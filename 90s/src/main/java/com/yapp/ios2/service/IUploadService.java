@@ -1,4 +1,4 @@
-package com.yapp.ios2.s.service;
+package com.yapp.ios2.service;
 
 public interface IUploadService {
 

@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class PhotoController {
 
-    @GetMapping("/abcd")
+    @GetMapping("/upload-photo")
     public String home(){
         return "A";
     }
