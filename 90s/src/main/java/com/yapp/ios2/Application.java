@@ -1,4 +1,4 @@
-package com.yapp.ios2.s;
+package com.yapp.ios2;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
