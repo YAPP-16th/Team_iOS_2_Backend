@@ -32,4 +32,4 @@ build/
 
 application.yml
 application.properties
-.jar
+*.jar
