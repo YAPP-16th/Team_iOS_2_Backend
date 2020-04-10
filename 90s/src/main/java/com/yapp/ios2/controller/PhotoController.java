@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 public class PhotoController {
@@ -23,12 +25,22 @@ public class PhotoController {
     @PostMapping(value = "/photo/upload")
     @ResponseBody
     public String upload(@RequestParam(value="image") MultipartFile image, @RequestParam("albumUid") Integer albumUid, @RequestParam("photoOrder") Integer photoOrder, @RequestParam("uploader") Integer uploader) throws IOException {
-        System.out.println("upload processing");
-        System.out.println(image.getName());
-        System.out.println(image.getOriginalFilename());
+
         String url = photoService.upload(image, albumUid, photoOrder, uploader);
+
         return url;
-//        return "YAHO";
+    }
+
+    @PostMapping(value = "/photo/download")
+    @ResponseBody
+    public byte[] download(@RequestBody Map<String, String> json) throws IOException {
+
+        Long album = Long.parseLong(json.get("album"));
+        Long photo = Long.parseLong(json.get("photo"));
+
+        byte[] file = photoService.download(album, photo);
+
+        return file;
     }
 
 }

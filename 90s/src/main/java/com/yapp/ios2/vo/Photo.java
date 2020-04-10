@@ -1,9 +1,6 @@
 package com.yapp.ios2.vo;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -17,13 +14,14 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
+@AllArgsConstructor
 public class Photo {
 
     @Id
     @GeneratedValue
     private Long uid;
 
-    @Column(length = 100, nullable = false)
+    @Column(length = 100)
     private String url;
 
     @Column(name="photoOrder")
@@ -41,7 +39,12 @@ public class Photo {
     @Column(name="album_uid")
     private Integer albumUid;
 
-
+    public Photo(String url, Integer photoOrder, Integer uploader, Integer albumUid) {
+        this.url = url;
+        this.photoOrder = photoOrder;
+        this.uploader = uploader;
+        this.albumUid = albumUid;
+    }
 }
 
 /*

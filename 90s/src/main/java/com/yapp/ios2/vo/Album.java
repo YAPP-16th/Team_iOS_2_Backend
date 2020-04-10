@@ -1,10 +1,7 @@
 package com.yapp.ios2.vo;
 
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -17,6 +14,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
+@AllArgsConstructor
 public class Album {
 
     @Id
@@ -30,13 +28,22 @@ public class Album {
     private Integer photoLimit;
 
     @Column(name = "layout_uid")
-    private Integer layoutUid;
+    private Long layoutUid;
 
     @CreationTimestamp
     private LocalDateTime created_at;
 
     @UpdateTimestamp
     private LocalDateTime updated_at;
+
+    public Album() {
+    }
+
+    public Album(String name, Integer photoLimit, Long layoutUid) {
+        this.name = name;
+        this.photoLimit = photoLimit;
+        this.layoutUid = layoutUid;
+    }
 }
 
 /*

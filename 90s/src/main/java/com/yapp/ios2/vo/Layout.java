@@ -1,9 +1,6 @@
 package com.yapp.ios2.vo;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,10 +13,13 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @ToString
+@AllArgsConstructor
 public class Layout {
 
     @Id
     @GeneratedValue
     private Long uid;
 
+    public Layout() {
+    }
 }
