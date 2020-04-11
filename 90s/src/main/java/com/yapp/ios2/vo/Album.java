@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Builder
@@ -29,6 +30,15 @@ public class Album {
 
     @Column(name = "layout_uid")
     private Long layoutUid;
+
+    @Column(columnDefinition = "integer default 0")
+    private Integer count;
+
+    @Column
+    private LocalDate endDate;
+
+    @Column(columnDefinition = "boolean default false")
+    private boolean isComplete;
 
     @CreationTimestamp
     private LocalDateTime created_at;

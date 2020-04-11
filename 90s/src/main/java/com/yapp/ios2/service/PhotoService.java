@@ -20,19 +20,18 @@ public class PhotoService implements IPhotoService {
     @Override
     public String upload(MultipartFile photo, Integer albumUid, Integer photoOrder, Integer uploader) throws IOException{
 
+        String fileName = albumUid.toString() + "/" + photoOrder;
+        String url = s3Service.upload(photo, fileName);
+
         Photo newPhoto = Photo.builder()
                 .albumUid(albumUid)
                 .photoOrder(photoOrder)
                 .uploader(uploader)
+                .url(url)
                 .build();
 
-        String fileName = albumUid.toString() + "/" + newPhoto.getUid();
-        String url = s3Service.upload(photo, fileName);
-
-        newPhoto.setUrl(url);
 
         photoRepository.save(newPhoto);
-
         return url;
     }
 

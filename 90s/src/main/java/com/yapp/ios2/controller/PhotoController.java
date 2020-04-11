@@ -25,7 +25,6 @@ public class PhotoController {
     @PostMapping(value = "/photo/upload")
     @ResponseBody
     public String upload(@RequestParam(value="image") MultipartFile image, @RequestParam("albumUid") Integer albumUid, @RequestParam("photoOrder") Integer photoOrder, @RequestParam("uploader") Integer uploader) throws IOException {
-
         String url = photoService.upload(image, albumUid, photoOrder, uploader);
 
         return url;

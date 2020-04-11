@@ -7,6 +7,7 @@ import com.yapp.ios2.vo.AlbumOwner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -21,25 +22,34 @@ public class AlbumService implements IAlbumService{
     AlbumOwnerRepository albumOwnerRepository;
 
     @Override
-    public Album create(String name, Integer photoLimit, Long user, Long layoutUid) {
+    public Album create(String name, Integer photoLimit, Long user, Long layoutUid, LocalDate endDate) {
 
         Album newAlbum = Album.builder()
                 .name(name)
                 .photoLimit(photoLimit)
                 .layoutUid(layoutUid)
+                .endDate(endDate)
                 .build();
 
         albumRepository.save(newAlbum);
 
+        addOwner(newAlbum.getUid(), user, "creator");
+
+        return newAlbum;
+    }
+
+    @Override
+    public AlbumOwner addOwner(Long albumUid, Long user, String role){
+
         AlbumOwner albumOwner = AlbumOwner.builder()
-                .albumUid(newAlbum.getUid())
+                .albumUid(albumUid)
                 .userUid(user)
-                .role("creator")
+                .role(role)
                 .build();
 
         albumOwnerRepository.save(albumOwner);
 
-        return newAlbum;
+        return albumOwner;
     }
 
     @Override

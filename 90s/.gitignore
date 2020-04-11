@@ -31,6 +31,7 @@ build/
 .vscode/
 
 application.yml
+*.yml
 application.properties
 *.jar
 out/
