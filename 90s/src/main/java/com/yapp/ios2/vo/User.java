@@ -38,7 +38,7 @@ public class User {
     @UpdateTimestamp
     private LocalDateTime updated_at;
 
-    public User(){};
+    public User(){}
 
     public User(String name, String email, String password, String phone) {
         this.name = name;

@@ -1,5 +1,7 @@
 package com.yapp.ios2.controller;
 
+import com.yapp.ios2.dto.BooleanResultDto;
+import com.yapp.ios2.dto.DuplicatedEmailDto;
 import com.yapp.ios2.service.UserService;
 import com.yapp.ios2.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,16 +55,14 @@ public class UserController {
 
     @PostMapping("/user/duplicatedEmail")
     @ResponseBody
-    public Map<String, Object> duplicatedEmail(@RequestBody Map<String, Optional> json){
+    public BooleanResultDto duplicatedEmail(@RequestBody DuplicatedEmailDto duplicatedEmailDto){
 
-        Map<String, Object> result = new HashMap<>();
+        BooleanResultDto booleanResultDto = new BooleanResultDto();
 
-        String email = (String)json.get("email").get();
+        boolean duplicated = userService.duplicatedEmail(duplicatedEmailDto.getEmail());
 
-        boolean duplicated = userService.duplicatedEmail(email);
+        booleanResultDto.setResult(duplicated);
 
-        result.put("duplicated", duplicated);
-
-        return result;
+        return booleanResultDto;
     }
 }
