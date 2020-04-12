@@ -1,14 +1,10 @@
 package com.yapp.ios2.service;
 
-import com.amazonaws.util.json.Jackson;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.yapp.ios2.repository.UserRepository;
 import com.yapp.ios2.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
 
 @Service
 public class UserService {

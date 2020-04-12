@@ -3,7 +3,6 @@ package com.yapp.ios2.controller;
 import com.yapp.ios2.service.IAlbumService;
 import com.yapp.ios2.vo.Album;
 import com.yapp.ios2.vo.AlbumOwner;
-import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +11,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 public class AlbumController {
@@ -43,9 +41,9 @@ public class AlbumController {
     }
 
     @PostMapping("/album/addUser")
-    public Map<String, Object> addUser(@RequestBody Map<String, Optional> json){
+    public Map<String, Object> addUser(@RequestBody Map<String, Object> json){
         Map<String, Object> result = new HashMap<>();
-        AlbumOwner albumOwner = albumService.addOwner((Long)json.get("album").get(), (Long)json.get("user").get(), (String)json.get("role").get());
+        AlbumOwner albumOwner = albumService.addOwner((Long)json.get("album"), (Long)json.get("user"), (String)json.get("role"));
         result.put("albumOwner", albumOwner);
         return result;
     }

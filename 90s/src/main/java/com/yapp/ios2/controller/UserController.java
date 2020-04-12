@@ -2,14 +2,12 @@ package com.yapp.ios2.controller;
 
 import com.yapp.ios2.dto.BooleanResultDto;
 import com.yapp.ios2.dto.DuplicatedEmailDto;
+import com.yapp.ios2.dto.JoinDto;
+import com.yapp.ios2.dto.LoginDto;
 import com.yapp.ios2.service.UserService;
 import com.yapp.ios2.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -21,36 +19,20 @@ public class UserController {
 
     @PostMapping(value = "/user/join")
     @ResponseBody
-    public Map<String, Object> join(@RequestBody Map<String, Optional> json) {
+    public User join(@RequestBody JoinDto joinInfo) {
 
-        Map<String, Object> result = new HashMap<>();
+        User newUser = userService.join(joinInfo.getEmail(), joinInfo.getName(), joinInfo.getPassword(), joinInfo.getPhone());
 
-        String name = (String)json.get("name").get();
-        String email = (String)json.get("email").get();
-        String password = (String)json.get("password").get();
-        String phone = (String)json.get("phone").get();
-
-        User newUser = userService.join(email, name, password, phone);
-
-        result.put("user", newUser);
-
-        return result;
+        return newUser;
     }
 
     @PostMapping(value = "/user/login")
     @ResponseBody
-    public Map<String, Object> login(@RequestBody Map<String, Optional> json){
+    public User login(@RequestBody LoginDto loginInfo){
 
-        Map<String, Object> result = new HashMap<>();
+        User user = userService.login(loginInfo.getEmail(), loginInfo.getPassword());
 
-        String email = (String)json.get("email").get();
-        String password = (String)json.get("password").get();
-
-        User user = userService.login(email, password);
-
-        result.put("user", user);
-
-        return result;
+        return user;
     }
 
     @PostMapping("/user/duplicatedEmail")
