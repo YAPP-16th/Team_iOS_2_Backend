@@ -29,6 +29,7 @@ public class AlbumService implements IAlbumService{
                 .photoLimit(photoLimit)
                 .layoutUid(layoutUid)
                 .endDate(endDate)
+                .count(0)
                 .build();
 
         albumRepository.save(newAlbum);

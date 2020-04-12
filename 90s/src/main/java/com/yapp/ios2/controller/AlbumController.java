@@ -1,16 +1,16 @@
 package com.yapp.ios2.controller;
 
+import com.yapp.ios2.dto.AlbumDto;
+import com.yapp.ios2.dto.AlbumOwnerDto;
+import com.yapp.ios2.dto.BooleanResultDto;
+import com.yapp.ios2.dto.UserUidDto;
 import com.yapp.ios2.service.IAlbumService;
 import com.yapp.ios2.vo.Album;
 import com.yapp.ios2.vo.AlbumOwner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 public class AlbumController {
@@ -26,31 +26,38 @@ public class AlbumController {
 
     @PostMapping("/album/create")
     @ResponseBody
-    public Album createAlbum(@RequestBody Map<String, String> json){
+    public Album createAlbum(@RequestBody AlbumDto albumInfo){
 
-        Integer photoLimit = Integer.parseInt(json.get("photoLimit"));
-        Long userUid = Long.parseLong(json.get("user"));
-        String name = json.get("name");
-        Long layoutUid = Long.parseLong(json.get("layoutUid"));
+        Album newAlbum = albumService.create(
+                albumInfo.getName(),
+                albumInfo.getPhotoLimit(),
+                albumInfo.getUserUid(),
+                albumInfo.getLayoutUid(),
+                albumInfo.getEndDate()
+        );
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
-
-        LocalDate endDate = LocalDate.parse(json.get("endDate"), formatter);
-
-        return albumService.create(name, photoLimit, userUid, layoutUid, endDate);
+        return newAlbum;
     }
 
     @PostMapping("/album/addUser")
-    public Map<String, Object> addUser(@RequestBody Map<String, Object> json){
-        Map<String, Object> result = new HashMap<>();
-        AlbumOwner albumOwner = albumService.addOwner((Long)json.get("album"), (Long)json.get("user"), (String)json.get("role"));
-        result.put("albumOwner", albumOwner);
+    public BooleanResultDto addUser(@RequestBody AlbumOwnerDto albumOwnerInfo){
+        AlbumOwner albumOwner = albumService.addOwner(
+                albumOwnerInfo.getAlbumUid(),
+                albumOwnerInfo.getUserUid(),
+                albumOwnerInfo.getRole()
+        );
+        BooleanResultDto result = new BooleanResultDto();
+        if(albumOwner != null){
+            result.setResult(true);
+        }else{
+            result.setResult(false);
+        }
         return result;
     }
 
     @PostMapping("/album/get")
-    public List<Album> getAlbums(@RequestBody Map<String, String> json){
-        List<Album> albums = albumService.getAlbums(Long.parseLong(json.get("user")));
+    public List<Album> getAlbums(@RequestBody UserUidDto user){
+        List<Album> albums = albumService.getAlbums(user.getUserUid());
         return albums;
     }
 

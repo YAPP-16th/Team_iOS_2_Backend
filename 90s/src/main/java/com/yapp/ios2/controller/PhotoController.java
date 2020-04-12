@@ -1,5 +1,6 @@
 package com.yapp.ios2.controller;
 
+import com.yapp.ios2.dto.PhotoDto;
 import com.yapp.ios2.service.IPhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,12 +33,9 @@ public class PhotoController {
 
     @PostMapping(value = "/photo/download")
     @ResponseBody
-    public byte[] download(@RequestBody Map<String, String> json) throws IOException {
+    public byte[] download(@RequestBody PhotoDto photoInfo) throws IOException {
 
-        Long album = Long.parseLong(json.get("album"));
-        Long photo = Long.parseLong(json.get("photo"));
-
-        byte[] file = photoService.download(album, photo);
+        byte[] file = photoService.download(photoInfo.getAlbumUid(), photoInfo.getPhotoUid());
 
         return file;
     }
