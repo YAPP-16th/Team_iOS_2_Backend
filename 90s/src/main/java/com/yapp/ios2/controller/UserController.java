@@ -1,19 +1,25 @@
 package com.yapp.ios2.controller;
 
-import com.yapp.ios2.dto.BooleanResultDto;
-import com.yapp.ios2.dto.DuplicatedEmailDto;
-import com.yapp.ios2.dto.JoinDto;
-import com.yapp.ios2.dto.LoginDto;
+import com.yapp.ios2.dto.*;
+import com.yapp.ios2.service.AwsSnsService;
+import com.yapp.ios2.service.S3Service;
+import com.yapp.ios2.service.SnsService;
 import com.yapp.ios2.service.UserService;
 import com.yapp.ios2.vo.User;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    SnsService snsService;
 
 
 
@@ -46,5 +52,19 @@ public class UserController {
         booleanResultDto.setResult(duplicated);
 
         return booleanResultDto;
+    }
+
+    @PostMapping("/user/sms")
+    @ResponseBody
+    public SmsResponseDto sendSms(@RequestBody SmsRequestDto smsRequestDto){
+
+        String num = snsService.send(smsRequestDto.getPhoneNumber());
+
+        SmsResponseDto smsResponseDto = new SmsResponseDto();
+
+        smsResponseDto.setNum(num);
+
+        return smsResponseDto;
+
     }
 }

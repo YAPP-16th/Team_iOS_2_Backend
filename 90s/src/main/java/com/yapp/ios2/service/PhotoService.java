@@ -12,7 +12,7 @@ import java.io.IOException;
 public class PhotoService implements IPhotoService {
 
     @Autowired
-    private IS3Service s3Service;
+    private S3Service s3Service;
 
     @Autowired
     private PhotoRepository photoRepository;
