@@ -32,6 +32,9 @@ public class User {
     @Column
     private String phone;
 
+    @Column
+    private String sosial;
+
     @CreationTimestamp
     private LocalDateTime created_at;
 
