@@ -27,13 +27,21 @@ public class UserController {
         return newUser;
     }
 
-    @PostMapping(value = "/user/auth/kakao")
+    @PostMapping(value = "/user/auth/kakao/getInfo")
     @ResponseBody
-    public KakaoProfileDto join(@RequestBody Map<String, String> json) {
-
+    public KakaoProfileDto getInfoFromKakao(@RequestBody Map<String, String> json) {
+        System.out.println("Called getInfoFromKakao");
         KakaoProfileDto kakaoProfileDto = kakaoService.getKakaoProfile(json.get("accesskey"));
 
         return kakaoProfileDto;
+    }
+    @PostMapping(value = "/user/auth/kakao/getToken")
+    @ResponseBody
+    public KakaoAuthDto getTokenFromKakao(@RequestBody Map<String, String> json) {
+        System.out.println("Called getTokenFromKakao");
+        KakaoAuthDto kakaoAuthDto = kakaoService.getKakaoTokenInfo(json.get("code"));
+
+        return kakaoAuthDto;
     }
 
     @PostMapping(value = "/user/login")
