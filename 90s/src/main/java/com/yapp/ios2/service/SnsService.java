@@ -1,44 +1,39 @@
 package com.yapp.ios2.service;
 
-import com.yapp.ios2.config.Coolsms;
-import org.json.simple.JSONObject;
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.HashMap;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class SnsService {
+//  Twilio
+    @Value("${twilio.credentials.sid}")
+    private String sid;
+    @Value("${twilio.credentials.token}")
+    private String token;
+    @Value("${twilio.fromPhoneNum}")
+    private String fromPhoneNum;
 
-    private String api_key = "NCSKL65OLKT0GSTP";
-    private String api_secret = "O3VAPFSW0YNUR2GSHTTWWUC6YUFKHGBT";
-
-    private Coolsms coolsms;
+    private Message message;
 
     @PostConstruct
     public void setSnsService(){
-        coolsms = new Coolsms(api_key, api_secret);
+        Twilio.init(sid, token);
     }
 
     public String send(String phoneNumber){
 
-        double dValue = Math.random();
+//        인증 난수 생성
+        String randomNum = String.valueOf(ThreadLocalRandom.current().nextInt(100000, 1000000));
 
-        String num = String.valueOf((int)(dValue * 1000000));
+        message = Message.creator(new PhoneNumber("+82" + phoneNumber), new PhoneNumber(fromPhoneNum), randomNum).create();
 
-        HashMap<String, String> set = new HashMap<String, String>();
-        set.put("to", phoneNumber); // 수신번호
-        set.put("from", "01095233114"); // 발신번호
-        set.put("text", num); // 문자내용
-        set.put("type", "sms"); // 문자 타입
-
-        JSONObject result = coolsms.send(set);
-
-        if(!(boolean)result.get("status")){
-            num = "0";
-        }
-
-        return num;
+        return randomNum;
 
     }
 

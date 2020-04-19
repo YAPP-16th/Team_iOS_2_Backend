@@ -1,16 +1,11 @@
 package com.yapp.ios2.controller;
 
 import com.yapp.ios2.dto.*;
-import com.yapp.ios2.service.AwsSnsService;
-import com.yapp.ios2.service.S3Service;
 import com.yapp.ios2.service.SnsService;
 import com.yapp.ios2.service.UserService;
 import com.yapp.ios2.vo.User;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @RestController
 public class UserController {
