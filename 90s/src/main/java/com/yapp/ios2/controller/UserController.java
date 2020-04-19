@@ -1,13 +1,13 @@
 package com.yapp.ios2.controller;
 
-import com.yapp.ios2.dto.BooleanResultDto;
-import com.yapp.ios2.dto.DuplicatedEmailDto;
-import com.yapp.ios2.dto.JoinDto;
-import com.yapp.ios2.dto.LoginDto;
+import com.yapp.ios2.dto.*;
+import com.yapp.ios2.service.KakaoService;
 import com.yapp.ios2.service.UserService;
 import com.yapp.ios2.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 public class UserController {
@@ -15,7 +15,8 @@ public class UserController {
     @Autowired
     UserService userService;
 
-
+    @Autowired
+    KakaoService kakaoService;
 
     @PostMapping(value = "/user/join")
     @ResponseBody
@@ -24,6 +25,15 @@ public class UserController {
         User newUser = userService.join(joinInfo.getEmail(), joinInfo.getName(), joinInfo.getPassword(), joinInfo.getPhone());
 
         return newUser;
+    }
+
+    @PostMapping(value = "/user/auth/kakao")
+    @ResponseBody
+    public KakaoProfileDto join(@RequestBody Map<String, String> json) {
+
+        KakaoProfileDto kakaoProfileDto = kakaoService.getKakaoProfile(json.get("accesskey"));
+
+        return kakaoProfileDto;
     }
 
     @PostMapping(value = "/user/login")
