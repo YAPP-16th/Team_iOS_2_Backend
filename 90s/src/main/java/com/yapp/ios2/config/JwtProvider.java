@@ -1,6 +1,9 @@
 package com.yapp.ios2.config;
 
-import com.sun.org.apache.xml.internal.security.algorithms.SignatureAlgorithm;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
