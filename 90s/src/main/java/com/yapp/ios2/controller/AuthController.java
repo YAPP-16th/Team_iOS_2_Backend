@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RestController
-public class AuthConroller {
+public class AuthController {
 
     @Autowired
     KakaoService kakaoService;
