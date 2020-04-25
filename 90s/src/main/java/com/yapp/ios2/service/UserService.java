@@ -1,9 +1,7 @@
 package com.yapp.ios2.service;
 
-import com.yapp.ios2.dto.KakaoProfileDto;
 import com.yapp.ios2.repository.UserRepository;
 import com.yapp.ios2.vo.User;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,7 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -24,13 +21,10 @@ public class UserService implements UserDetailsService {
     UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private final KakaoService kakaoService;
-
 //    일반 회원가입
     public User join(String email, String name, String password, String phone){
         User newUser = null;
-        if(!duplicatedEmail(email)){
+        if(!checkEmail(email)){
             newUser = User.builder()
                     .email(email)
                     .name(name)
@@ -44,10 +38,11 @@ public class UserService implements UserDetailsService {
         }
         return newUser;
     }
+
 //    카카오 회원가입
     public User join(String email, String name, String phone){
         User newUser = null;
-        if(!duplicatedEmail(email)){
+        if(!checkEmail(email)){
             newUser = User.builder()
                     .email(email)
                     .name(name)
@@ -77,11 +72,7 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 E-MAIL"));
     }
 
-    public boolean duplicatedEmail(String email){
-//        Optional<User> user = userRepository.findByEmail(email);
-//
-//        boolean result = (user != null) ? true : false ;
-
+    public boolean checkEmail(String email){
         return userRepository.findByEmail(email)
                 .isPresent();
     }

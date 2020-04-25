@@ -25,27 +25,27 @@ public class UserController {
     @Autowired
     SnsService snsService;
 
-    KakaoService kakaoService;
+//    KakaoService kakaoService;
 
     @Autowired
     JwtProvider jwtProvider;
 
-    @PostMapping(value = "/kakao/getInfo")
-    @ResponseBody
-    public KakaoProfileDto getInfoFromKakao(@RequestBody Map<String, String> json) {
-        System.out.println("Called getInfoFromKakao");
-        KakaoProfileDto kakaoProfileDto = kakaoService.getKakaoProfile(json.get("accesskey"));
-
-        return kakaoProfileDto;
-    }
-    @PostMapping(value = "/kakao/getToken")
-    @ResponseBody
-    public KakaoAuthDto getTokenFromKakao(@RequestBody Map<String, String> json) {
-        System.out.println("Called getTokenFromKakao");
-        KakaoAuthDto kakaoAuthDto = kakaoService.getKakaoTokenInfo(json.get("code"));
-
-        return kakaoAuthDto;
-    }
+//    @PostMapping(value = "/kakao/getInfo")
+//    @ResponseBody
+//    public KakaoProfileDto getInfoFromKakao(@RequestBody Map<String, String> json) {
+//        System.out.println("Called getInfoFromKakao");
+//        KakaoProfileDto kakaoProfileDto = kakaoService.getKakaoProfile(json.get("accesskey"));
+//
+//        return kakaoProfileDto;
+//    }
+//    @PostMapping(value = "/kakao/getToken")
+//    @ResponseBody
+//    public KakaoAuthDto getTokenFromKakao(@RequestBody Map<String, String> json) {
+//        System.out.println("Called getTokenFromKakao");
+//        KakaoAuthDto kakaoAuthDto = kakaoService.getKakaoTokenInfo(json.get("code"));
+//
+//        return kakaoAuthDto;
+//    }
 
     @ApiOperation(value = "회원가입", notes = "" +
             "두가 방식으로 회원가입 할 수 있습니다." +
@@ -59,14 +59,18 @@ public class UserController {
     @PostMapping(value = "/join")
     @ResponseBody
     public String join(@RequestBody JoinDto joinInfo) {
+
         String jwt;
         User newUser;
+
         if(joinInfo.getSosial()){
             newUser = userService.join(joinInfo.getEmail(), joinInfo.getName(), joinInfo.getPassword(), joinInfo.getPhone());
         }else{
             newUser = userService.join(joinInfo.getEmail(), joinInfo.getName(), joinInfo.getPhone());
         }
+
         jwt = jwtProvider.createToken(newUser.getUid().toString(), newUser.getRoles());
+
         return jwt;
     }
 
@@ -107,28 +111,36 @@ public class UserController {
         return jwt;
     }
 
-    @PostMapping("/duplicatedEmail")
+    @ApiOperation(value = "이메일 체크", notes = "" +
+            "이메일이 중복되는지 확인합니다." +
+            "<br>이메일이 중복된다면 true 를" +
+            "<br>이메일이 중복되지 않는다면 false를" +
+            "<br>리턴합니다.")
+    @PostMapping("/checkEmail")
     @ResponseBody
     public BooleanResultDto duplicatedEmail(@RequestBody DuplicatedEmailDto duplicatedEmailDto){
 
         BooleanResultDto booleanResultDto = new BooleanResultDto();
 
-        boolean duplicated = userService.duplicatedEmail(duplicatedEmailDto.getEmail());
+        boolean duplicated = userService.checkEmail(duplicatedEmailDto.getEmail());
 
         booleanResultDto.setResult(duplicated);
 
         return booleanResultDto;
     }
 
-    @PostMapping("/user/sms")
+    @ApiOperation(value = "문자 인증", notes = "" +
+            "문자 인증을 진행합니다." +
+            "<br>Param으로 넘긴 핸드폰 번호에 6자리의 난수가 담긴 sms를 보냅니다." +
+            "<br>Response 값은 발생한 6자리의 난수입니다."
+            )
+    @PostMapping("/checkPhoneNum")
     @ResponseBody
-    public SmsResponseDto sendSms(@RequestBody SmsRequestDto smsRequestDto){
+    public SmsDto.SmsResponseDto sendSms(@RequestBody SmsDto.SmsRequestDto smsRequestDto){
 
         String num = snsService.send(smsRequestDto.getPhoneNumber());
 
-        SmsResponseDto smsResponseDto = new SmsResponseDto();
-
-        smsResponseDto.setNum(num);
+        SmsDto.SmsResponseDto smsResponseDto = new SmsDto.SmsResponseDto(num);
 
         return smsResponseDto;
 
