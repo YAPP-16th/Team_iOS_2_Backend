@@ -1,55 +1,97 @@
 package com.yapp.ios2.service;
 
+import com.yapp.ios2.dto.KakaoProfileDto;
 import com.yapp.ios2.repository.UserRepository;
 import com.yapp.ios2.vo.User;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
 
     @Autowired
     UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private final KakaoService kakaoService;
+
+//    일반 회원가입
     public User join(String email, String name, String password, String phone){
         User newUser = null;
         if(!duplicatedEmail(email)){
             newUser = User.builder()
                     .email(email)
                     .name(name)
-                    .password(password)
+                    .password(passwordEncoder.encode(password))
+                    .roles(Collections.singletonList("ROLE_USER"))
                     .phone(phone)
+                    .sosial(false)
                     .build();
 
             userRepository.save(newUser);
         }
+        return newUser;
+    }
+//    카카오 회원가입
+    public User join(String email, String name, String phone){
+        User newUser = null;
+        if(!duplicatedEmail(email)){
+            newUser = User.builder()
+                    .email(email)
+                    .name(name)
+                    .roles(Collections.singletonList("ROLE_USER"))
+                    .phone(phone)
+                    .sosial(true)
+                    .build();
 
+            userRepository.save(newUser);
+        }
         return newUser;
     }
 
     public User login(String email, String password){
 
-        User user = null;
-
-        if(duplicatedEmail(email)){
-            user = userRepository.findByEmail(email);
-
-            if(!user.getPassword().equals(password)){
-                user = null;
-            }
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 E-MAIL 입니다."));
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new IllegalArgumentException("잘못된 비밀번호입니다.");
         }
 
         return user;
     }
 
+    public User getUserByEmail(String email){
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 E-MAIL"));
+    }
+
     public boolean duplicatedEmail(String email){
-        User user = userRepository.findByEmail(email);
+//        Optional<User> user = userRepository.findByEmail(email);
+//
+//        boolean result = (user != null) ? true : false ;
 
-        boolean result = (user != null) ? true : false ;
+        return userRepository.findByEmail(email)
+                .isPresent();
+    }
 
-        return result;
+    @Override
+    public UserDetails loadUserByUsername(String uid) throws UsernameNotFoundException {
+        return userRepository.findById(Long.parseLong(uid))
+                .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
+//        return userRepository.findByEmail(username)
+//                .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
     }
 
 }

@@ -1,8 +1,6 @@
 package com.yapp.ios2.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
@@ -12,6 +10,11 @@ public class KakaoProfileDto {
     private Long id;
     private Properties properties;
     private Kakao_account kakao_account;
+
+    public String getEmail(){
+        return this.kakao_account.getEmail();
+    }
+
 
     @Getter
     @Setter
@@ -25,7 +28,9 @@ public class KakaoProfileDto {
     @Getter
     @Setter
     @ToString
+    @NoArgsConstructor
     private static class Kakao_account {
         private String email;
+
     }
 }
