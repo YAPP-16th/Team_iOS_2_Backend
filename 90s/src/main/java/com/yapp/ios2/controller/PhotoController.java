@@ -23,7 +23,8 @@ public class PhotoController {
     public String home(@AuthenticationPrincipal UserDetails user){
 
         return "WELCOME, " + user.getUsername() +
-                "HERE IS PHOTO HOME";
+                " HERE IS PHOTO HOME " +
+                user.getAuthorities();
     }
 
 
