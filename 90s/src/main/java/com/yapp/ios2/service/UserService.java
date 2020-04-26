@@ -35,6 +35,8 @@ public class UserService implements UserDetailsService {
                     .build();
 
             userRepository.save(newUser);
+        }else{
+            throw new IllegalArgumentException("Existing Email");
         }
         return newUser;
     }
@@ -52,6 +54,8 @@ public class UserService implements UserDetailsService {
                     .build();
 
             userRepository.save(newUser);
+        }else{
+            throw new IllegalArgumentException("Existing Email");
         }
         return newUser;
     }
@@ -69,7 +73,7 @@ public class UserService implements UserDetailsService {
 
     public User getUserByEmail(String email){
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 E-MAIL"));
+                .orElseThrow(() -> new UsernameNotFoundException("가입되지 않은 E-MAIL"));
     }
 
     public boolean checkEmail(String email){

@@ -64,9 +64,9 @@ public class UserController {
         User newUser;
 
         if(joinInfo.getSosial()){
-            newUser = userService.join(joinInfo.getEmail(), joinInfo.getName(), joinInfo.getPassword(), joinInfo.getPhone());
-        }else{
             newUser = userService.join(joinInfo.getEmail(), joinInfo.getName(), joinInfo.getPhone());
+        }else{
+            newUser = userService.join(joinInfo.getEmail(), joinInfo.getName(), joinInfo.getPassword(), joinInfo.getPhone());
         }
 
         jwt = jwtProvider.createToken(newUser.getUid().toString(), newUser.getRoles());
@@ -132,6 +132,7 @@ public class UserController {
     @ApiOperation(value = "문자 인증", notes = "" +
             "문자 인증을 진행합니다." +
             "<br>Param으로 넘긴 핸드폰 번호에 6자리의 난수가 담긴 sms를 보냅니다." +
+            "<br>핸드폰 번호는 01012341234 형태로 보내주세요." +
             "<br>Response 값은 발생한 6자리의 난수입니다."
             )
     @PostMapping("/checkPhoneNum")
@@ -139,8 +140,8 @@ public class UserController {
     public SmsDto.SmsResponseDto sendSms(@RequestBody SmsDto.SmsRequestDto smsRequestDto){
 
         String num = snsService.send(smsRequestDto.getPhoneNumber());
-
-        SmsDto.SmsResponseDto smsResponseDto = new SmsDto.SmsResponseDto(num);
+        SmsDto.SmsResponseDto smsResponseDto = new SmsDto.SmsResponseDto();
+        smsResponseDto.setNum(num);
 
         return smsResponseDto;
 

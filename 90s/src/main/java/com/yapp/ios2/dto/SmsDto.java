@@ -1,23 +1,25 @@
 package com.yapp.ios2.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+@Getter
+@Setter
 public class SmsDto {
 
-    @AllArgsConstructor
-    @Builder
-    @Getter
-    @Setter
+//    @AllArgsConstructor
+//    @Builder
+//    @Getter
+//    @Setter
+    @Data
     public static class SmsRequestDto {
         private String phoneNumber;
     }
 
-    @AllArgsConstructor
-    @Getter
-    @Setter
+//    @AllArgsConstructor
+//    @Builder
+//    @Getter
+//    @Setter
+    @Data
     public static class SmsResponseDto {
         private String num;
     }

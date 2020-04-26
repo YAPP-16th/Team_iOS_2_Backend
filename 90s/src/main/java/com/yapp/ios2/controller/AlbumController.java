@@ -7,24 +7,27 @@ import com.yapp.ios2.dto.UserUidDto;
 import com.yapp.ios2.service.IAlbumService;
 import com.yapp.ios2.vo.Album;
 import com.yapp.ios2.vo.AlbumOwner;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Api(tags = {"2. Album"})
 @RestController
+@RequestMapping("/album/*")
 public class AlbumController {
 
     @Autowired
     private IAlbumService albumService;
 
-    @GetMapping("/album")
+    @GetMapping("/")
     public String home(){
         System.out.println("album home");
         return "Welcome, HERE IS ALBUM HOME";
     }
 
-    @PostMapping("/album/create")
+    @PostMapping("/create")
     @ResponseBody
     public Album createAlbum(@RequestBody AlbumDto albumInfo){
 
@@ -39,7 +42,7 @@ public class AlbumController {
         return newAlbum;
     }
 
-    @PostMapping("/album/addUser")
+    @PostMapping("/addUser")
     public BooleanResultDto addUser(@RequestBody AlbumOwnerDto albumOwnerInfo){
         AlbumOwner albumOwner = albumService.addOwner(
                 albumOwnerInfo.getAlbumUid(),
@@ -55,7 +58,7 @@ public class AlbumController {
         return result;
     }
 
-    @PostMapping("/album/get")
+    @PostMapping("/get")
     public List<Album> getAlbums(@RequestBody UserUidDto user){
         List<Album> albums = albumService.getAlbums(user.getUserUid());
         return albums;

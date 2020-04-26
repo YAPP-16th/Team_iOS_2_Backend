@@ -3,6 +3,8 @@ package com.yapp.ios2.controller;
 import com.yapp.ios2.dto.PhotoDto;
 import com.yapp.ios2.service.IPhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,8 +20,10 @@ public class PhotoController {
 
     @GetMapping("/photo")
     @ResponseBody
-    public String home(){
-        return "WELCOME, HERE IS PHOTO HOME";
+    public String home(@AuthenticationPrincipal UserDetails user){
+
+        return "WELCOME, " + user.getUsername() +
+                "HERE IS PHOTO HOME";
     }
 
 
