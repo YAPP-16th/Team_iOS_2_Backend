@@ -4,11 +4,14 @@ import com.yapp.ios2.dto.AlbumDto;
 import com.yapp.ios2.dto.AlbumOwnerDto;
 import com.yapp.ios2.dto.BooleanResultDto;
 import com.yapp.ios2.dto.UserUidDto;
-import com.yapp.ios2.service.IAlbumService;
+import com.yapp.ios2.service.AlbumService;
+import com.yapp.ios2.service.UserService;
 import com.yapp.ios2.vo.Album;
 import com.yapp.ios2.vo.AlbumOwner;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,7 +22,10 @@ import java.util.List;
 public class AlbumController {
 
     @Autowired
-    private IAlbumService albumService;
+    private AlbumService albumService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/")
     public String home(){
@@ -29,12 +35,12 @@ public class AlbumController {
 
     @PostMapping("/create")
     @ResponseBody
-    public Album createAlbum(@RequestBody AlbumDto albumInfo){
+    public Album createAlbum(@AuthenticationPrincipal UserDetails user, @RequestBody AlbumDto albumInfo){
 
         Album newAlbum = albumService.create(
                 albumInfo.getName(),
                 albumInfo.getPhotoLimit(),
-                albumInfo.getUserUid(),
+                userService.getUserByEmail(user.getUsername()).getUid(),
                 albumInfo.getLayoutUid(),
                 albumInfo.getEndDate()
         );
@@ -58,9 +64,9 @@ public class AlbumController {
         return result;
     }
 
-    @PostMapping("/get")
-    public List<Album> getAlbums(@RequestBody UserUidDto user){
-        List<Album> albums = albumService.getAlbums(user.getUserUid());
+    @GetMapping("/get")
+    public List<Album> getAlbums(@AuthenticationPrincipal UserDetails user){
+        List<Album> albums = albumService.getAlbums(userService.getUserByEmail(user.getUsername()).getUid());
         return albums;
     }
 

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class AlbumService implements IAlbumService{
+public class AlbumService{
 
     @Autowired
     AlbumRepository albumRepository;
@@ -21,7 +21,6 @@ public class AlbumService implements IAlbumService{
     @Autowired
     AlbumOwnerRepository albumOwnerRepository;
 
-    @Override
     public Album create(String name, Integer photoLimit, Long user, Long layoutUid, LocalDate endDate) {
 
         Album newAlbum = Album.builder()
@@ -34,12 +33,11 @@ public class AlbumService implements IAlbumService{
 
         albumRepository.save(newAlbum);
 
-        addOwner(newAlbum.getUid(), user, "creator");
+        addOwner(newAlbum.getUid(), user, "ROLE_CREATOR");
 
         return newAlbum;
     }
 
-    @Override
     public AlbumOwner addOwner(Long albumUid, Long user, String role){
 
         AlbumOwner albumOwner = AlbumOwner.builder()
@@ -53,7 +51,6 @@ public class AlbumService implements IAlbumService{
         return albumOwner;
     }
 
-    @Override
     public List<Album> getAlbums(Long userUid) {
 
         List<AlbumOwner> albumOwners = albumOwnerRepository.findByUserUid(userUid);
