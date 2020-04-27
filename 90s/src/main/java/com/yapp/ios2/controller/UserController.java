@@ -9,6 +9,8 @@ import com.yapp.ios2.vo.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -145,5 +147,60 @@ public class UserController {
 
         return smsResponseDto;
 
+    }
+
+    @ApiOperation(value = "이메일 변경", notes = "" +
+            "이메일을 변경합니다." +
+            "<br>변경할 이메일을 보내주세요." +
+            "<br>JWT 토큰의 정보를 활용해 사용자의 이메일을 변경합니다."
+    )
+    @PostMapping("/updateEmail")
+    @ResponseBody
+    public ResponseDto.JwtDto updateEmail(@AuthenticationPrincipal UserDetails userDetails, @RequestBody UserDto userDto){
+
+        User user = userService.getUserByEmail(userDetails.getUsername());
+        userService.updateEmail(user, userDto.getEmail());
+
+        String jwt = jwtProvider.createToken(user.getUid().toString(), user.getRoles());
+        ResponseDto.JwtDto jwtDto = new ResponseDto.JwtDto();
+        jwtDto.setJwt(jwt);
+        return jwtDto;
+    }
+
+    @ApiOperation(value = "핸드폰번호 변경", notes = "" +
+            "핸드폰 번호를 변경합니다." +
+            "<br>변경할 핸드폰 번호를 보내주세요." +
+            "<br>JWT 토큰의 정보를 활용해 사용자의 핸드폰 번호를 변경합니다."
+    )
+    @PostMapping("/updatePhoneNumber")
+    @ResponseBody
+    public ResponseDto.JwtDto updatePhoneNumber(@AuthenticationPrincipal UserDetails userDetails, @RequestBody UserDto userDto){
+
+        User user = userService.getUserByEmail(userDetails.getUsername());
+        userService.updatePhoneNumber(user, userDto.getPhoneNum());
+
+        String jwt = jwtProvider.createToken(user.getUid().toString(), user.getRoles());
+        ResponseDto.JwtDto jwtDto = new ResponseDto.JwtDto();
+        jwtDto.setJwt(jwt);
+        return jwtDto;
+    }
+
+    @ApiOperation(value = "비밀번호 변경", notes = "" +
+            "비밀번호를 변경합니다." +
+            "<br>변경할 비밀번호를 보내주세요." +
+            "<br>JWT 토큰의 정보를 활용해 사용자의 비밀번호를 변경합니다."
+    )
+    @PostMapping("/updatePassword")
+    @ResponseBody
+    public ResponseDto.JwtDto updatePassword(@RequestBody UserDto userDto, @AuthenticationPrincipal UserDetails userDetails){
+
+        User user = userService.getUserByEmail(userDetails.getUsername());
+        userService.updatePassword(user, userDto.getPassword());
+
+        String jwt = jwtProvider.createToken(user.getUid().toString(), user.getRoles());
+        ResponseDto.JwtDto jwtDto = new ResponseDto.JwtDto();
+        jwtDto.setJwt(jwt);
+
+        return jwtDto;
     }
 }

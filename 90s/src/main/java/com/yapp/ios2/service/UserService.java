@@ -89,4 +89,22 @@ public class UserService implements UserDetailsService {
 //                .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
     }
 
+    public User updateEmail(User user, String email){
+        user.setEmail(email);
+        userRepository.save(user);
+        return user;
+    }
+
+    public User updatePhoneNumber(User user, String phoneNumber){
+        user.setPhone(phoneNumber);
+        userRepository.save(user);
+        return user;
+    }
+
+    public User updatePassword(User user, String password){
+        user.setPassword(passwordEncoder.encode(password));
+        userRepository.save(user);
+        return user;
+    }
+
 }

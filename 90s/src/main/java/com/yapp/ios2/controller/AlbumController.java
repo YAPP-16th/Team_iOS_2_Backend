@@ -3,7 +3,7 @@ package com.yapp.ios2.controller;
 import com.yapp.ios2.dto.AlbumDto;
 import com.yapp.ios2.dto.AlbumOwnerDto;
 import com.yapp.ios2.dto.BooleanResultDto;
-import com.yapp.ios2.dto.UserUidDto;
+import com.yapp.ios2.dto.UserDto;
 import com.yapp.ios2.service.IAlbumService;
 import com.yapp.ios2.vo.Album;
 import com.yapp.ios2.vo.AlbumOwner;
@@ -59,7 +59,7 @@ public class AlbumController {
     }
 
     @PostMapping("/get")
-    public List<Album> getAlbums(@RequestBody UserUidDto user){
+    public List<Album> getAlbums(@RequestBody UserDto user){
         List<Album> albums = albumService.getAlbums(user.getUserUid());
         return albums;
     }
