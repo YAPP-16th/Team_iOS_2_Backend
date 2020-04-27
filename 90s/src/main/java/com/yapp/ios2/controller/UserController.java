@@ -60,7 +60,7 @@ public class UserController {
             "<br>리턴값은 JWT 입니다.")
     @PostMapping(value = "/join")
     @ResponseBody
-    public String join(@RequestBody JoinDto joinInfo) {
+    public ResponseDto.JwtDto join(@RequestBody JoinDto joinInfo) {
 
         String jwt;
         User newUser;
@@ -73,7 +73,9 @@ public class UserController {
 
         jwt = jwtProvider.createToken(newUser.getUid().toString(), newUser.getRoles());
 
-        return jwt;
+        ResponseDto.JwtDto jwtDto = new ResponseDto.JwtDto();
+        jwtDto.setJwt(jwt);
+        return jwtDto;
     }
 
     @ApiOperation(value = "로그인", notes = "" +
@@ -85,7 +87,7 @@ public class UserController {
             "<br>리턴값은 JWT 입니다.")
     @PostMapping(value = "/login")
     @ResponseBody
-    public String login(@RequestBody LoginDto loginInfo){
+    public ResponseDto.JwtDto login(@RequestBody LoginDto loginInfo){
 
         String jwt = null;
 
@@ -110,7 +112,10 @@ public class UserController {
             }
         }
 
-        return jwt;
+        ResponseDto.JwtDto jwtDto = new ResponseDto.JwtDto();
+        jwtDto.setJwt(jwt);
+
+        return jwtDto;
     }
 
     @ApiOperation(value = "이메일 체크", notes = "" +
