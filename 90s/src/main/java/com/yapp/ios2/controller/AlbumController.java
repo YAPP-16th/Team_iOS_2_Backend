@@ -3,14 +3,8 @@ package com.yapp.ios2.controller;
 import com.yapp.ios2.dto.AlbumDto;
 import com.yapp.ios2.dto.AlbumOwnerDto;
 import com.yapp.ios2.dto.BooleanResultDto;
-<<<<<<< HEAD
-import com.yapp.ios2.dto.UserUidDto;
 import com.yapp.ios2.service.AlbumService;
 import com.yapp.ios2.service.UserService;
-=======
-import com.yapp.ios2.dto.UserDto;
-import com.yapp.ios2.service.IAlbumService;
->>>>>>> dev
 import com.yapp.ios2.vo.Album;
 import com.yapp.ios2.vo.AlbumOwner;
 import io.swagger.annotations.Api;
