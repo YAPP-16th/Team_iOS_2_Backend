@@ -1,5 +1,6 @@
 package com.yapp.ios2.dto;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,15 +11,26 @@ import java.time.format.DateTimeFormatter;
 @Setter
 public class AlbumDto {
 
-    private Integer photoLimit;
-    private String name;
-    private Long layoutUid;
+    @Data
+    public static class AlbumInfoDto{
 
-    private LocalDate endDate;
+        private Integer photoLimit;
+        private String name;
+        private Long layoutUid;
+        private LocalDate endDate;
 
-    public void setEndDate(String stringEndDate) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
-        this.endDate = LocalDate.parse(stringEndDate, formatter);;
+        public void setEndDate(String stringEndDate) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
+            this.endDate = LocalDate.parse(stringEndDate, formatter);
+        }
+
+    }
+
+    @Data
+    public static class AlbumOwnerDto {
+        private Long albumUid;
+        private Long userUid;
+        private String role;
     }
 
 }

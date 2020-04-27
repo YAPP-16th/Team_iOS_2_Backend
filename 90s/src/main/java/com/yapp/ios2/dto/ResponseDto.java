@@ -9,4 +9,9 @@ public class ResponseDto {
         private String jwt;
     }
 
+    @Data
+    public static class BooleanDto{
+        private Boolean result;
+    }
+
 }

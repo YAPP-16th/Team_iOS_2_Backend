@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @Service
-public class PhotoService implements IPhotoService {
+public class PhotoService{
 
     @Autowired
     private S3Service s3Service;
@@ -17,8 +17,7 @@ public class PhotoService implements IPhotoService {
     @Autowired
     private PhotoRepository photoRepository;
 
-    @Override
-    public String upload(MultipartFile photo, Integer albumUid, Integer photoOrder, Integer uploader) throws IOException{
+    public String upload(MultipartFile photo, Long albumUid, Integer photoOrder, Long uploader) throws IOException{
 
         String fileName = albumUid.toString() + "/" + photoOrder;
         String url = s3Service.upload(photo, fileName);
@@ -35,7 +34,6 @@ public class PhotoService implements IPhotoService {
         return url;
     }
 
-    @Override
     public byte[] download(Long album, Long photo) throws IOException {
 
         byte[] file = s3Service.download(album, photo.toString());

@@ -125,9 +125,9 @@ public class UserController {
             "<br>리턴합니다.")
     @PostMapping("/checkEmail")
     @ResponseBody
-    public BooleanResultDto duplicatedEmail(@RequestBody DuplicatedEmailDto duplicatedEmailDto){
+    public ResponseDto.BooleanDto duplicatedEmail(@RequestBody DuplicatedEmailDto duplicatedEmailDto){
 
-        BooleanResultDto booleanResultDto = new BooleanResultDto();
+        ResponseDto.BooleanDto booleanResultDto = new ResponseDto.BooleanDto();
 
         boolean duplicated = userService.checkEmail(duplicatedEmailDto.getEmail());
 

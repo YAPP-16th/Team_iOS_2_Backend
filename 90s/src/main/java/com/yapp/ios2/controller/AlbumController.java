@@ -1,8 +1,7 @@
 package com.yapp.ios2.controller;
 
 import com.yapp.ios2.dto.AlbumDto;
-import com.yapp.ios2.dto.AlbumOwnerDto;
-import com.yapp.ios2.dto.BooleanResultDto;
+import com.yapp.ios2.dto.ResponseDto;
 import com.yapp.ios2.service.AlbumService;
 import com.yapp.ios2.service.UserService;
 import com.yapp.ios2.vo.Album;
@@ -34,7 +33,7 @@ public class AlbumController {
 
     @PostMapping("/create")
     @ResponseBody
-    public Album createAlbum(@AuthenticationPrincipal UserDetails user, @RequestBody AlbumDto albumInfo){
+    public Album createAlbum(@AuthenticationPrincipal UserDetails user, @RequestBody AlbumDto.AlbumInfoDto albumInfo){
 
         Album newAlbum = albumService.create(
                 albumInfo.getName(),
@@ -48,13 +47,13 @@ public class AlbumController {
     }
 
     @PostMapping("/addUser")
-    public BooleanResultDto addUser(@RequestBody AlbumOwnerDto albumOwnerInfo){
+    public ResponseDto.BooleanDto addUser(@RequestBody AlbumDto.AlbumOwnerDto albumOwnerInfo){
         AlbumOwner albumOwner = albumService.addOwner(
                 albumOwnerInfo.getAlbumUid(),
                 albumOwnerInfo.getUserUid(),
                 albumOwnerInfo.getRole()
         );
-        BooleanResultDto result = new BooleanResultDto();
+        ResponseDto.BooleanDto result = new ResponseDto.BooleanDto();
         if(albumOwner != null){
             result.setResult(true);
         }else{

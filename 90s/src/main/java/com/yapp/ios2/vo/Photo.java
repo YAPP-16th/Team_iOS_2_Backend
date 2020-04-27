@@ -34,12 +34,12 @@ public class Photo {
     private LocalDateTime updated_at;
 
     @Column(name="uploader")
-    private Integer uploader;
+    private Long uploader;
 
     @Column(name="album_uid")
-    private Integer albumUid;
+    private Long albumUid;
 
-    public Photo(String url, Integer photoOrder, Integer uploader, Integer albumUid) {
+    public Photo(String url, Integer photoOrder, Long uploader, Long albumUid) {
         this.url = url;
         this.photoOrder = photoOrder;
         this.uploader = uploader;

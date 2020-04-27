@@ -1,7 +1,8 @@
 package com.yapp.ios2.controller;
 
 import com.yapp.ios2.dto.PhotoDto;
-import com.yapp.ios2.service.IPhotoService;
+import com.yapp.ios2.service.PhotoService;
+import com.yapp.ios2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,14 +10,15 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 public class PhotoController {
 
     @Autowired
-    private IPhotoService photoService;
+    private PhotoService photoService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/photo")
     @ResponseBody
@@ -30,8 +32,8 @@ public class PhotoController {
 
     @PostMapping(value = "/photo/upload")
     @ResponseBody
-    public String upload(@RequestParam(value="image") MultipartFile image, @RequestParam("albumUid") Integer albumUid, @RequestParam("photoOrder") Integer photoOrder, @RequestParam("uploader") Integer uploader) throws IOException {
-        String url = photoService.upload(image, albumUid, photoOrder, uploader);
+    public String upload(@RequestParam(value="image") MultipartFile image, @RequestParam("albumUid") Long albumUid, @RequestParam("photoOrder") Integer photoOrder, @AuthenticationPrincipal UserDetails user) throws IOException {
+        String url = photoService.upload(image, albumUid, photoOrder, userService.getUserByEmail(user.getUsername()).getUid());
 
         return url;
     }
