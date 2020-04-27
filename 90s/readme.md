@@ -10,4 +10,5 @@
 - Docker
 - Twilio
 - Swagger
+- JWT
 - ... 
