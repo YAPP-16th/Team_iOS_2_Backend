@@ -1,8 +1,10 @@
 package com.yapp.ios2.controller;
 
 import com.yapp.ios2.dto.PhotoDto;
+import com.yapp.ios2.dto.ResponseDto;
 import com.yapp.ios2.service.PhotoService;
 import com.yapp.ios2.service.UserService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,7 +13,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
+
+@Api(tags = {"3. Photo"})
 @RestController
+@RequestMapping("/photo/*")
 public class PhotoController {
 
     @Autowired
@@ -20,7 +25,7 @@ public class PhotoController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/photo")
+    @GetMapping("/")
     @ResponseBody
     public String home(@AuthenticationPrincipal UserDetails user){
 
@@ -30,17 +35,20 @@ public class PhotoController {
     }
 
 
-    @PostMapping(value = "/photo/upload")
+    @PostMapping(value = "/upload")
     @ResponseBody
-    public String upload(@RequestParam(value="image") MultipartFile image, @RequestParam("albumUid") Long albumUid, @RequestParam("photoOrder") Integer photoOrder, @AuthenticationPrincipal UserDetails user) throws IOException {
+    public ResponseDto.UrlDto upload(@RequestParam(value="image") MultipartFile image, @RequestParam("albumUid") Long albumUid, @RequestParam("photoOrder") Integer photoOrder, @AuthenticationPrincipal UserDetails user) throws IOException {
         String url = photoService.upload(image, albumUid, photoOrder, userService.getUserByEmail(user.getUsername()).getUid());
 
-        return url;
+        ResponseDto.UrlDto urlDto = new ResponseDto.UrlDto();
+        urlDto.setUrl(url);
+
+        return urlDto;
     }
 
-    @PostMapping(value = "/photo/download")
+    @PostMapping(value = "/download")
     @ResponseBody
-    public byte[] download(@RequestBody PhotoDto photoInfo) throws IOException {
+    public byte[] download(@RequestBody PhotoDto.PhotoInfoDto photoInfo) throws IOException {
 
         byte[] file = photoService.download(photoInfo.getAlbumUid(), photoInfo.getPhotoUid());
 

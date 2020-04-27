@@ -14,4 +14,9 @@ public class ResponseDto {
         private Boolean result;
     }
 
+    @Data
+    public static class UrlDto{
+        private String url;
+    }
+
 }

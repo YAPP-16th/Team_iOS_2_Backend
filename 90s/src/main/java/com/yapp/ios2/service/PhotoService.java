@@ -1,5 +1,6 @@
 package com.yapp.ios2.service;
 
+import com.yapp.ios2.dto.ResponseDto;
 import com.yapp.ios2.repository.PhotoRepository;
 import com.yapp.ios2.vo.Photo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class PhotoService{
 
     public String upload(MultipartFile photo, Long albumUid, Integer photoOrder, Long uploader) throws IOException{
 
-        String fileName = albumUid.toString() + "/" + photoOrder;
+        String fileName = albumUid.toString() + "/" + photoOrder + ".jpeg";
         String url = s3Service.upload(photo, fileName);
 
         Photo newPhoto = Photo.builder()
@@ -31,6 +32,7 @@ public class PhotoService{
 
 
         photoRepository.save(newPhoto);
+
         return url;
     }
 
