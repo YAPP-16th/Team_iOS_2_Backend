@@ -22,7 +22,7 @@ import java.util.List;
 @Component
 public class JwtProvider {
 
-    @Value("${spring.key}")
+    @Value("${spring.secret-key}")
     private String secretKey;
 
     // 토큰 유효시간 20년
