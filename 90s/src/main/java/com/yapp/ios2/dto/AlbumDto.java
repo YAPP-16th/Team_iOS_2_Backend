@@ -12,6 +12,12 @@ import java.time.format.DateTimeFormatter;
 public class AlbumDto {
 
     @Data
+    public static class AlbumUidDto{
+        private Long uid;
+    }
+
+
+    @Data
     public static class AlbumInfoDto{
 
         private Integer photoLimit;

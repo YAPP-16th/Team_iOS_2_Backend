@@ -2,8 +2,10 @@ package com.yapp.ios2.service;
 
 import com.yapp.ios2.repository.AlbumOwnerRepository;
 import com.yapp.ios2.repository.AlbumRepository;
+import com.yapp.ios2.repository.UserRepository;
 import com.yapp.ios2.vo.Album;
 import com.yapp.ios2.vo.AlbumOwner;
+import com.yapp.ios2.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,9 @@ public class AlbumService{
 
     @Autowired
     AlbumRepository albumRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Autowired
     AlbumOwnerRepository albumOwnerRepository;
@@ -63,5 +68,21 @@ public class AlbumService{
         }
 
         return albums;
+    }
+
+    public List<User> getAlbumOwners(Long albumUid){
+
+        List<AlbumOwner> albumOwners = albumOwnerRepository.findByAlbumUid(albumUid);
+
+        List<User> owners = new ArrayList<>();
+
+        for(AlbumOwner owner : albumOwners){
+            owners.add(
+                    userRepository.findById(owner.getUserUid()).get()
+            );
+        }
+
+        return owners;
+
     }
 }
