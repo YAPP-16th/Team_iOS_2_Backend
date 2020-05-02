@@ -190,6 +190,13 @@ public class UserController {
         return jwtDto;
     }
 
+    @GetMapping("/getUserProfile")
+    @ResponseBody
+    public User getProile(@AuthenticationPrincipal UserDetails userDetails){
+        User user = userService.getUserByEmail(userDetails.getUsername());
+        return user;
+    }
+
     @ApiOperation(value = "비밀번호 변경", notes = "" +
             "비밀번호를 변경합니다." +
             "<br>변경할 비밀번호를 보내주세요." +
