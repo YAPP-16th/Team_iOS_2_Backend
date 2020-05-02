@@ -46,7 +46,7 @@ public class PhotoController {
 
     @PostMapping(value = "/upload")
     @ResponseBody
-    public List<Photo> upload(@RequestParam(value="images") MultipartFile[] images, @RequestParam("albumUid") Long albumUid, @AuthenticationPrincipal UserDetails user) throws IOException {
+    public List<Photo> upload(@RequestParam(value="image") MultipartFile[] images, @RequestParam("albumUid") Long albumUid, @AuthenticationPrincipal UserDetails user) throws IOException {
 
         List<Photo> photos = photoService.upload(images, albumUid, userService.getUserByEmail(user.getUsername()).getUid());
 

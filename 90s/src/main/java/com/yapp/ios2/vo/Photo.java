@@ -41,6 +41,11 @@ public class Photo {
     @JoinColumn(name ="albumUid", referencedColumnName="uid")
     private Album album;
 
+
+    public Photo(){
+
+    }
+
 //    public Photo(String url, Integer photoOrder, Long uploader, Long albumUid) {
 //        this.url = url;
 //        this.photoOrder = photoOrder;

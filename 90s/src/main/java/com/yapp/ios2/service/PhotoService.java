@@ -1,10 +1,11 @@
 package com.yapp.ios2.service;
 
-import com.yapp.ios2.dto.ResponseDto;
 import com.yapp.ios2.repository.AlbumRepository;
 import com.yapp.ios2.repository.PhotoRepository;
 import com.yapp.ios2.repository.UserRepository;
+import com.yapp.ios2.vo.Album;
 import com.yapp.ios2.vo.Photo;
+import com.yapp.ios2.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -50,13 +51,23 @@ public class PhotoService{
 
         List<Photo> photoList = new ArrayList<>();
 
-        Integer lastPhotoOrder = photoRepository.findFirstByAlbumOrderByPhotoOrderAsc(albumRepository.findById(albumUid).get()).getPhotoOrder() + 1;
+        Integer lastPhotoOrder = photoRepository.findFirstByAlbumOrderByPhotoOrderAsc(
+                albumRepository.findById(albumUid).get())
+                .orElse(Photo.builder().photoOrder(0).build())
+                .getPhotoOrder();
+
+        Album album = albumRepository.findById(albumUid).get();
+        User user = userRepository.findById(uploader).get();
+
+        System.out.println("lastPhotoOrder");
+        System.out.println(lastPhotoOrder);
+        System.out.println("lastPhotoOrder");
 
         for(MultipartFile photo : photos){
             Photo newPhoto = Photo.builder()
-                    .album(albumRepository.findById(albumUid).get())
+                    .album(album)
                     .photoOrder(lastPhotoOrder++)
-                    .uploader(userRepository.findById(uploader).get())
+                    .uploader(user)
                     .build();
 
             photoRepository.save(newPhoto);
