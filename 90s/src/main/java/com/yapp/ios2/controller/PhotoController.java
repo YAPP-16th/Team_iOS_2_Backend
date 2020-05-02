@@ -6,11 +6,17 @@ import com.yapp.ios2.service.PhotoService;
 import com.yapp.ios2.service.UserService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 
 
@@ -49,10 +55,17 @@ public class PhotoController {
     @PostMapping(value = "/download")
     @ResponseBody
     public byte[] download(@RequestBody PhotoDto.PhotoInfoDto photoInfo) throws IOException {
+//    public ResponseEntity<Resource> download(@RequestBody PhotoDto.PhotoInfoDto photoInfo) throws IOException {
 
-        byte[] file = photoService.download(photoInfo.getAlbumUid(), photoInfo.getPhotoUid());
+        byte[] bytes = photoService.download(photoInfo.getAlbumUid(), photoInfo.getPhotoUid());
 
-        return file;
+        return bytes;
+//        ByteArrayResource resource = new ByteArrayResource(bytes);
+//
+//        return ResponseEntity.ok()
+//                .contentType(MediaType.parseMediaType("application/octet-stream"))
+//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+//                .body(resource);
     }
 
 }
