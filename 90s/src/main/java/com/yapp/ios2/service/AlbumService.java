@@ -1,11 +1,13 @@
 package com.yapp.ios2.service;
 
+import com.yapp.ios2.config.exception.AlbumNotFoundException;
 import com.yapp.ios2.repository.AlbumOwnerRepository;
 import com.yapp.ios2.repository.AlbumRepository;
 import com.yapp.ios2.repository.UserRepository;
 import com.yapp.ios2.vo.Album;
 import com.yapp.ios2.vo.AlbumOwner;
 import com.yapp.ios2.vo.User;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -84,5 +86,13 @@ public class AlbumService{
 
         return owners;
 
+    }
+
+    public void plusCount(Long albumUid){
+        Album album = albumRepository.findById(albumUid).
+                orElseThrow(() -> new AlbumNotFoundException());
+        Integer count = album.getCount();
+        album.setCount(++count);
+        albumRepository.save(album);
     }
 }

@@ -75,4 +75,11 @@ public class AlbumController {
         return albumOwners;
     }
 
+    @GetMapping("/plusCount")
+    public void plusCount(AlbumDto.AlbumUidDto albumUidDto){
+
+        albumService.plusCount(albumUidDto.getUid());
+
+    }
+
 }
