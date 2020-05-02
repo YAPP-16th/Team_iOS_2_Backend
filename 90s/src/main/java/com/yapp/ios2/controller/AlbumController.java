@@ -7,6 +7,7 @@ import com.yapp.ios2.service.UserService;
 import com.yapp.ios2.vo.Album;
 import com.yapp.ios2.vo.AlbumOrder;
 import com.yapp.ios2.vo.AlbumOwner;
+import com.yapp.ios2.vo.User;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -79,7 +80,19 @@ public class AlbumController {
     }
 
     @PostMapping("/changeAlbumOrderStatus")
-    public void changeAlbumOrderStatus(){
+    public void changeAlbumOrderStatus() {
+    }
+
+    @PostMapping("/getAlbumOwners")
+    public List<User> getAlbumOwners(AlbumDto.AlbumUidDto albumUidDto){
+        List<User> albumOwners = albumService.getAlbumOwners(albumUidDto.getUid());
+        return albumOwners;
+    }
+
+    @GetMapping("/plusCount")
+    public void plusCount(AlbumDto.AlbumUidDto albumUidDto){
+
+        albumService.plusCount(albumUidDto.getUid());
 
     }
 

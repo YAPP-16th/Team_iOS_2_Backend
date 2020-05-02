@@ -47,7 +47,7 @@ public class PhotoController {
     @ResponseBody
     public List<ResponseDto.UrlDto> upload(@RequestParam(value="images") MultipartFile[] images, @RequestParam("albumUid") Long albumUid, @RequestParam("photoOrder") Integer photoOrder, @AuthenticationPrincipal UserDetails user) throws IOException {
 
-        List<ResponseDto.UrlDto> urlDtos = new ArrayList<ResponseDto.UrlDto>();
+        List<ResponseDto.UrlDto> urlDtos = new ArrayList();
 
         for(MultipartFile image : images){
             ResponseDto.UrlDto urlDto = new ResponseDto.UrlDto();

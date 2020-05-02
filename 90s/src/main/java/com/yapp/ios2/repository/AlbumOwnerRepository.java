@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface AlbumOwnerRepository extends JpaRepository<AlbumOwner, Long> {
     List<AlbumOwner> findByUserUid(Long userUid);
+    List<AlbumOwner> findByAlbumUid(Long albumUid);
 }
