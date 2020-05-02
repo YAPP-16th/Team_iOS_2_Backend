@@ -71,6 +71,14 @@ public class AlbumService{
         return albumOwner;
     }
 
+    public Album getAlbum(Long albumUid) {
+
+        Album album = albumRepository.findById(albumUid)
+                .orElseThrow(() -> new IllegalArgumentException("Not exist album"));
+
+        return album;
+    }
+
     public List<Album> getAlbums(Long userUid) {
 
         List<AlbumOwner> albumOwners = albumOwnerRepository.findByUserUid(userUid);

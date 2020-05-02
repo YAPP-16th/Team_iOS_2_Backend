@@ -64,10 +64,16 @@ public class AlbumController {
         return result;
     }
 
-    @GetMapping("/get")
+    @GetMapping("/getAlbums")
     public List<Album> getAlbums(@AuthenticationPrincipal UserDetails user){
         List<Album> albums = albumService.getAlbums(userService.getUserByEmail(user.getUsername()).getUid());
         return albums;
+    }
+
+    @PostMapping("/getAlbum")
+    public Album getAlbum(AlbumDto.AlbumUidDto albumUidDto){
+        Album album = albumService.getAlbum(albumUidDto.getUid());
+        return album;
     }
 
     @PostMapping("/createAlbumOrder")
