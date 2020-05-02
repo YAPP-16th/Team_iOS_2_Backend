@@ -18,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Api(tags = {"3. Photo"})
@@ -43,13 +45,19 @@ public class PhotoController {
 
     @PostMapping(value = "/upload")
     @ResponseBody
-    public ResponseDto.UrlDto upload(@RequestParam(value="image") MultipartFile image, @RequestParam("albumUid") Long albumUid, @RequestParam("photoOrder") Integer photoOrder, @AuthenticationPrincipal UserDetails user) throws IOException {
-        String url = photoService.upload(image, albumUid, photoOrder, userService.getUserByEmail(user.getUsername()).getUid());
+    public List<ResponseDto.UrlDto> upload(@RequestParam(value="images") MultipartFile[] images, @RequestParam("albumUid") Long albumUid, @RequestParam("photoOrder") Integer photoOrder, @AuthenticationPrincipal UserDetails user) throws IOException {
 
-        ResponseDto.UrlDto urlDto = new ResponseDto.UrlDto();
-        urlDto.setUrl(url);
+        List<ResponseDto.UrlDto> urlDtos = new ArrayList<ResponseDto.UrlDto>();
 
-        return urlDto;
+        for(MultipartFile image : images){
+            ResponseDto.UrlDto urlDto = new ResponseDto.UrlDto();
+            String url = photoService.upload(image, albumUid, photoOrder, userService.getUserByEmail(user.getUsername()).getUid());
+            urlDto.setUrl(url);
+            urlDtos.add(urlDto);
+        }
+
+
+        return urlDtos;
     }
 
     @PostMapping(value = "/download")

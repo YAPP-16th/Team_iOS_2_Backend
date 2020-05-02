@@ -47,6 +47,9 @@ public class AlbumOrder {
     @Column
     private String message;
 
+    @OneToOne(mappedBy = "album")
+    private Album album;
+
     @ManyToOne
     @JoinColumn(name ="OrderStatusUid", referencedColumnName="uid")
     private AlbumOrderStatus status;

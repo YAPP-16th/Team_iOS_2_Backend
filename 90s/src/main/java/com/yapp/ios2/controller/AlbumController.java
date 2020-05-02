@@ -5,6 +5,7 @@ import com.yapp.ios2.dto.ResponseDto;
 import com.yapp.ios2.service.AlbumService;
 import com.yapp.ios2.service.UserService;
 import com.yapp.ios2.vo.Album;
+import com.yapp.ios2.vo.AlbumOrder;
 import com.yapp.ios2.vo.AlbumOwner;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +67,20 @@ public class AlbumController {
     public List<Album> getAlbums(@AuthenticationPrincipal UserDetails user){
         List<Album> albums = albumService.getAlbums(userService.getUserByEmail(user.getUsername()).getUid());
         return albums;
+    }
+
+    @PostMapping("/createAlbumOrder")
+    public AlbumOrder createAlbumOrder(AlbumDto.AlbumOrderInfo albumOrderInfo){
+
+        AlbumOrder newAlbumOrder = albumService.createAlbumOrder(albumOrderInfo);
+
+        return newAlbumOrder;
+
+    }
+
+    @PostMapping("/changeAlbumOrderStatus")
+    public void changeAlbumOrderStatus(){
+
     }
 
 }
