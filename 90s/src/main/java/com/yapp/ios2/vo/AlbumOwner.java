@@ -19,11 +19,13 @@ public class AlbumOwner {
     @GeneratedValue
     private Long uid;
 
-    @Column
-    private Long albumUid;
+    @ManyToOne
+    @JoinColumn(name ="albumUid", referencedColumnName="uid")
+    private Album album;
 
-    @Column
-    private Long userUid;
+    @ManyToOne
+    @JoinColumn(name ="userUid", referencedColumnName="uid")
+    private User user;
 
     @Column
     private String role;
@@ -34,11 +36,11 @@ public class AlbumOwner {
     @UpdateTimestamp
     private LocalDateTime updated_at;
 
-    public AlbumOwner() {
-    }
-
-    public AlbumOwner(Long userUid, String role) {
-        this.userUid = userUid;
-        this.role = role;
-    }
+//    public AlbumOwner() {
+//    }
+//
+//    public AlbumOwner(Long userUid, String role) {
+//        this.userUid = userUid;
+//        this.role = role;
+//    }
 }

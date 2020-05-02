@@ -4,6 +4,7 @@ import com.yapp.ios2.dto.PhotoDto;
 import com.yapp.ios2.dto.ResponseDto;
 import com.yapp.ios2.service.PhotoService;
 import com.yapp.ios2.service.UserService;
+import com.yapp.ios2.vo.Photo;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -45,19 +46,11 @@ public class PhotoController {
 
     @PostMapping(value = "/upload")
     @ResponseBody
-    public List<ResponseDto.UrlDto> upload(@RequestParam(value="images") MultipartFile[] images, @RequestParam("albumUid") Long albumUid, @RequestParam("photoOrder") Integer photoOrder, @AuthenticationPrincipal UserDetails user) throws IOException {
+    public List<Photo> upload(@RequestParam(value="images") MultipartFile[] images, @RequestParam("albumUid") Long albumUid, @AuthenticationPrincipal UserDetails user) throws IOException {
 
-        List<ResponseDto.UrlDto> urlDtos = new ArrayList();
+        List<Photo> photos = photoService.upload(images, albumUid, userService.getUserByEmail(user.getUsername()).getUid());
 
-        for(MultipartFile image : images){
-            ResponseDto.UrlDto urlDto = new ResponseDto.UrlDto();
-            String url = photoService.upload(image, albumUid, photoOrder, userService.getUserByEmail(user.getUsername()).getUid());
-            urlDto.setUrl(url);
-            urlDtos.add(urlDto);
-        }
-
-
-        return urlDtos;
+        return photos;
     }
 
     @PostMapping(value = "/download")

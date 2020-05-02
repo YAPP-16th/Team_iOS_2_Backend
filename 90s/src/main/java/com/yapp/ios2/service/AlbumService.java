@@ -61,8 +61,8 @@ public class AlbumService{
     public AlbumOwner addOwner(Long albumUid, Long user, String role){
 
         AlbumOwner albumOwner = AlbumOwner.builder()
-                .albumUid(albumUid)
-                .userUid(user)
+                .album(albumRepository.findById(albumUid).get())
+                .user(userRepository.findById(user).get())
                 .role(role)
                 .build();
 
@@ -78,7 +78,7 @@ public class AlbumService{
 
         for(AlbumOwner owner : albumOwners){
             albums.add(
-                    albumRepository.findById(owner.getAlbumUid()).get()
+                    owner.getAlbum()
             );
         }
 
@@ -137,7 +137,7 @@ public class AlbumService{
 
         for(AlbumOwner owner : albumOwners){
             owners.add(
-                    userRepository.findById(owner.getUserUid()).get()
+                    owner.getUser()
             );
         }
 

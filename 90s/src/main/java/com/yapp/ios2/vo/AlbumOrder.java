@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 
 @Builder
 @Entity
-@Table(name = "AlbumOrder")
+@Table(name = "albumOrder")
 @Getter
 @Setter
 @ToString
@@ -47,7 +47,8 @@ public class AlbumOrder {
     @Column
     private String message;
 
-    @OneToOne(mappedBy = "album")
+    @OneToOne
+    @JoinColumn(name ="AlbumUid", referencedColumnName="uid")
     private Album album;
 
     @ManyToOne

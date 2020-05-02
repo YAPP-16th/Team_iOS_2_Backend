@@ -1,7 +1,6 @@
 package com.yapp.ios2.vo;
 
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -33,18 +32,21 @@ public class Photo {
     @UpdateTimestamp
     private LocalDateTime updated_at;
 
-    @Column(name="uploader")
-    private Long uploader;
+    @ManyToOne
+    @JoinColumn(name ="userUid", referencedColumnName="uid")
+    private User uploader;
 
-    @Column(name="album_uid")
-    private Long albumUid;
 
-    public Photo(String url, Integer photoOrder, Long uploader, Long albumUid) {
-        this.url = url;
-        this.photoOrder = photoOrder;
-        this.uploader = uploader;
-        this.albumUid = albumUid;
-    }
+    @ManyToOne
+    @JoinColumn(name ="albumUid", referencedColumnName="uid")
+    private Album album;
+
+//    public Photo(String url, Integer photoOrder, Long uploader, Long albumUid) {
+//        this.url = url;
+//        this.photoOrder = photoOrder;
+//        this.uploader = uploader;
+//        this.albumUid = albumUid;
+//    }
 }
 
 /*
