@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 @Setter
 @ToString
 @AllArgsConstructor
+@NoArgsConstructor
 public class User implements UserDetails {
 
     @Id
@@ -84,7 +85,7 @@ public class User implements UserDetails {
         return true;
     }
 
-    public User(){}
+//    public User(){}
 
     public User(String name, String email, String password, String phone) {
         this.name = name;

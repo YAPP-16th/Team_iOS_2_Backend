@@ -14,12 +14,13 @@ import javax.persistence.Table;
 @Setter
 @ToString
 @AllArgsConstructor
+@NoArgsConstructor
 public class Layout {
 
     @Id
     @GeneratedValue
     private Long uid;
 
-    public Layout() {
-    }
+//    public Layout() {
+//    }
 }

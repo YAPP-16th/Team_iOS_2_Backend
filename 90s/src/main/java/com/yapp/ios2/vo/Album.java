@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @AllArgsConstructor
+@NoArgsConstructor
 public class Album {
 
     @Id
@@ -46,8 +47,8 @@ public class Album {
     @UpdateTimestamp
     private LocalDateTime updated_at;
 
-    public Album() {
-    }
+//    public Album() {
+//    }
 
     public Album(String name, Integer photoLimit, Long layoutUid) {
         this.name = name;

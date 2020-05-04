@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Setter
 @ToString
 @AllArgsConstructor
+@NoArgsConstructor
 public class AlbumOrderStatus {
     @GeneratedValue
     @Id
@@ -18,4 +19,8 @@ public class AlbumOrderStatus {
 
     @Column
     String status;
+
+    public AlbumOrderStatus(String status) {
+        this.status = status;
+    }
 }
