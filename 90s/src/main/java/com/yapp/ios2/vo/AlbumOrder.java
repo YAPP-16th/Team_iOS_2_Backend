@@ -15,6 +15,7 @@ import java.time.format.DateTimeFormatter;
 @Setter
 @ToString
 @AllArgsConstructor
+@NoArgsConstructor
 public class AlbumOrder {
 
     @Id

@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @AllArgsConstructor
+@NoArgsConstructor
 public class AlbumOwner {
     @Id
     @GeneratedValue
@@ -38,7 +39,7 @@ public class AlbumOwner {
 
 //    public AlbumOwner() {
 //    }
-//
+
 //    public AlbumOwner(Long userUid, String role) {
 //        this.userUid = userUid;
 //        this.role = role;

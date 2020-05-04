@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Setter
 @ToString
 @AllArgsConstructor
+@NoArgsConstructor
 public class AlbumOrderPaperType {
     @GeneratedValue
     @Id

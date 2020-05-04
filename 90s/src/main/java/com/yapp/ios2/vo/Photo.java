@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @AllArgsConstructor
+@NoArgsConstructor
 public class Photo {
 
     @Id
@@ -42,9 +43,8 @@ public class Photo {
     private Album album;
 
 
-    public Photo(){
-
-    }
+//    public Photo(){
+//    }
 
 //    public Photo(String url, Integer photoOrder, Long uploader, Long albumUid) {
 //        this.url = url;
