@@ -36,3 +36,6 @@ application.properties
 *.jar
 out/
 target/
+
+logs/*
+*.log

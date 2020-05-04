@@ -51,17 +51,13 @@ public class PhotoService{
 
         List<Photo> photoList = new ArrayList<>();
 
-        Integer lastPhotoOrder = photoRepository.findFirstByAlbumOrderByPhotoOrderAsc(
+        Integer lastPhotoOrder = photoRepository.findFirstByAlbumOrderByPhotoOrderDesc(
                 albumRepository.findById(albumUid).get())
-                .orElse(Photo.builder().photoOrder(0).build())
-                .getPhotoOrder();
+                .orElse(Photo.builder().photoOrder(-1).build())
+                .getPhotoOrder() + 1;
 
         Album album = albumRepository.findById(albumUid).get();
         User user = userRepository.findById(uploader).get();
-
-        System.out.println("lastPhotoOrder");
-        System.out.println(lastPhotoOrder);
-        System.out.println("lastPhotoOrder");
 
         for(MultipartFile photo : photos){
             Photo newPhoto = Photo.builder()

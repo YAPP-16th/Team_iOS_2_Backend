@@ -9,4 +9,5 @@ import java.util.Optional;
 
 public interface PhotoRepository extends JpaRepository<Photo, Long> {
     Optional<Photo> findFirstByAlbumOrderByPhotoOrderAsc(Album album);
+    Optional<Photo> findFirstByAlbumOrderByPhotoOrderDesc(Album album);
 }
