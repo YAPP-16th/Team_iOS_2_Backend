@@ -2,8 +2,10 @@ package com.yapp.ios2.config;
 
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.FilterChain;
@@ -13,6 +15,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+@Slf4j
 @RequiredArgsConstructor
 public class JwtFilter extends GenericFilterBean {
 
@@ -21,6 +24,8 @@ public class JwtFilter extends GenericFilterBean {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         // 헤더에서 JWT 를 받아옵니다.
+        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        log.info(httpServletRequest.getRequestURI() + " " + httpServletRequest.getRemoteUser());
         String token = jwtProvider.resolveToken((HttpServletRequest) request);
         // 유효한 토큰인지 확인합니다.
         if (token != null && jwtProvider.validateToken(token)) {

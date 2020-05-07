@@ -1,6 +1,6 @@
 FROM java:8
 
-VOLUME /tmp
+VOLUME ["/tmp", "/logs"]
 
 EXPOSE 8080
 
