@@ -1,9 +1,9 @@
 package com.yapp.ios2.controller;
 
 import com.yapp.ios2.dto.*;
+import com.yapp.ios2.service.AlbumService;
 import com.yapp.ios2.service.SnsService;
 import com.yapp.ios2.config.JwtProvider;
-import com.yapp.ios2.service.KakaoService;
 import com.yapp.ios2.service.UserService;
 import com.yapp.ios2.vo.User;
 import io.swagger.annotations.Api;
@@ -13,7 +13,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
 import java.util.Optional;
 
 @Api(tags = {"1. User"})
@@ -23,9 +22,10 @@ public class UserController {
 
     @Autowired
     UserService userService;
-
     @Autowired
     SnsService snsService;
+    @Autowired
+    AlbumService albumService;
 
 //    KakaoService kakaoService;
 
@@ -161,7 +161,7 @@ public class UserController {
     )
     @PostMapping("/updateEmail")
     @ResponseBody
-    public ResponseDto.JwtDto updateEmail(@AuthenticationPrincipal UserDetails userDetails, @RequestBody UserDto userDto){
+    public ResponseDto.JwtDto updateEmail(@AuthenticationPrincipal UserDetails userDetails, @RequestBody UserDto.UserInfo userDto){
 
         User user = userService.getUserByEmail(userDetails.getUsername());
         userService.updateEmail(user, userDto.getEmail());
@@ -179,7 +179,7 @@ public class UserController {
     )
     @PostMapping("/updatePhoneNumber")
     @ResponseBody
-    public ResponseDto.JwtDto updatePhoneNumber(@AuthenticationPrincipal UserDetails userDetails, @RequestBody UserDto userDto){
+    public ResponseDto.JwtDto updatePhoneNumber(@AuthenticationPrincipal UserDetails userDetails, @RequestBody UserDto.UserInfo userDto){
 
         User user = userService.getUserByEmail(userDetails.getUsername());
         userService.updatePhoneNumber(user, userDto.getPhoneNum());
@@ -192,9 +192,13 @@ public class UserController {
 
     @GetMapping("/getUserProfile")
     @ResponseBody
-    public User getProile(@AuthenticationPrincipal UserDetails userDetails){
-        User user = userService.getUserByEmail(userDetails.getUsername());
-        return user;
+    public UserDto.UserProfile getProile(@AuthenticationPrincipal UserDetails userDetails){
+        UserDto.UserProfile userProfile = new UserDto.UserProfile();
+        userProfile.setUser(userService.getUserByEmail(userDetails.getUsername()));
+        userProfile.setAlbumTotalCount(albumService.getAlbums(userProfile.getUser().getUid()).size());
+
+
+        return userProfile;
     }
 
     @ApiOperation(value = "비밀번호 변경", notes = "" +
@@ -204,7 +208,7 @@ public class UserController {
     )
     @PostMapping("/updatePassword")
     @ResponseBody
-    public ResponseDto.JwtDto updatePassword(@RequestBody UserDto userDto, @AuthenticationPrincipal UserDetails userDetails){
+    public ResponseDto.JwtDto updatePassword(@RequestBody UserDto.UserInfo userDto, @AuthenticationPrincipal UserDetails userDetails){
 
         User user = userService.getUserByEmail(userDetails.getUsername());
         userService.updatePassword(user, userDto.getPassword());
