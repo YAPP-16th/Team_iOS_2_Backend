@@ -66,7 +66,7 @@ public class AlbumController {
 
     @GetMapping("/getAlbums")
     public List<Album> getAlbums(@AuthenticationPrincipal UserDetails user){
-        List<Album> albums = albumService.getAlbums(userService.getUserByEmail(user.getUsername()).getUid());
+        List<Album> albums = albumService.getAlbumsByUser(userService.getUserByEmail(user.getUsername()));
         return albums;
     }
 

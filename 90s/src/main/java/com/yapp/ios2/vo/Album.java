@@ -35,6 +35,9 @@ public class Album {
     @Column(columnDefinition = "integer default 0")
     private Integer count;
 
+    @Column(columnDefinition = "varchar(45) default 'ready'")
+    private String orderStatus;
+
     @Column
     private LocalDate endDate;
 
