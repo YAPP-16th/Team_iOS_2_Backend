@@ -195,8 +195,8 @@ public class UserController {
     public UserDto.UserProfile getProile(@AuthenticationPrincipal UserDetails userDetails){
         UserDto.UserProfile userProfile = new UserDto.UserProfile();
         userProfile.setUser(userService.getUserByEmail(userDetails.getUsername()));
-        userProfile.setAlbumTotalCount(albumService.getAlbums(userProfile.getUser().getUid()).size());
-
+        userProfile.setAlbumTotalCount(albumService.getAlbumsByUser(userProfile.getUser()).size());
+        userProfile.setAlbumPrintingCount(albumService.getAlbumsNotReady(userProfile.getUser()).size());
 
         return userProfile;
     }
