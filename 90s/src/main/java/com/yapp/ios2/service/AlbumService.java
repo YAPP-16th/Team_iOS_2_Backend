@@ -79,16 +79,16 @@ public class AlbumService{
         return album;
     }
 
-    public List<Album> getAlbums(Long userUid) {
+    public List<Album> getAlbumsNotReady(User user){
+        List<Album> albums = albumRepository.findByOrderStatus(user, "ready");
+        return albums;
 
-        List<AlbumOwner> albumOwners = albumOwnerRepository.findByUserUid(userUid);
-        List<Album> albums = new ArrayList<>();
 
-        for(AlbumOwner owner : albumOwners){
-            albums.add(
-                    owner.getAlbum()
-            );
-        }
+    }
+
+    public List<Album> getAlbumsByUser(User user) {
+
+        List<Album> albums = albumRepository.findByUser(user);
 
         return albums;
     }
@@ -152,6 +152,8 @@ public class AlbumService{
         return owners;
 
     }
+
+
 
     public void plusCount(Long albumUid){
         Album album = albumRepository.findById(albumUid).
