@@ -1,6 +1,7 @@
 package com.yapp.ios2.controller;
 
 import com.yapp.ios2.dto.AlbumDto;
+import com.yapp.ios2.dto.AlbumOwnerDto;
 import com.yapp.ios2.dto.ResponseDto;
 import com.yapp.ios2.service.AlbumService;
 import com.yapp.ios2.service.UserService;
@@ -64,6 +65,20 @@ public class AlbumController {
         return result;
     }
 
+    @PostMapping("/removeUser")
+    public ResponseDto.BooleanDto removeUser(@RequestBody AlbumDto.AlbumOwnerDto albumOwnerInfo){
+        albumService.removeOwner(
+                albumOwnerInfo.getAlbumUid(),
+                albumOwnerInfo.getUserUid()
+        );
+        ResponseDto.BooleanDto result = new ResponseDto.BooleanDto();
+        result.setResult(true);
+
+        return result;
+    }
+
+
+
     @GetMapping("/getAlbums")
     public List<Album> getAlbums(@AuthenticationPrincipal UserDetails user){
         List<Album> albums = albumService.getAlbumsByUser(userService.getUserByEmail(user.getUsername()));
@@ -90,13 +105,13 @@ public class AlbumController {
     }
 
     @PostMapping("/getAlbumOwners")
-    public List<User> getAlbumOwners(AlbumDto.AlbumUidDto albumUidDto){
-        List<User> albumOwners = albumService.getAlbumOwners(albumUidDto.getUid());
+    public List<AlbumOwnerDto.AlbumOwnerInfo> getAlbumOwners(@RequestBody AlbumDto.AlbumUidDto albumUidDto){
+        List<AlbumOwnerDto.AlbumOwnerInfo> albumOwners = albumService.getAlbumOwners(albumUidDto.getUid());
         return albumOwners;
     }
 
     @GetMapping("/plusCount")
-    public void plusCount(AlbumDto.AlbumUidDto albumUidDto){
+    public void plusCount(@RequestBody AlbumDto.AlbumUidDto albumUidDto){
 
         albumService.plusCount(albumUidDto.getUid());
 

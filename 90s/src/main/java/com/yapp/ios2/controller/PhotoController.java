@@ -1,5 +1,6 @@
 package com.yapp.ios2.controller;
 
+import com.yapp.ios2.dto.AlbumDto;
 import com.yapp.ios2.dto.PhotoDto;
 import com.yapp.ios2.dto.ResponseDto;
 import com.yapp.ios2.service.PhotoService;
@@ -67,6 +68,15 @@ public class PhotoController {
 //                .contentType(MediaType.parseMediaType("application/octet-stream"))
 //                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
 //                .body(resource);
+    }
+
+    @PostMapping(value = "/getPhotos")
+    @ResponseBody
+    public List<PhotoDto.PhotoInfoDto> getPhotos(@RequestBody AlbumDto.AlbumUidDto albumUidDto){
+
+        List<PhotoDto.PhotoInfoDto> photoInfos = photoService.getPhotos(albumUidDto.getUid());
+
+        return photoInfos;
     }
 
 }
