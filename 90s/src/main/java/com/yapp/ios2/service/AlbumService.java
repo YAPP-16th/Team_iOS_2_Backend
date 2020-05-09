@@ -72,6 +72,17 @@ public class AlbumService{
         return albumOwner;
     }
 
+    public void removeOwner(Long albumUid, Long user){
+
+        albumOwnerRepository.delete(
+                albumOwnerRepository.findByAlbumAndUser(
+                        albumRepository.findById(albumUid).get(),
+                        userRepository.findById(user).get()
+                )
+        );
+
+    }
+
     public Album getAlbum(Long albumUid) {
 
         Album album = albumRepository.findById(albumUid)

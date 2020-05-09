@@ -67,17 +67,13 @@ public class AlbumController {
 
     @PostMapping("/removeUser")
     public ResponseDto.BooleanDto removeUser(@RequestBody AlbumDto.AlbumOwnerDto albumOwnerInfo){
-        AlbumOwner albumOwner = albumService.addOwner(
+        albumService.removeOwner(
                 albumOwnerInfo.getAlbumUid(),
-                albumOwnerInfo.getUserUid(),
-                albumOwnerInfo.getRole()
+                albumOwnerInfo.getUserUid()
         );
         ResponseDto.BooleanDto result = new ResponseDto.BooleanDto();
-        if(albumOwner != null){
-            result.setResult(true);
-        }else{
-            result.setResult(false);
-        }
+        result.setResult(true);
+
         return result;
     }
 
