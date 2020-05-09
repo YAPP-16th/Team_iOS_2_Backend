@@ -65,6 +65,24 @@ public class AlbumController {
         return result;
     }
 
+    @PostMapping("/removeUser")
+    public ResponseDto.BooleanDto removeUser(@RequestBody AlbumDto.AlbumOwnerDto albumOwnerInfo){
+        AlbumOwner albumOwner = albumService.addOwner(
+                albumOwnerInfo.getAlbumUid(),
+                albumOwnerInfo.getUserUid(),
+                albumOwnerInfo.getRole()
+        );
+        ResponseDto.BooleanDto result = new ResponseDto.BooleanDto();
+        if(albumOwner != null){
+            result.setResult(true);
+        }else{
+            result.setResult(false);
+        }
+        return result;
+    }
+
+
+
     @GetMapping("/getAlbums")
     public List<Album> getAlbums(@AuthenticationPrincipal UserDetails user){
         List<Album> albums = albumService.getAlbumsByUser(userService.getUserByEmail(user.getUsername()));
