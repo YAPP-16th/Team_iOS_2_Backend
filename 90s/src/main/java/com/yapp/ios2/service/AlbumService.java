@@ -1,6 +1,7 @@
 package com.yapp.ios2.service;
 
 import com.yapp.ios2.dto.AlbumDto;
+import com.yapp.ios2.dto.AlbumOwnerDto;
 import com.yapp.ios2.repository.*;
 import com.yapp.ios2.config.exception.AlbumNotFoundException;
 import com.yapp.ios2.repository.AlbumOwnerRepository;
@@ -137,19 +138,15 @@ public class AlbumService{
 
 
 
-    public List<User> getAlbumOwners(Long albumUid){
+    public List<AlbumOwnerDto.AlbumOwnerInfo> getAlbumOwners(Long albumUid){
+
+        List<User> owners = userRepository.findUsersByAlbum(albumRepository.findById(albumUid).get());
 
         List<AlbumOwner> albumOwners = albumOwnerRepository.findByAlbumUid(albumUid);
 
-        List<User> owners = new ArrayList<>();
+        List<AlbumOwnerDto.AlbumOwnerInfo> albumOwnerInfos = AlbumOwnerDto.convertFromAlbumOwnerListToAlbumOwnerInfoList(albumOwners);
 
-        for(AlbumOwner owner : albumOwners){
-            owners.add(
-                    owner.getUser()
-            );
-        }
-
-        return owners;
+        return albumOwnerInfos;
 
     }
 
