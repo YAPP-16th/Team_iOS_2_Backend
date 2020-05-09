@@ -1,5 +1,6 @@
 package com.yapp.ios2.service;
 
+import com.yapp.ios2.dto.PhotoDto;
 import com.yapp.ios2.repository.AlbumRepository;
 import com.yapp.ios2.repository.PhotoRepository;
 import com.yapp.ios2.repository.UserRepository;
@@ -85,5 +86,12 @@ public class PhotoService{
         byte[] file = s3Service.download(album, photo.toString());
 
         return file;
+    }
+
+    public List<PhotoDto.PhotoInfoDto> getPhotos(Long albumUid){
+        List<PhotoDto.PhotoInfoDto> photoInfos =
+                PhotoDto.convertFromPhotoListToPhotoInfoList(
+                        photoRepository.findByAlbum(albumRepository.findById(albumUid).get()));
+        return photoInfos;
     }
 }
