@@ -1,5 +1,6 @@
 package com.yapp.ios2.dto;
 
+import com.yapp.ios2.vo.Album;
 import com.yapp.ios2.vo.AlbumOrderPaperType;
 import com.yapp.ios2.vo.AlbumOrderPostType;
 import lombok.Data;
@@ -24,7 +25,7 @@ public class AlbumDto {
 
     @Data
     public static class AlbumInfoDto{
-
+        private Long albumUid;
         private Integer photoLimit;
         private String name;
         private Long layoutUid;
@@ -35,13 +36,14 @@ public class AlbumDto {
             this.endDate = LocalDate.parse(stringEndDate, formatter);
         }
 
-    }
+        public AlbumInfoDto(Album album){
+            this.albumUid = album.getUid();
+            this.photoLimit = album.getPhotoLimit();
+            this.name = album.getName();
+            this.layoutUid = album.getLayoutUid();
+            this.endDate = album.getEndDate();
+        }
 
-    @Data
-    public static class AlbumOwnerDto {
-        private Long albumUid;
-        private Long userUid;
-        private String role;
     }
 
     @Data

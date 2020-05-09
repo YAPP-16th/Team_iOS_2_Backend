@@ -88,10 +88,8 @@ public class PhotoService{
         return file;
     }
 
-    public List<PhotoDto.PhotoInfoDto> getPhotos(Long albumUid){
-        List<PhotoDto.PhotoInfoDto> photoInfos =
-                PhotoDto.convertFromPhotoListToPhotoInfoList(
-                        photoRepository.findByAlbum(albumRepository.findById(albumUid).get()));
-        return photoInfos;
+    public List<Photo> getPhotos(Long albumUid){
+        List<Photo> photos = photoRepository.findByAlbum(albumRepository.findById(albumUid).get());
+        return photos;
     }
 }

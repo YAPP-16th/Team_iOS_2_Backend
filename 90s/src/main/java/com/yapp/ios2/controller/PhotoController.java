@@ -74,9 +74,11 @@ public class PhotoController {
     @ResponseBody
     public List<PhotoDto.PhotoInfoDto> getPhotos(@RequestBody AlbumDto.AlbumUidDto albumUidDto){
 
-        List<PhotoDto.PhotoInfoDto> photoInfos = photoService.getPhotos(albumUidDto.getUid());
+        List<PhotoDto.PhotoInfoDto> photos = PhotoDto.convertFromPhotoListToPhotoInfoList(
+                photoService.getPhotos(albumUidDto.getUid())
+        );
 
-        return photoInfos;
+        return photos;
     }
 
 }

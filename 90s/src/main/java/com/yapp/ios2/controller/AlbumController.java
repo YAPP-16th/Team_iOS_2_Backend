@@ -50,12 +50,8 @@ public class AlbumController {
     }
 
     @PostMapping("/addUser")
-    public ResponseDto.BooleanDto addUser(@RequestBody AlbumDto.AlbumOwnerDto albumOwnerInfo){
-        AlbumOwner albumOwner = albumService.addOwner(
-                albumOwnerInfo.getAlbumUid(),
-                albumOwnerInfo.getUserUid(),
-                albumOwnerInfo.getRole()
-        );
+    public ResponseDto.BooleanDto addUser(@RequestBody AlbumOwnerDto.AlbumOwnerInfo albumOwnerInfo){
+        AlbumOwner albumOwner = albumService.addOwner(albumOwnerInfo.getAlbumUid(), albumOwnerInfo.getUserUid(), albumOwnerInfo.getRole());
         ResponseDto.BooleanDto result = new ResponseDto.BooleanDto();
         if(albumOwner != null){
             result.setResult(true);
@@ -66,7 +62,7 @@ public class AlbumController {
     }
 
     @PostMapping("/removeUser")
-    public ResponseDto.BooleanDto removeUser(@RequestBody AlbumDto.AlbumOwnerDto albumOwnerInfo){
+    public ResponseDto.BooleanDto removeUser(@RequestBody AlbumOwnerDto.AlbumOwnerInfo albumOwnerInfo){
         albumService.removeOwner(
                 albumOwnerInfo.getAlbumUid(),
                 albumOwnerInfo.getUserUid()

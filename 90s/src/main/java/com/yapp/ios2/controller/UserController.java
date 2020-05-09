@@ -222,4 +222,15 @@ public class UserController {
 
         return jwtDto;
     }
+
+    @GetMapping("/getDefaultUser")
+    @ResponseBody
+    public ResponseDto.JwtDto getDefaultUser(){
+        User user = userService.getUserByEmail("tryer@90s.com");
+        String jwt = jwtProvider.createToken(user.getUid().toString(), user.getRoles());
+        ResponseDto.JwtDto jwtDto = new ResponseDto.JwtDto();
+        jwtDto.setJwt(jwt);
+
+        return jwtDto;
+    }
 }
