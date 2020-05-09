@@ -161,7 +161,7 @@ public class UserController {
     )
     @PostMapping("/updateEmail")
     @ResponseBody
-    public ResponseDto.JwtDto updateEmail(@AuthenticationPrincipal UserDetails userDetails, @RequestBody UserDto.UserInfo userDto){
+    public ResponseDto.JwtDto updateEmail(@AuthenticationPrincipal UserDetails userDetails, @RequestBody UserDto.AccountInfo userDto){
 
         User user = userService.getUserByEmail(userDetails.getUsername());
         userService.updateEmail(user, userDto.getEmail());
@@ -179,7 +179,7 @@ public class UserController {
     )
     @PostMapping("/updatePhoneNumber")
     @ResponseBody
-    public ResponseDto.JwtDto updatePhoneNumber(@AuthenticationPrincipal UserDetails userDetails, @RequestBody UserDto.UserInfo userDto){
+    public ResponseDto.JwtDto updatePhoneNumber(@AuthenticationPrincipal UserDetails userDetails, @RequestBody UserDto.AccountInfo userDto){
 
         User user = userService.getUserByEmail(userDetails.getUsername());
         userService.updatePhoneNumber(user, userDto.getPhoneNum());
@@ -193,10 +193,13 @@ public class UserController {
     @GetMapping("/getUserProfile")
     @ResponseBody
     public UserDto.UserProfile getProile(@AuthenticationPrincipal UserDetails userDetails){
+        User user = userService.getUserByEmail(userDetails.getUsername());
+
         UserDto.UserProfile userProfile = new UserDto.UserProfile();
-        userProfile.setUser(userService.getUserByEmail(userDetails.getUsername()));
-        userProfile.setAlbumTotalCount(albumService.getAlbumsByUser(userProfile.getUser()).size());
-        userProfile.setAlbumPrintingCount(albumService.getAlbumsNotReady(userProfile.getUser()).size());
+
+        userProfile.setUserInfo(user);
+        userProfile.setAlbumTotalCount(albumService.getAlbumsByUser(user).size());
+        userProfile.setAlbumPrintingCount(albumService.getAlbumsNotReady(user).size());
 
         return userProfile;
     }
@@ -208,7 +211,7 @@ public class UserController {
     )
     @PostMapping("/updatePassword")
     @ResponseBody
-    public ResponseDto.JwtDto updatePassword(@RequestBody UserDto.UserInfo userDto, @AuthenticationPrincipal UserDetails userDetails){
+    public ResponseDto.JwtDto updatePassword(@RequestBody UserDto.AccountInfo userDto, @AuthenticationPrincipal UserDetails userDetails){
 
         User user = userService.getUserByEmail(userDetails.getUsername());
         userService.updatePassword(user, userDto.getPassword());

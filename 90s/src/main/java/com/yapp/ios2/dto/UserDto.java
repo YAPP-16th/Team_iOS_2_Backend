@@ -10,7 +10,7 @@ import lombok.Setter;
 public class UserDto {
 
     @Data
-    public static class UserInfo{
+    public static class AccountInfo {
         private Long userUid;
         private String email;
         private String phoneNum;
@@ -18,11 +18,28 @@ public class UserDto {
     }
 
     @Data
+    public static class UserInfo{
+        private String email;
+        private String name;
+        private String phoneNum;
+
+        public UserInfo(User user){
+            this.email = user.getEmail();
+            this.name = user.getName();
+            this.phoneNum = user.getPhone();
+        }
+    }
+
+    @Data
     public static class UserProfile{
         private Integer albumTotalCount;
         private Integer albumPrintingCount;
 
-        private User user;
+        private UserInfo userInfo;
+
+        public void setUserInfo(User user){
+            this.userInfo = new UserInfo(user);
+        }
     }
 
 
