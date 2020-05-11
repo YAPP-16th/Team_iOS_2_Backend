@@ -58,7 +58,6 @@ public class PhotoController {
     @ResponseBody
     public byte[] download(@RequestBody PhotoDto.PhotoInfoDto photoInfo) throws IOException {
 //    public ResponseEntity<Resource> download(@RequestBody PhotoDto.PhotoInfoDto photoInfo) throws IOException {
-
         byte[] bytes = photoService.download(photoInfo.getAlbumUid(), photoInfo.getPhotoUid());
 
         return bytes;

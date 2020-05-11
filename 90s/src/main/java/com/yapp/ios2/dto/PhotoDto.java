@@ -2,9 +2,7 @@ package com.yapp.ios2.dto;
 
 import com.yapp.ios2.vo.AlbumOwner;
 import com.yapp.ios2.vo.Photo;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +10,10 @@ import java.util.List;
 @Getter
 @Setter
 public class PhotoDto {
+
     @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class PhotoInfoDto{
         private Long photoUid;
         private Long albumUid;
