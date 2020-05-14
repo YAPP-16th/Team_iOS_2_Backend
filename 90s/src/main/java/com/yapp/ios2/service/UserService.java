@@ -1,6 +1,9 @@
 package com.yapp.ios2.service;
 
+import com.yapp.ios2.dto.UserDto;
+import com.yapp.ios2.repository.NoticeAgreementRepository;
 import com.yapp.ios2.repository.UserRepository;
+import com.yapp.ios2.vo.NoticeAgreement;
 import com.yapp.ios2.vo.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +24,14 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    NoticeAgreementRepository noticeAgreementRepository;
     private final PasswordEncoder passwordEncoder;
 
 //    일반 회원가입
     public User join(String email, String name, String password, String phone){
         User newUser = null;
+        NoticeAgreement newNoticeAgreement;
         if(!checkEmail(email)){
             newUser = User.builder()
                     .email(email)
@@ -35,6 +41,11 @@ public class UserService implements UserDetailsService {
                     .phone(phone)
                     .sosial(false)
                     .build();
+
+            newNoticeAgreement = NoticeAgreement.builder()
+                    .build();
+
+            noticeAgreementRepository.save(newNoticeAgreement);
 
             userRepository.save(newUser);
         }else{
@@ -107,6 +118,32 @@ public class UserService implements UserDetailsService {
         user.setPassword(passwordEncoder.encode(password));
         userRepository.save(user);
         return user;
+    }
+
+    public NoticeAgreement getNoticeAgreement(User user){
+        return noticeAgreementRepository.findByUser(user);
+    }
+
+    public NoticeAgreement updateAgreement(User user, UserDto.NoticeAgreement noticeAgreement){
+
+        NoticeAgreement noticeAgreementVo = noticeAgreementRepository.findByUser(user);
+
+        if(noticeAgreementVo.getAlbumEndNotice()^noticeAgreement.getAlbumEndNotice()){
+            noticeAgreementVo.setAlbumEndNotice(noticeAgreement.getAlbumEndNotice());
+        }
+        if(noticeAgreementVo.getEventNotice()^noticeAgreement.getEventNotice()){
+            noticeAgreementVo.setEventNotice(noticeAgreement.getEventNotice());
+        }
+        if(noticeAgreementVo.getInvitationNotice()^noticeAgreement.getInvitationNotice()){
+            noticeAgreementVo.setInvitationNotice(noticeAgreement.getInvitationNotice());
+        }
+        if(noticeAgreementVo.getOrderNotice()^noticeAgreement.getOrderNotice()){
+            noticeAgreementVo.setOrderNotice(noticeAgreement.getOrderNotice());
+        }
+
+        noticeAgreementRepository.save(noticeAgreementVo);
+
+        return noticeAgreementVo;
     }
 
 }

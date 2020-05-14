@@ -8,7 +8,6 @@ import com.yapp.ios2.service.UserService;
 import com.yapp.ios2.vo.Album;
 import com.yapp.ios2.vo.AlbumOrder;
 import com.yapp.ios2.vo.AlbumOwner;
-import com.yapp.ios2.vo.User;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -36,7 +35,7 @@ public class AlbumController {
 
     @PostMapping("/create")
     @ResponseBody
-    public Album createAlbum(@AuthenticationPrincipal UserDetails user, @RequestBody AlbumDto.AlbumInfoDto albumInfo){
+    public Album createAlbum(@AuthenticationPrincipal UserDetails user, @RequestBody AlbumDto.AlbumInfo albumInfo){
 
         Album newAlbum = albumService.create(
                 albumInfo.getName(),
@@ -82,8 +81,8 @@ public class AlbumController {
     }
 
     @PostMapping("/getAlbum")
-    public Album getAlbum(AlbumDto.AlbumUidDto albumUidDto){
-        Album album = albumService.getAlbum(albumUidDto.getUid());
+    public Album getAlbum(AlbumDto.AlbumUid albumUid){
+        Album album = albumService.getAlbum(albumUid.getUid());
         return album;
     }
 
@@ -101,15 +100,15 @@ public class AlbumController {
     }
 
     @PostMapping("/getAlbumOwners")
-    public List<AlbumOwnerDto.AlbumOwnerInfo> getAlbumOwners(@RequestBody AlbumDto.AlbumUidDto albumUidDto){
-        List<AlbumOwnerDto.AlbumOwnerInfo> albumOwners = albumService.getAlbumOwners(albumUidDto.getUid());
+    public List<AlbumOwnerDto.AlbumOwnerInfo> getAlbumOwners(@RequestBody AlbumDto.AlbumUid albumUid){
+        List<AlbumOwnerDto.AlbumOwnerInfo> albumOwners = albumService.getAlbumOwners(albumUid.getUid());
         return albumOwners;
     }
 
     @GetMapping("/plusCount")
-    public void plusCount(@RequestBody AlbumDto.AlbumUidDto albumUidDto){
+    public void plusCount(@RequestBody AlbumDto.AlbumUid albumUid){
 
-        albumService.plusCount(albumUidDto.getUid());
+        albumService.plusCount(albumUid.getUid());
 
     }
 

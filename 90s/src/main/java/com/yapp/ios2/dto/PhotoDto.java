@@ -14,21 +14,21 @@ public class PhotoDto {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class PhotoInfoDto{
+    public static class PhotoInfo {
         private Long photoUid;
         private Long albumUid;
 
-        public PhotoInfoDto(Photo photo){
+        public PhotoInfo(Photo photo){
             this.photoUid = photo.getUid();
             this.albumUid = photo.getAlbum().getUid();
         }
     }
 
-    public static List<PhotoInfoDto> convertFromPhotoListToPhotoInfoList(List<Photo> photos){
-        List<PhotoInfoDto> photoInfos = new ArrayList();
+    public static List<PhotoInfo> convertFromPhotoListToPhotoInfoList(List<Photo> photos){
+        List<PhotoInfo> photoInfos = new ArrayList();
 
         for(Photo photo : photos){
-            photoInfos.add(new PhotoInfoDto(photo));
+            photoInfos.add(new PhotoInfo(photo));
         }
 
         return photoInfos;

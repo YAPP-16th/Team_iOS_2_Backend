@@ -18,13 +18,13 @@ import java.time.format.DateTimeFormatter;
 public class AlbumDto {
 
     @Data
-    public static class AlbumUidDto{
+    public static class AlbumUid {
         private Long uid;
     }
 
 
     @Data
-    public static class AlbumInfoDto{
+    public static class AlbumInfo {
         private Long albumUid;
         private Integer photoLimit;
         private String name;
@@ -36,7 +36,7 @@ public class AlbumDto {
             this.endDate = LocalDate.parse(stringEndDate, formatter);
         }
 
-        public AlbumInfoDto(Album album){
+        public AlbumInfo(Album album){
             this.albumUid = album.getUid();
             this.photoLimit = album.getPhotoLimit();
             this.name = album.getName();

@@ -18,13 +18,13 @@ public class NoticeAgreement {
     @GeneratedValue
     private Long uid;
 
-    @Column
+    @Column(columnDefinition = "boolean default false")
     private Boolean eventNotice;
 
-    @Column
+    @Column(columnDefinition = "boolean default false")
     private Boolean albumEndNotice;
 
-    @Column
+    @Column(columnDefinition = "boolean default false")
     private Boolean invitationNotice;
 
     @Column(columnDefinition = "boolean default false")

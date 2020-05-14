@@ -233,4 +233,27 @@ public class UserController {
 
         return jwtDto;
     }
+
+    @RestController
+    @RequestMapping("/notice/*")
+    class NoticeController {
+        @GetMapping("/getNoticeInfo")
+        public UserDto.NoticeAgreement getNoticeAgreement(@AuthenticationPrincipal UserDetails userDetails){
+
+            User user = userService.getUserByEmail(userDetails.getUsername());
+            UserDto.NoticeAgreement noticeAgreement = new UserDto.NoticeAgreement(userService.getNoticeAgreement(user));
+
+            return noticeAgreement;
+
+        }
+        @PostMapping("/updateNoticeInfo")
+        public void updateNoticeAgreement(@RequestBody UserDto.NoticeAgreement noticeAgreement, @AuthenticationPrincipal UserDetails userDetails){
+            User user = userService.getUserByEmail(userDetails.getUsername());
+
+            userService.updateAgreement(user, noticeAgreement);
+
+        }
+
+    }
+
 }
