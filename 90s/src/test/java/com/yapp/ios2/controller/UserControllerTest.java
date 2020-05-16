@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.JUnitRestDocumentation;
 import org.springframework.restdocs.mockmvc.RestDocumentationResultHandler;
+import org.springframework.restdocs.snippet.Attributes;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -54,7 +55,7 @@ public class UserControllerTest {
     public void 회원가입() throws Exception {
 
         JoinDto joinDto = new JoinDto();
-        joinDto.setEmail("tester1@test.com");
+        joinDto.setEmail("test7@90s.com");
         joinDto.setName("test");
         joinDto.setPassword("test");
         joinDto.setPhone("010-9523-3114");
@@ -73,11 +74,11 @@ public class UserControllerTest {
                 .andExpect(status().isOk())
                 .andDo(document.document(
                         requestFields(
-                                fieldWithPath("email").description("이메일"),
+                                fieldWithPath("email").description("이메일").attributes(new Attributes.Attribute("format","test@90s.com")),
                                 fieldWithPath("name").description("유저 이름"),
                                 fieldWithPath("password").description("비밀번호"),
-                                fieldWithPath("phone").type(String.class).description("핸드폰 번호 010-1234-5678"),
-                                fieldWithPath("sosial").type(Boolean.class).description("카카오 로그인 여부")
+                                fieldWithPath("phone").type("String").description("핸드폰 번호").attributes(new Attributes.Attribute("format","010-1234-5678")),
+                                fieldWithPath("sosial").type("Boolean").description("카카오 로그인 여부").attributes(new Attributes.Attribute("format","true / false"))
                         )
                 ));
     }

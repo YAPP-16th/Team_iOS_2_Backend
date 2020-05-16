@@ -1,69 +1,71 @@
-= RESTful Notes API Guide
-Andy Wilkinson;
+= 90s Awesome Api Guide
+FC JANYANG CAPTAIN;
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs
 :toc: left
-:toclevels: 2
+:toclevels: 3
 :sectlinks:
 
-[[overview]]
+
 == Overview
 
-[[overview-http-verbs]]
 === HTTP verbs
-
-RESTful notes tries to adhere as closely as possible to standard HTTP and REST conventions in its
-use of HTTP verbs.
+두가지만 사용합니다. GET! POST!
 
 |===
 | Verb | Usage
 
 | `GET`
-| 테스트
+| GET으로 Request를 보낼때는 따로 보내주실 Parameter가 없습니다.
 
 | `POST`
-| 테스트
-
-| `PATCH`
-| 테스트
-
-| `DELETE`
-| 테스트
+| Post로 Request를 보낼때는 보통 Json형태로 데이터를 넘겨주시면 됩니다.
 |===
 
-[[overview-http-status-codes]]
-=== HTTP status codes
 
-RESTful notes tries to adhere as closely as possible to standard HTTP and REST conventions in its
-use of HTTP status codes.
-
+=== Status-Code
 |===
-| Status code | Usage
+| Status code | Status Name | Description
+| 200
+| OK
+| 성공!
 
-| `200 OK`
-| The request completed successfully
+| 400
+| Bad Request
+| 무언가 잘못되었다. 하지만 서버 잘못은 아니다!
 
-| `201 Created`
-| A new resource has been created successfully. The resource's URI is available from the response's
-`Location` header
+| 500
+| Internal Server Error
+| 서버 에러!
 
-| `204 No Content`
-| An update to an existing resource has been applied successfully
-
-| `400 Bad Request`
-| The request was malformed. The response body will include an error providing further information
-
-| `404 Not Found`
-| The requested resource did not exist
+| 404
+| Not Found
+| 없는 주소!
 |===
 
-== User
+== Controller
+=== User
 
-=== 회원 조회
-operation::user-controller-test/회원가입[snippets='curl-request,http-request,http-response,httpie-request,path-parameters,request-body,response-body,response-fields']
 
-=== 회원가입
+----
+회원 관련한 API 입니다. 회원가입, 로그인, 이메일 및 비밀번호 찾기 등이 있습니다.
+----
+
+
+|===
+| Controller | URI
+| User | user/**
+|===
+
+
+***
+==== 회원가입 1 - 카카오 X
+
+----
+카카오가 아닌 직접 회원가입하는 방식입니다.
+----
+
 operation::user-controller-test/회원가입[snippets='request-fields,http-request,http-response']
 
 
