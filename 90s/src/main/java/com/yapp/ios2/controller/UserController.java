@@ -225,7 +225,7 @@ public class UserController {
 
     @PostMapping("/findEmail")
     @ResponseBody
-    public UserDto.AccountInfo findEmail(@ResponseBody UserDto.AccountInfo userDto){
+    public UserDto.AccountInfo findEmail(@RequestBody UserDto.AccountInfo userDto){
         User user = userService.findByPhone(userDto.getPhoneNum());
         userDto.setEmail(user.getEmail());
         return userDto;
