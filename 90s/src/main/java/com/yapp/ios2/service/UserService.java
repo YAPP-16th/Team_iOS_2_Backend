@@ -1,5 +1,6 @@
 package com.yapp.ios2.service;
 
+import com.yapp.ios2.config.exception.UserNotFoundException;
 import com.yapp.ios2.dto.UserDto;
 import com.yapp.ios2.repository.NoticeAgreementRepository;
 import com.yapp.ios2.repository.UserRepository;
@@ -106,6 +107,15 @@ public class UserService implements UserDetailsService {
         user.setEmail(email);
         userRepository.save(user);
         return user;
+    }
+
+    public User findByPhone(String phoneNumber){
+        User user = userRepository.findUserByPhone(phoneNumber).orElseThrow(
+                () -> new UserNotFoundException()
+        );
+
+        return user;
+
     }
 
     public User updatePhoneNumber(User user, String phoneNumber){

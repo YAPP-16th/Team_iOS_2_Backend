@@ -207,13 +207,13 @@ public class UserController {
     @ApiOperation(value = "비밀번호 변경", notes = "" +
             "비밀번호를 변경합니다." +
             "<br>변경할 비밀번호를 보내주세요." +
-            "<br>JWT 토큰의 정보를 활용해 사용자의 비밀번호를 변경합니다."
+            "<br>핸드폰 번호를 활용해 사용자의 비밀번호를 변경합니다."
     )
     @PostMapping("/updatePassword")
     @ResponseBody
-    public ResponseDto.JwtDto updatePassword(@RequestBody UserDto.AccountInfo userDto, @AuthenticationPrincipal UserDetails userDetails){
+    public ResponseDto.JwtDto updatePassword(@RequestBody UserDto.AccountInfo userDto){
 
-        User user = userService.getUserByEmail(userDetails.getUsername());
+        User user = userService.findByPhone(userDto.getPhoneNum());
         userService.updatePassword(user, userDto.getPassword());
 
         String jwt = jwtProvider.createToken(user.getUid().toString(), user.getRoles());
