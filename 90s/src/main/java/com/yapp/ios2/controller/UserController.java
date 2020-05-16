@@ -223,6 +223,14 @@ public class UserController {
         return jwtDto;
     }
 
+    @PostMapping("/findEmail")
+    @ResponseBody
+    public UserDto.AccountInfo findEmail(@ResponseBody UserDto.AccountInfo userDto){
+        User user = userService.findByPhone(userDto.getPhoneNum());
+        userDto.setEmail(user.getEmail());
+        return userDto;
+    }
+
     @GetMapping("/getDefaultUser")
     @ResponseBody
     public ResponseDto.JwtDto getDefaultUser(){
