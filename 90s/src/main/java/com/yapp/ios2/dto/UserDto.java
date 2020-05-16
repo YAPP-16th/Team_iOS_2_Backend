@@ -22,6 +22,7 @@ public class UserDto {
     }
 
     @Data
+    @NoArgsConstructor
     public static class UserInfo{
         private Long uid;
         private String email;
