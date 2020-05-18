@@ -2,10 +2,7 @@ package com.yapp.ios2.dto;
 
 import com.yapp.ios2.vo.NoticeAgreement;
 import com.yapp.ios2.vo.User;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Column;
 
@@ -14,6 +11,8 @@ import javax.persistence.Column;
 public class UserDto {
 
     @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class AccountInfo {
         private Long userUid;
         private String email;
@@ -22,8 +21,8 @@ public class UserDto {
     }
 
     @Data
-    @NoArgsConstructor
-    public static class UserInfo{
+    @AllArgsConstructor
+    @NoArgsConstructor    public static class UserInfo{
         private Long uid;
         private String email;
         private String name;
@@ -38,6 +37,8 @@ public class UserDto {
     }
 
     @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class UserProfile{
         private Integer albumTotalCount;
         private Integer albumPrintingCount;
@@ -50,6 +51,7 @@ public class UserDto {
     }
 
     @Data
+    @AllArgsConstructor
     @NoArgsConstructor
     public static class NoticeAgreement{
         private Boolean eventNotice;

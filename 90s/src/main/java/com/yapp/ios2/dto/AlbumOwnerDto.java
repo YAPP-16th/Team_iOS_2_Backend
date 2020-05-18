@@ -5,6 +5,7 @@ import com.yapp.ios2.vo.AlbumOwner;
 import com.yapp.ios2.vo.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ public class AlbumOwnerDto {
 
     @Data
     @AllArgsConstructor
+    @NoArgsConstructor
     public static class AlbumOwnerInfo{
 
         private Long albumUid;
@@ -32,6 +34,8 @@ public class AlbumOwnerDto {
     }
 
     @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class AlbumOwnerInfos{
         private List<AlbumOwnerInfo> albumOwnerInfos;
     }

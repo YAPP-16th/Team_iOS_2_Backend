@@ -3,9 +3,7 @@ package com.yapp.ios2.dto;
 import com.yapp.ios2.vo.Album;
 import com.yapp.ios2.vo.AlbumOrderPaperType;
 import com.yapp.ios2.vo.AlbumOrderPostType;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
@@ -18,12 +16,16 @@ import java.time.format.DateTimeFormatter;
 public class AlbumDto {
 
     @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class AlbumUid {
         private Long uid;
     }
 
 
     @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class AlbumInfo {
         private Long albumUid;
         private Integer photoLimit;
@@ -47,6 +49,8 @@ public class AlbumDto {
     }
 
     @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class AlbumOrderInfo{
         private Long paperType;
         private Long postType;

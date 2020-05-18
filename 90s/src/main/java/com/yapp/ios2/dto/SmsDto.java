@@ -11,6 +11,8 @@ public class SmsDto {
 //    @Getter
 //    @Setter
     @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class SmsRequestDto {
         private String phoneNumber;
     }
@@ -20,6 +22,8 @@ public class SmsDto {
 //    @Getter
 //    @Setter
     @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class SmsResponseDto {
         private String num;
     }
