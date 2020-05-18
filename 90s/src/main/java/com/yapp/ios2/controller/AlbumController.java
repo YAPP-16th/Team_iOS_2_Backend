@@ -105,10 +105,10 @@ public class AlbumController {
         return albumOwners;
     }
 
-    @GetMapping("/plusCount")
-    public void plusCount(@RequestBody AlbumDto.AlbumUid albumUid){
+    @GetMapping("/plusCount/{albumUid}")
+    public void plusCount(@PathVariable("albumUid") Long albumUid){
 
-        albumService.plusCount(albumUid.getUid());
+        albumService.plusCount(albumUid);
 
     }
 
