@@ -7,12 +7,15 @@ import com.yapp.ios2.service.UserService;
 import com.yapp.ios2.vo.Photo;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -48,19 +51,26 @@ public class PhotoController {
         return photos;
     }
 
-    @PostMapping(value = "/download", produces = MediaType.IMAGE_JPEG_VALUE)
-    @ResponseBody
+    @PostMapping(value = "/download", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @ResponseBody()
     public byte[] download(@RequestBody PhotoDto.PhotoInfo photoInfo) throws IOException {
         byte[] bytes = photoService.download(photoInfo.getAlbumUid(), photoInfo.getPhotoUid());
 
         return bytes;
     }
 
-    @GetMapping(value = "/download/{albumUid}/{photoUid}", produces = MediaType.IMAGE_JPEG_VALUE)
+    @GetMapping(value = "/download/{albumUid}/{photoUid}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     @ResponseBody
-    public byte[] download(@PathVariable("albumUid") Long albumUid, @PathVariable("photoUid") Long photoUid) throws IOException {
+    public HttpEntity<byte[]> download(@PathVariable("albumUid") Long albumUid,
+                                       @PathVariable("photoUid") Long photoUid,
+                                       HttpServletResponse response) throws IOException {
         byte[] bytes = photoService.download(albumUid, photoUid);
-        return bytes;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        response.setHeader("Content-Disposition", "attachment; filename=" + photoUid.toString() + ".jpeg");
+
+        return new HttpEntity(bytes, headers);
     }
 
     @PostMapping(value = "/getPhotos")
