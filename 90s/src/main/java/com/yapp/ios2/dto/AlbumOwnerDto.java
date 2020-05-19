@@ -18,6 +18,7 @@ public class AlbumOwnerDto {
     public static class AlbumOwnerInfo{
 
         private Long albumUid;
+        private String name;
         private Long userUid;
         private String role;
 
@@ -27,7 +28,11 @@ public class AlbumOwnerDto {
         List<AlbumOwnerInfo> albumOwnerInfos = new ArrayList();
 
         for(AlbumOwner albumOwner : albumOwners){
-            albumOwnerInfos.add(new AlbumOwnerInfo(albumOwner.getAlbum().getUid(), albumOwner.getUser().getUid(), albumOwner.getRole()));
+            albumOwnerInfos.add(new AlbumOwnerInfo(
+                    albumOwner.getAlbum().getUid(),
+                    albumOwner.getUser().getName(),
+                    albumOwner.getUser().getUid(),
+                    albumOwner.getRole()));
         }
 
         return albumOwnerInfos;
