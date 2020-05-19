@@ -16,6 +16,9 @@ import java.util.Collections;
 public class defaultUserConfig implements CommandLineRunner {
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    JwtProvider jwtProvider;
+
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -40,6 +43,9 @@ public class defaultUserConfig implements CommandLineRunner {
                         .build()
         );
         userRepository.save(testUser);
+
+
+        System.out.println("JWT TOKEN : " + jwtProvider.createToken(testUser.getUid().toString(), testUser.getRoles()));
 
 
     }

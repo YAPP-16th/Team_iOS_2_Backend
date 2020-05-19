@@ -81,13 +81,13 @@ public class AlbumController {
     }
 
     @PostMapping("/getAlbum")
-    public Album getAlbum(AlbumDto.AlbumUid albumUid){
+    public Album getAlbum(@RequestBody AlbumDto.AlbumUid albumUid){
         Album album = albumService.getAlbum(albumUid.getUid());
         return album;
     }
 
     @PostMapping("/createAlbumOrder")
-    public AlbumOrder createAlbumOrder(AlbumDto.AlbumOrderInfo albumOrderInfo){
+    public AlbumOrder createAlbumOrder(@RequestBody AlbumDto.AlbumOrderInfo albumOrderInfo){
 
         AlbumOrder newAlbumOrder = albumService.createAlbumOrder(albumOrderInfo);
 
