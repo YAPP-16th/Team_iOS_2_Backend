@@ -26,10 +26,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 토큰 기반 인증이므로 세션 역시 사용하지 않습니다.
                 .and()
                 .authorizeRequests() // 요청에 대한 사용권한 체크
-                .antMatchers("/**").hasRole("TESTER")
+                .antMatchers("/swagger-ui.html").permitAll()
                 .antMatchers("/photo/download/**").permitAll()
-                .antMatchers("/photo/**").hasRole("USER")
-                .antMatchers("/album/**").hasRole("USER")
+                .antMatchers("/photo/**").hasAnyRole("USER", "TESTER")
+                .antMatchers("/album/**").hasAnyRole("USER", "TESTER")
                 .anyRequest().permitAll() // 그외 나머지 요청은 누구나 접근 가능
                 .and()
                 .addFilterBefore(new JwtFilter(jwtProvider),
