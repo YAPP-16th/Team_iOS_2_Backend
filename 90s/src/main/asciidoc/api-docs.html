@@ -457,7 +457,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel2">
 <li><a href="#_user">User</a>
 <ul class="sectlevel3">
-<li><a href="#_회원가입_1_카카오_x">회원가입 1 - 카카오 X</a></li>
+<li><a href="#_회원가입">회원가입</a></li>
+<li><a href="#_로그인">로그인</a></li>
 </ul>
 </li>
 </ul>
@@ -465,7 +466,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_실패">실패</a></li>
 <li><a href="#_유저">유저</a>
 <ul class="sectlevel1">
-<li><a href="#_회원가입">회원가입</a>
+<li><a href="#_회원가입_2">회원가입</a>
 <ul class="sectlevel4">
 <li><a href="#_request_fields">Request Fields</a></li>
 </ul>
@@ -574,14 +575,44 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </table>
 <hr>
 <div class="sect3 has-source-line data-line-/Users/a007/90s/Team_iOS_2_Backend/90s/src/main/asciidoc/api-docs.adoc-63">
-<h4 id="_회원가입_1_카카오_x"><a class="link" href="#_회원가입_1_카카오_x">회원가입 1 - 카카오 X</a></h4>
-<div class="listingblock has-source-line data-line-/Users/a007/90s/Team_iOS_2_Backend/90s/src/main/asciidoc/api-docs.adoc-65">
-<div class="content">
-<pre>카카오가 아닌 직접 회원가입하는 방식입니다.</pre>
+<h4 id="_회원가입"><a class="link" href="#_회원가입">회원가입</a></h4>
+<div class="dlist has-source-line data-line-/Users/a007/90s/Team_iOS_2_Backend/90s/src/main/asciidoc/api-docs.adoc-65">
+<dl>
+<dt class="hdlist1">user/join</dt>
+<dd>
+<p>회원가입의 방식은 2가지이며, 각각의 방식에 따라 필요한 값이 달라집니다.<br></p>
+</dd>
+<dt class="hdlist1">일반 로그인</dt>
+<dd>
+<p>social 파라미터를 false 로 보내며, password를 보내야 합니다.</p>
+</dd>
+<dt class="hdlist1">카카오 로그인</dt>
+<dd>
+<p>social 파라미터를 true 로 보내며, 따로 password를 보내지 않아도 됩니다.</p>
+</dd>
+</dl>
 </div>
-</div>
+<table class="tableblock frame-all grid-all stretch has-source-line data-line-/Users/a007/90s/Team_iOS_2_Backend/90s/src/main/asciidoc/api-docs.adoc-73">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">기능</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">방식</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">URI</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">회원가입</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user/join</p></td>
+</tr>
+</tbody>
+</table>
 <div class="sect4">
-<h5 id="_회원가입_1_카카오_x_request_fields"><a class="link" href="#_회원가입_1_카카오_x_request_fields">Request fields</a></h5>
+<h5 id="_회원가입_request_fields"><a class="link" href="#_회원가입_request_fields">Request fields</a></h5>
 <div class="sect4">
 <h5 id="_request_fields"><a class="link" href="#_request_fields">Request Fields</a></h5>
 <table class="tableblock frame-all grid-all stretch">
@@ -642,7 +673,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect4">
-<h5 id="_회원가입_1_카카오_x_http_request"><a class="link" href="#_회원가입_1_카카오_x_http_request">HTTP request</a></h5>
+<h5 id="_회원가입_http_request"><a class="link" href="#_회원가입_http_request">HTTP request</a></h5>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">POST /user/join HTTP/1.1
@@ -662,7 +693,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect4">
-<h5 id="_회원가입_1_카카오_x_http_response"><a class="link" href="#_회원가입_1_카카오_x_http_response">HTTP response</a></h5>
+<h5 id="_회원가입_http_response"><a class="link" href="#_회원가입_http_response">HTTP response</a></h5>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
@@ -671,6 +702,121 @@ Content-Length: 172
 
 {
   &quot;jwt&quot; : &quot;eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4OCIsInJvbGVzIjpbIlJPTEVfVVNFUiJdLCJpYXQiOjE1ODk2MzYzOTcsImV4cCI6MjIyMDM1NjM5N30.BE4MJ6HqWIJxD5ee-nTa_p5GsqeQRSkkpqbj5DpzcYc&quot;
+}</code></pre>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div class="sect3 has-source-line data-line-/Users/a007/90s/Team_iOS_2_Backend/90s/src/main/asciidoc/api-docs.adoc-81">
+<h4 id="_로그인"><a class="link" href="#_로그인">로그인</a></h4>
+<div class="dlist has-source-line data-line-/Users/a007/90s/Team_iOS_2_Backend/90s/src/main/asciidoc/api-docs.adoc-83">
+<dl>
+<dt class="hdlist1">user/login</dt>
+<dd>
+<p>로그인 방식 또한 회원가입처럼 2가지 입니다.</p>
+</dd>
+<dt class="hdlist1">일반 로그인</dt>
+<dd>
+<p>social 파라미터를 false 로 보내며, password를 보내야 합니다.</p>
+</dd>
+<dt class="hdlist1">카카오 로그인</dt>
+<dd>
+<p>social 파라미터를 true 로 보내며, 따로 password를 보내지 않아도 됩니다.</p>
+</dd>
+</dl>
+</div>
+<table class="tableblock frame-all grid-all stretch has-source-line data-line-/Users/a007/90s/Team_iOS_2_Backend/90s/src/main/asciidoc/api-docs.adoc-90">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">기능</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">방식</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">URI</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">로그인</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Post</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user/login</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect4">
+<h5 id="_로그인_request_fields"><a class="link" href="#_로그인_request_fields">Request fields</a></h5>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">타입</th>
+<th class="tableblock halign-left valign-top">필수값</th>
+<th class="tableblock halign-left valign-top">예시</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>email</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="mailto:test@90s.com">test@90s.com</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">이메일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>password</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">카카오 로그인 시에는 null로 보내지 않아도 무관합니다.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">비밀번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sosial</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true / false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">카카오 로그인 여부</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_로그인_http_request"><a class="link" href="#_로그인_http_request">HTTP request</a></h5>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">POST /user/login HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+Content-Length: 73
+Host: localhost:8080
+
+{
+  &quot;sosial&quot; : false,
+  &quot;email&quot; : &quot;test@90s.com&quot;,
+  &quot;password&quot; : &quot;test&quot;
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_로그인_http_response"><a class="link" href="#_로그인_http_response">HTTP response</a></h5>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 172
+
+{
+  &quot;jwt&quot; : &quot;eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3OCIsInJvbGVzIjpbIlJPTEVfVVNFUiJdLCJpYXQiOjE1ODk4OTU5MTYsImV4cCI6MjIyMDYxNTkxNn0.-iPXKeMHNmE4mISjVae7Q7Hc403sTTspJ4nl-gER1o4&quot;
 }</code></pre>
 </div>
 </div>
@@ -744,9 +890,9 @@ Content-Length: 172
 </div>
 </div>
 </div>
-<h1 id="_유저" class="sect0 has-source-line data-line-/Users/a007/90s/Team_iOS_2_Backend/90s/src/main/asciidoc/api-docs.adoc-84"><a class="link" href="#_유저">유저</a></h1>
+<h1 id="_유저" class="sect0 has-source-line data-line-/Users/a007/90s/Team_iOS_2_Backend/90s/src/main/asciidoc/api-docs.adoc-109"><a class="link" href="#_유저">유저</a></h1>
 <div class="sect1 has-source-line data-line-/Users/a007/90s/Team_iOS_2_Backend/90s/target/generated-snippets/user-controller-test/회원가입/http-request.adoc-0">
-<h2 id="_회원가입"><a class="link" href="#_회원가입">회원가입</a></h2>
+<h2 id="_회원가입_2"><a class="link" href="#_회원가입_2">회원가입</a></h2>
 <div class="sectionbody">
 <div class="listingblock has-source-line data-line-/Users/a007/90s/Team_iOS_2_Backend/90s/target/generated-snippets/user-controller-test/회원가입/http-request.adoc-2">
 <div class="content">
@@ -839,7 +985,7 @@ Content-Length: 172
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-05-16 22:13:24 +0900
+Last updated 2020-05-19 22:51:01 +0900
 </div>
 </div>
 </body>

@@ -60,14 +60,39 @@ FC JANYANG CAPTAIN;
 
 
 ***
-==== 회원가입 1 - 카카오 X
+==== 회원가입
 
-----
-카카오가 아닌 직접 회원가입하는 방식입니다.
-----
+user/join::
+회원가입의 방식은 2가지이며, 각각의 방식에 따라 필요한 값이 달라집니다. +
+일반 로그인::
+social 파라미터를 false 로 보내며, password를 보내야 합니다.
+카카오 로그인::
+social 파라미터를 true 로 보내며, 따로 password를 보내지 않아도 됩니다.
+
+
+|===
+| 기능 | 방식 | URI
+| 회원가입 | Post | user/join
+|===
 
 operation::user-controller-test/회원가입[snippets='request-fields,http-request,http-response']
 
+***
+==== 로그인
+
+user/login::
+로그인 방식 또한 회원가입처럼 2가지 입니다.
+일반 로그인::
+social 파라미터를 false 로 보내며, password를 보내야 합니다.
+카카오 로그인::
+social 파라미터를 true 로 보내며, 따로 password를 보내지 않아도 됩니다.
+
+|===
+| 기능 | 방식 | URI
+| 로그인 | Post | user/login
+|===
+
+operation::user-controller-test/로그인[snippets='request-fields,http-request,http-response']
 
 
 
