@@ -228,6 +228,7 @@ public class UserController {
     public UserDto.AccountInfo findEmail(@RequestBody UserDto.AccountInfo userDto){
         User user = userService.findByPhone(userDto.getPhoneNum());
         userDto.setEmail(user.getEmail());
+        userDto.setName(user.getName());
         return userDto;
     }
 

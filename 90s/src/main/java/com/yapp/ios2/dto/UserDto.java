@@ -15,6 +15,7 @@ public class UserDto {
     @NoArgsConstructor
     public static class AccountInfo {
         private Long userUid;
+        private String name;
         private String email;
         private String phoneNum;
         private String password;
