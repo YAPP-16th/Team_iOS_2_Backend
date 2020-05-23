@@ -75,6 +75,8 @@ social 파라미터를 true 로 보내며, 따로 password를 보내지 않아�
 | 회원가입 | Post | user/join
 |===
 
+include::{snippets}/user-controller-test/join/http-request.adoc[]
+
 operation::user-controller-test/회원가입[snippets='request-fields,http-request,http-response']
 
 ***
