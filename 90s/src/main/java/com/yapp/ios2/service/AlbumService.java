@@ -42,6 +42,9 @@ public class AlbumService{
     @Autowired
     AlbumOrderStatusRepository albumOrderStatusRepository;
 
+    @Autowired
+    S3Service s3Service;
+
     public Album create(String name, Integer photoLimit, Long user, Long layoutUid, LocalDate endDate) {
 
         Album newAlbum = Album.builder()
@@ -82,6 +85,17 @@ public class AlbumService{
         );
 
     }
+
+    public void removeAlbum(Album album){
+
+        // Delete all photos in S3
+        s3Service.deleteByAlbum(album.getUid());
+
+        albumRepository.delete(album);
+
+
+    }
+
 
     public Album getAlbum(Long albumUid) {
 

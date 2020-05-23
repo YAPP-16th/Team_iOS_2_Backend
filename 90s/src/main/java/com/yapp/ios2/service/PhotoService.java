@@ -30,25 +30,24 @@ public class PhotoService{
     @Autowired
     private UserRepository userRepository;
 
-    public String upload(MultipartFile photo, Long albumUid, Integer photoOrder, Long uploader) throws IOException{
+//    public String upload(MultipartFile photo, Long albumUid, Integer photoOrder) throws IOException{
+//
+//        String fileName = albumUid.toString() + "/" + photoOrder + ".jpeg";
+//        String url = s3Service.upload(photo, fileName);
+//
+//        Photo newPhoto = Photo.builder()
+//                .album(albumRepository.findById(albumUid).get())
+//                .photoOrder(photoOrder)
+//                .url(url)
+//                .build();
+//
+//
+//        photoRepository.save(newPhoto);
+//
+//        return url;
+//    }
 
-        String fileName = albumUid.toString() + "/" + photoOrder + ".jpeg";
-        String url = s3Service.upload(photo, fileName);
-
-        Photo newPhoto = Photo.builder()
-                .album(albumRepository.findById(albumUid).get())
-                .photoOrder(photoOrder)
-                .uploader(userRepository.findById(uploader).get())
-                .url(url)
-                .build();
-
-
-        photoRepository.save(newPhoto);
-
-        return url;
-    }
-
-    public List<Photo> upload(MultipartFile[] photos, Long albumUid, Long uploader) throws IOException{
+    public List<Photo> upload(MultipartFile[] photos, Long albumUid) throws IOException{
 
         List<Photo> photoList = new ArrayList<>();
 
@@ -58,13 +57,11 @@ public class PhotoService{
                 .getPhotoOrder() + 1;
 
         Album album = albumRepository.findById(albumUid).get();
-        User user = userRepository.findById(uploader).get();
 
         for(MultipartFile photo : photos){
             Photo newPhoto = Photo.builder()
                     .album(album)
                     .photoOrder(lastPhotoOrder++)
-                    .uploader(user)
                     .build();
 
             photoRepository.save(newPhoto);

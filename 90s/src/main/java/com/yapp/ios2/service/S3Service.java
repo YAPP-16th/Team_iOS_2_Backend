@@ -65,5 +65,13 @@ public class S3Service{
 //        return resource;
     }
 
+    public void deleteByAlbum(Long albumUid){
+
+        for (S3ObjectSummary file : s3Client.listObjects(bucket, albumUid.toString() + "/").getObjectSummaries()){
+            s3Client.deleteObject(bucket, file.getKey());
+        }
+
+    }
+
 
 }

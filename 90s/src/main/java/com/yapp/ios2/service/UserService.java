@@ -2,8 +2,12 @@ package com.yapp.ios2.service;
 
 import com.yapp.ios2.config.exception.UserNotFoundException;
 import com.yapp.ios2.dto.UserDto;
+import com.yapp.ios2.repository.AlbumOwnerRepository;
+import com.yapp.ios2.repository.AlbumRepository;
 import com.yapp.ios2.repository.NoticeAgreementRepository;
 import com.yapp.ios2.repository.UserRepository;
+import com.yapp.ios2.vo.Album;
+import com.yapp.ios2.vo.AlbumOwner;
 import com.yapp.ios2.vo.NoticeAgreement;
 import com.yapp.ios2.vo.User;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +21,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -25,6 +30,13 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    AlbumRepository albumRepository;
+    @Autowired
+    AlbumOwnerRepository albumOwnerRepository;
+    @Autowired
+    AlbumService albumService;
+
     @Autowired
     NoticeAgreementRepository noticeAgreementRepository;
     private final PasswordEncoder passwordEncoder;
@@ -83,6 +95,31 @@ public class UserService implements UserDetailsService {
         }
 
         return user;
+    }
+
+    public void signout(User user){
+
+        List<Album> albums = albumRepository.findByUser(user);
+        System.out.println("SIZE OF ALBUMS : " + albums.size());
+        for(Album album : albums){
+
+            // 엘범 소유자가 한명이상이며, 삭제하려는 유저가 CREATOR인 경우 역할을 바꿔줘야 함.
+            if(albumOwnerRepository.findByAlbumUid(album.getUid()).size() > 1) {
+//                엘범소유자가 한명 이상일때
+                if(albumOwnerRepository.findByAlbumAndUser(album, user).getRole().contains("CREATOR")){
+                    // 삭제 유저가 CREATOR인 경우
+                    AlbumOwner newCreator = albumOwnerRepository.findByAlbumUidandRole(album.getUid(), "GUEST").get(0);
+                    newCreator.setRole("ROLE_CREATOR");
+                    albumOwnerRepository.save(newCreator);
+                }
+            }else{
+                albumService.removeAlbum(album);
+            }
+
+        }
+
+        userRepository.delete(user);
+
     }
 
     public User getUserByEmail(String email){

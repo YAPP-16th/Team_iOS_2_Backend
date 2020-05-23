@@ -1,9 +1,12 @@
 package com.yapp.ios2.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yapp.ios2.config.JwtProvider;
 import com.yapp.ios2.dto.JoinDto;
 import com.yapp.ios2.dto.LoginDto;
 import com.yapp.ios2.dto.UserDto;
+import com.yapp.ios2.service.UserService;
+import com.yapp.ios2.vo.User;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -31,12 +34,12 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-
 @SpringBootTest
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 @ActiveProfiles("dev")
@@ -46,6 +49,11 @@ public class UserControllerTest {
 
     private MockMvc mockMvc;
     private RestDocumentationResultHandler document;
+
+    @Autowired
+    UserService userService;
+    @Autowired
+    JwtProvider jwtProvider;
 
     @BeforeEach
     public void setUp(WebApplicationContext webApplicationContext, RestDocumentationContextProvider restDocumentation) {
@@ -117,5 +125,25 @@ public class UserControllerTest {
                                 fieldWithPath("sosial").type("Boolean").description("카카오 로그인 여부").attributes(new Attributes.Attribute("format","true / false"))
                         )
                 ));
+    }
+
+    @Test
+    public void 회원탈퇴() throws Exception {
+        System.out.println("111111111");
+        User user = userService.getUserByEmail("tester@90s.com");
+        System.out.println("222222222");
+        String jwt = jwtProvider.createToken(user.getUid().toString(), user.getRoles());
+        System.out.println("333333333");
+
+//        ObjectMapper json = new ObjectMapper();
+//        String jsonString = json.writerWithDefaultPrettyPrinter().writeValueAsString(loginDto);
+
+        mockMvc.perform(
+                get("/user/signout")
+                        .header("X-AUTH-TOKEN", jwt)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
+//                .andDo(print());
     }
 }

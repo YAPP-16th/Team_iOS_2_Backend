@@ -46,7 +46,7 @@ public class PhotoController {
     @ResponseBody
     public List<Photo> upload(@RequestParam(value="image") MultipartFile[] images, @RequestParam("albumUid") Long albumUid, @AuthenticationPrincipal UserDetails user) throws IOException {
 
-        List<Photo> photos = photoService.upload(images, albumUid, userService.getUserByEmail(user.getUsername()).getUid());
+        List<Photo> photos = photoService.upload(images, albumUid);
 
         return photos;
     }

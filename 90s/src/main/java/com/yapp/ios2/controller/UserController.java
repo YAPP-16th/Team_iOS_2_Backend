@@ -243,6 +243,15 @@ public class UserController {
         return jwtDto;
     }
 
+    @GetMapping("/signout")
+    @ResponseBody
+    public void signout(@AuthenticationPrincipal UserDetails userDetails){
+        User user = userService.getUserByEmail(userDetails.getUsername());
+        userService.signout(user);
+
+
+    }
+
     @RestController
     @RequestMapping("/notice/*")
     class NoticeController {

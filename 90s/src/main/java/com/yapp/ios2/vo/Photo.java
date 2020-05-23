@@ -2,6 +2,8 @@ package com.yapp.ios2.vo;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -34,11 +36,7 @@ public class Photo {
     private LocalDateTime updated_at;
 
     @ManyToOne
-    @JoinColumn(name ="userUid", referencedColumnName="uid")
-    private User uploader;
-
-
-    @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name ="albumUid", referencedColumnName="uid")
     private Album album;
 
