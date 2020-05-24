@@ -18,7 +18,7 @@ public class AlbumOrderStatus {
     @Id
     private Long uid;
 
-    @Column
+    @ManyToOne
     String status;
 //    [입금대기, 배송준비, 배송중, 배송완료]
 //    [pending, processing, shipping, done]
