@@ -85,12 +85,20 @@ public class AlbumController {
     @GetMapping("/getAlbums")
     public List<Album> getAlbums(@AuthenticationPrincipal UserDetails user){
         List<Album> albums = albumService.getAlbumsByUser(userService.getUserByEmail(user.getUsername()));
+
+        albums.forEach(
+                album -> {
+                    albumService.completeChecker(album.getUid());
+                }
+        );
+
         return albums;
     }
 
     @PostMapping("/getAlbum")
     public Album getAlbum(@RequestBody AlbumDto.AlbumUid albumUid){
         Album album = albumService.getAlbum(albumUid.getUid());
+        albumService.completeChecker(album.getUid());
         return album;
     }
 
