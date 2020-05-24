@@ -37,7 +37,7 @@ public class Photo {
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name ="albumUid", referencedColumnName="uid")
+    @JoinColumn(name ="album_uid", referencedColumnName="uid")
     private Album album;
 
 

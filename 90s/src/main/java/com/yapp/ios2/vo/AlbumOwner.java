@@ -24,12 +24,12 @@ public class AlbumOwner {
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name ="albumUid", referencedColumnName="uid")
+    @JoinColumn(name ="album_uid")
     private Album album;
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name ="userUid", referencedColumnName="uid")
+    @JoinColumn(name ="user_uid")
     private User user;
 
     @Column

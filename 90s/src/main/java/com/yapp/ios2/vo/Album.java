@@ -38,6 +38,10 @@ public class Album {
     @Column(columnDefinition = "varchar(45) default 'ready'")
     private String orderStatus;
 
+    @ManyToOne
+    @JoinColumn(name ="cover_uid", referencedColumnName="uid")
+    private Cover cover;
+
     @Column
     private LocalDate endDate;
 

@@ -31,6 +31,7 @@ public class AlbumDto {
         private Integer photoLimit;
         private String name;
         private Long layoutUid;
+        private Long coverUid;
         private LocalDate endDate;
 
         public void setEndDate(String stringEndDate) {
@@ -43,6 +44,7 @@ public class AlbumDto {
             this.photoLimit = album.getPhotoLimit();
             this.name = album.getName();
             this.layoutUid = album.getLayoutUid();
+            this.coverUid = album.getCover().getUid();
             this.endDate = album.getEndDate();
         }
 

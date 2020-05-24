@@ -45,12 +45,16 @@ public class AlbumService{
     @Autowired
     S3Service s3Service;
 
-    public Album create(String name, Integer photoLimit, Long user, Long layoutUid, LocalDate endDate) {
+    @Autowired
+    CoverRepository coverRepository;
+
+    public Album create(String name, Integer photoLimit, Long user, Long layoutUid, Long cover, LocalDate endDate) {
 
         Album newAlbum = Album.builder()
                 .name(name)
                 .photoLimit(photoLimit)
                 .layoutUid(layoutUid)
+                .cover(coverRepository.findById(cover).get())
                 .endDate(endDate)
                 .count(0)
                 .build();

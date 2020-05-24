@@ -31,7 +31,7 @@ public class NoticeAgreement {
     private Boolean orderNotice;
 
     @OneToOne
-    @JoinColumn(name ="UserUid", referencedColumnName="uid")
+    @JoinColumn(name ="user_uid")
     private User user;
 
 }

@@ -26,10 +26,10 @@ public class AlbumOrder {
     private String orderCode;
 
     @ManyToOne
-    @JoinColumn(name ="PaperTypeUid", referencedColumnName="uid")
+    @JoinColumn(name ="AlbumOrderPaperType_uid")
     private AlbumOrderPaperType paperType;
     @ManyToOne
-    @JoinColumn(name ="PostTypeUid", referencedColumnName="uid")
+    @JoinColumn(name ="AlbumOrderPostType_uid")
     private AlbumOrderPostType postType;
     @Column
     private String cost;
@@ -49,11 +49,11 @@ public class AlbumOrder {
     private String message;
 
     @OneToOne
-    @JoinColumn(name ="AlbumUid", referencedColumnName="uid")
+    @JoinColumn(name ="album_uid")
     private Album album;
 
     @ManyToOne
-    @JoinColumn(name ="OrderStatusUid", referencedColumnName="uid")
+    @JoinColumn(name ="albumOrderStatus_uid")
     private AlbumOrderStatus status;
 
     @CreationTimestamp

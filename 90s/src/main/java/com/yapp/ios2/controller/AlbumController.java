@@ -1,5 +1,6 @@
 package com.yapp.ios2.controller;
 
+import com.amazonaws.util.IOUtils;
 import com.yapp.ios2.dto.AlbumDto;
 import com.yapp.ios2.dto.AlbumOwnerDto;
 import com.yapp.ios2.dto.ResponseDto;
@@ -10,10 +11,16 @@ import com.yapp.ios2.vo.AlbumOrder;
 import com.yapp.ios2.vo.AlbumOwner;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 @Api(tags = {"2. Album"})
@@ -42,6 +49,7 @@ public class AlbumController {
                 albumInfo.getPhotoLimit(),
                 userService.getUserByEmail(user.getUsername()).getUid(),
                 albumInfo.getLayoutUid(),
+                albumInfo.getCoverUid(),
                 albumInfo.getEndDate()
         );
 
@@ -84,6 +92,24 @@ public class AlbumController {
     public Album getAlbum(@RequestBody AlbumDto.AlbumUid albumUid){
         Album album = albumService.getAlbum(albumUid.getUid());
         return album;
+    }
+
+    @PostMapping(value = "/getAlbumCover", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    public HttpEntity<byte[]> getAlbumCover(@RequestBody AlbumDto.AlbumUid albumUid,
+                                            HttpServletResponse response) throws IOException {
+        Album album =albumService.getAlbum(albumUid.getUid());
+
+        ClassPathResource resource = new ClassPathResource(
+                album.getCover().getPath()
+        );
+
+        byte[] bytes = IOUtils.toByteArray(resource.getInputStream());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        response.setHeader("Content-Disposition", "attachment; filename=" + album.getName() + "_cover.jpeg");
+
+        return new HttpEntity(bytes, headers);
     }
 
     @PostMapping("/createAlbumOrder")
