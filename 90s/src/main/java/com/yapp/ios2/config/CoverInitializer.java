@@ -19,12 +19,14 @@ public class CoverInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         List<String> covers = Arrays.asList(
-                "dreamy2121",
-                "fellinlove",
-                "sweetholiday",
+                "1990",
+                "paradiso",
                 "happilyeverafter",
-                "mysweetyLovesyou",
-                "90svibe"
+                "favoritethings",
+                "awsomemix",
+                "lessbutbetter",
+                "90sretroclub",
+                "oneandonly"
         );
         for(int i = 0; i < covers.size(); i++){
             Cover cover = coverRepository.findById(Long.valueOf(i+1)).orElse(
@@ -36,10 +38,4 @@ public class CoverInitializer implements CommandLineRunner {
             coverRepository.save(cover);
         }
     }
-//0 = dreamy2121
-//1 = fellinlove
-//2 = sweetholiday
-//3 = happilyeverafter
-//4 = mysweetyLovesyou
-//5 = 90svibe
 }
