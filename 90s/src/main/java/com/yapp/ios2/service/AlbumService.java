@@ -19,6 +19,7 @@ import java.time.LocalDate;
 import java.time.chrono.ChronoLocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class AlbumService{
@@ -204,6 +205,15 @@ public class AlbumService{
                 album.setComplete(true);
             }
         }
+    }
+
+    public String invite(Long albumUid, Long userUid){
+
+        String randomNum = String.valueOf(ThreadLocalRandom.current().nextInt(100000, 1000000));
+
+
+
+        return randomNum;
     }
 
 }
