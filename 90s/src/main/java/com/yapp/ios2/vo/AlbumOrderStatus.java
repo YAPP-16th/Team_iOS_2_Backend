@@ -13,12 +13,15 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AlbumOrderStatus {
+
     @GeneratedValue
     @Id
     private Long uid;
 
     @Column
     String status;
+//    [입금대기, 배송준비, 배송중, 배송완료]
+//    [pending, processing, shipping, done]
 
     public AlbumOrderStatus(String status) {
         this.status = status;

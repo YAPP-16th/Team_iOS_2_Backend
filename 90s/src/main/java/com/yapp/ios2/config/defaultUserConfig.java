@@ -45,6 +45,9 @@ public class defaultUserConfig implements CommandLineRunner {
 
         for(int i = 0; i < 31; i++){
             String name = "tester" + i;
+
+            if(userRepository.findByEmail(name + "@90s.com").isPresent()) break;
+
             User testUser = userRepository.findByEmail(name + "@90s.com").orElse(
                     User.builder()
                             .email(name + "@90s.com")

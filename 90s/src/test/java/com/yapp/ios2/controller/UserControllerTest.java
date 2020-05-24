@@ -4,19 +4,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yapp.ios2.config.JwtProvider;
 import com.yapp.ios2.dto.JoinDto;
 import com.yapp.ios2.dto.LoginDto;
-import com.yapp.ios2.dto.UserDto;
 import com.yapp.ios2.service.UserService;
 import com.yapp.ios2.vo.User;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.JUnitRestDocumentation;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.mockmvc.RestDocumentationResultHandler;
@@ -39,7 +35,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
+//@RunWith(SpringRunner.class)
 @SpringBootTest
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 @ActiveProfiles("dev")
@@ -103,7 +99,7 @@ public class UserControllerTest {
     public void 로그인() throws Exception {
 
         LoginDto loginDto = new LoginDto();
-        loginDto.setEmail("test@90s.com");
+        loginDto.setEmail("tester0@90s.com");
         loginDto.setPassword("test");
         loginDto.setSosial(false);
 
@@ -146,4 +142,7 @@ public class UserControllerTest {
                 .andExpect(status().isOk());
 //                .andDo(print());
     }
+
+    
+
 }
