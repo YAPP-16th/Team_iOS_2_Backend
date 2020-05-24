@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
@@ -18,6 +19,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @RequiredArgsConstructor
 
 @Configuration
+@Lazy
 public class defaultUserConfig implements CommandLineRunner {
     @Autowired
     UserRepository userRepository;

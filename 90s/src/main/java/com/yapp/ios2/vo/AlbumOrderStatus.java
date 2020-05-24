@@ -18,10 +18,8 @@ public class AlbumOrderStatus {
     @Id
     private Long uid;
 
-    @ManyToOne
     String status;
-//    [입금대기, 배송준비, 배송중, 배송완료]
-//    [pending, processing, shipping, done]
+//    [pending, ready ,processing, shipping, done]
 
     public AlbumOrderStatus(String status) {
         this.status = status;
