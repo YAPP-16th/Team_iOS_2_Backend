@@ -35,8 +35,9 @@ public class Album {
     @Column(columnDefinition = "integer default 0")
     private Integer count;
 
-    @Column(columnDefinition = "varchar(45) default 'ready'")
-    private String orderStatus;
+    @ManyToOne
+    @JoinColumn(name ="album_order_status_uid", referencedColumnName="uid", columnDefinition = "bigint default 1")
+    private AlbumOrderStatus orderStatus;
 
     @ManyToOne
     @JoinColumn(name ="cover_uid", referencedColumnName="uid")

@@ -6,20 +6,17 @@ import javax.persistence.*;
 
 @Builder
 @Entity
-@Table(name = "cover")
+@Table(name = "AlbumOrderPaperType1")
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Cover {
-
+public class AlbumOrderPaperType1 {
     @Id
     private Long uid;
 
     @Column
-    private String name;
-
-    @Column
-    private String path;
+    private String type;
+//    ["gloss", "matt"]
 }

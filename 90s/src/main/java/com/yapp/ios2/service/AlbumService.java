@@ -7,10 +7,7 @@ import com.yapp.ios2.config.exception.AlbumNotFoundException;
 import com.yapp.ios2.repository.AlbumOwnerRepository;
 import com.yapp.ios2.repository.AlbumRepository;
 import com.yapp.ios2.repository.UserRepository;
-import com.yapp.ios2.vo.Album;
-import com.yapp.ios2.vo.AlbumOrder;
-import com.yapp.ios2.vo.AlbumOwner;
-import com.yapp.ios2.vo.User;
+import com.yapp.ios2.vo.*;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,7 +28,9 @@ public class AlbumService{
     AlbumOrderRepository albumOrderRepository;
 
     @Autowired
-    AlbumOrderPaperTypeRepository albumOrderPaperTypeRepository;
+    AlbumOrderPaperType1Repository albumOrderPaper1TypeRepository;
+    @Autowired
+    AlbumOrderPaperType2Repository albumOrderPaper2TypeRepository;
 
     @Autowired
     UserRepository userRepository;
@@ -62,6 +61,7 @@ public class AlbumService{
                 .layoutUid(layoutUid)
                 .cover(coverRepository.findById(cover).get())
                 .endDate(endDate)
+                .orderStatus(albumOrderStatusRepository.findById(1L).get())
                 .count(0)
                 .build();
 
@@ -139,7 +139,8 @@ public class AlbumService{
                 .addressDetail(albumOrderInfo.getAddressDetail())
                 .phoneNum(albumOrderInfo.getPhoneNum())
                 .message(albumOrderInfo.getMessage())
-                .paperType(albumOrderPaperTypeRepository.findById(albumOrderInfo.getPaperType()).get())
+                .paperType1(albumOrderPaper1TypeRepository.findById(albumOrderInfo.getPaperType1()).get())
+                .paperType2(albumOrderPaper2TypeRepository.findById(albumOrderInfo.getPaperType2()).get())
                 .postType(albumOrderPostTypeRepository.findById(albumOrderInfo.getPostType()).get())
                 .build();
 
@@ -201,8 +202,10 @@ public class AlbumService{
         if(!album.isComplete()){
             if(photoRepository.findByAlbum(album).size() >= album.getPhotoLimit()){
                 album.setComplete(true);
+                albumRepository.save(album);
             }else if(album.getEndDate().isBefore(ChronoLocalDate.from(LocalDate.now()))){
                 album.setComplete(true);
+                albumRepository.save(album);
             }
         }
     }

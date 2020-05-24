@@ -1,13 +1,8 @@
 package com.yapp.ios2.dto;
 
 import com.yapp.ios2.vo.Album;
-import com.yapp.ios2.vo.AlbumOrderPaperType;
-import com.yapp.ios2.vo.AlbumOrderPostType;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -54,7 +49,8 @@ public class AlbumDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class AlbumOrderInfo{
-        private Long paperType;
+        private Long paperType1;
+        private Long paperType2;
         private Long postType;
         private String cost;
         private String recipient;
@@ -64,7 +60,6 @@ public class AlbumDto {
         private String addressDetail;
         private String phoneNum;
         private String message;
-
     }
 
 }

@@ -26,8 +26,11 @@ public class AlbumOrder {
     private String orderCode;
 
     @ManyToOne
-    @JoinColumn(name ="AlbumOrderPaperType_uid")
-    private AlbumOrderPaperType paperType;
+    @JoinColumn(name ="AlbumOrderPaperType1_uid")
+    private AlbumOrderPaperType1 paperType1;
+    @ManyToOne
+    @JoinColumn(name ="AlbumOrderPaperType2_uid")
+    private AlbumOrderPaperType2 paperType2;
     @ManyToOne
     @JoinColumn(name ="AlbumOrderPostType_uid")
     private AlbumOrderPostType postType;
@@ -64,7 +67,7 @@ public class AlbumOrder {
 
 
     public void setOrderCode(Long albumUid){
-        this.orderCode = String.format("%04d%04d%d%d%s", this.uid, albumUid, this.paperType, this.postalCode, this.created_at.format(DateTimeFormatter.ofPattern("yyMMdd")));
+        this.orderCode = String.format("%04d%04d%d%d%d%s", this.uid, albumUid, this.paperType1, this.paperType2, this.postalCode, this.created_at.format(DateTimeFormatter.ofPattern("yyMMdd")));
     }
 }
 

@@ -14,7 +14,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class AlbumOrderStatus {
 
-    @GeneratedValue
     @Id
     private Long uid;
 

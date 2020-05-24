@@ -13,11 +13,11 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AlbumOrderPostType {
-    @GeneratedValue
     @Id
     private Long uid;
 
     @Column
     private String type;
+//    ["normal","fast","faster"]
 }
 

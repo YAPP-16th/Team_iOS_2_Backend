@@ -75,8 +75,6 @@ social 파라미터를 true 로 보내며, 따로 password를 보내지 않아�
 | 회원가입 | Post | user/join
 |===
 
-include::{snippets}/user-controller-test/join/http-request.adoc[]
-
 operation::user-controller-test/회원가입[snippets='request-fields,http-request,http-response']
 
 ***
@@ -97,19 +95,29 @@ social 파라미터를 true 로 보내며, 따로 password를 보내지 않아�
 operation::user-controller-test/로그인[snippets='request-fields,http-request,http-response']
 
 
+=== AlbumOrder
 
 
-== 실패
-include::{snippets}/user-controller-test/회원가입/curl-request.adoc[]
-include::{snippets}/user-controller-test/회원가입/http-request.adoc[]
-include::{snippets}/user-controller-test/회원가입/http-response.adoc[]
-include::{snippets}/user-controller-test/회원가입/request-body.adoc[]
-include::{snippets}/user-controller-test/회원가입/response-body.adoc[]
+----
+주문 관련한 API 입니다.
+----
 
 
+|===
+| Controller | URI
+| AlbumOrder | album/order/**
+|===
 
-= 유저
-== 회원가입
-include::{snippets}/user-controller-test/회원가입/http-request.adoc[]
-include::{snippets}/user-controller-test/회원가입/request-fields.adoc[]
-include::{snippets}/user-controller-test/회원가입/http-response.adoc[]
+
+***
+==== 회원가입
+
+album/order/createAlbumOrder::
+주문을 만듭니다.
+
+|===
+| 기능 | 방식 | URI
+| 엘범 주분 | Post | album/order/createAlbumOrder
+|===
+
+operation::album-order-controller-test/주문생성[snippets='request-fields,http-request,http-response']

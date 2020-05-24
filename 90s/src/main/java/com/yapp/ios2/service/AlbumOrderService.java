@@ -17,7 +17,9 @@ public class AlbumOrderService {
     @Autowired
     AlbumOrderStatusRepository albumOrderStatusRepository;
     @Autowired
-    AlbumOrderPaperTypeRepository albumOrderPaperTypeRepository;
+    AlbumOrderPaperType1Repository albumOrderPaperType1Repository;
+    @Autowired
+    AlbumOrderPaperType2Repository albumOrderPaperType2Repository;
     @Autowired
     AlbumOrderPostTypeRepository albumOrderPostTypeRepository;
 
@@ -31,7 +33,8 @@ public class AlbumOrderService {
                 .addressDetail(albumOrderInfo.getAddressDetail())
                 .phoneNum(albumOrderInfo.getPhoneNum())
                 .message(albumOrderInfo.getMessage())
-                .paperType(albumOrderPaperTypeRepository.findById(albumOrderInfo.getPaperType()).get())
+                .paperType1(albumOrderPaperType1Repository.findById(albumOrderInfo.getPaperType1()).get())
+                .paperType2(albumOrderPaperType2Repository.findById(albumOrderInfo.getPaperType2()).get())
                 .postType(albumOrderPostTypeRepository.findById(albumOrderInfo.getPostType()).get())
                 .build();
 

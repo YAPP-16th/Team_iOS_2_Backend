@@ -6,17 +6,18 @@ import javax.persistence.*;
 
 @Builder
 @Entity
-@Table(name = "AlbumOrderPaperType")
+@Table(name = "AlbumOrderPaperType2")
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class AlbumOrderPaperType {
-    @GeneratedValue
+public class AlbumOrderPaperType2 {
     @Id
     private Long uid;
 
     @Column
     private String type;
+//    ["gloss", "matt"]
+
 }

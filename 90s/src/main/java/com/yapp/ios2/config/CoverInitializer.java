@@ -28,14 +28,17 @@ public class CoverInitializer implements CommandLineRunner {
                 "90sretroclub",
                 "oneandonly"
         );
-        for(int i = 0; i < covers.size(); i++){
-            Cover cover = coverRepository.findById(Long.valueOf(i+1)).orElse(
-                    Cover.builder()
-                            .name(covers.get(i))
-                            .path("static/" + covers.get(i) + ".jpeg")
-                            .build()
-            );
-            coverRepository.save(cover);
+        if(coverRepository.findAll().isEmpty()){
+            for(int i = 0; i < covers.size(); i++){
+                Cover cover = coverRepository.findById(Long.valueOf(i+1)).orElse(
+                        Cover.builder()
+                                .uid(Long.valueOf(i+1))
+                                .name(covers.get(i))
+                                .path("static/" + covers.get(i) + ".jpeg")
+                                .build()
+                );
+                coverRepository.save(cover);
+            }
         }
     }
 }
