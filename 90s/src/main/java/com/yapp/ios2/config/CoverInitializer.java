@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Configuration
-public class defaultConfig implements CommandLineRunner {
+public class CoverInitializer implements CommandLineRunner {
 
     @Autowired
     CoverRepository coverRepository;
