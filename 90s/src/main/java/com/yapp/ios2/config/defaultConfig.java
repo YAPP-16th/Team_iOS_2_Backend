@@ -30,7 +30,7 @@ public class defaultConfig implements CommandLineRunner {
             Cover cover = coverRepository.findById(Long.valueOf(i+1)).orElse(
                     Cover.builder()
                             .name(covers.get(i))
-                            .path("static/" + covers.get(i))
+                            .path("static/" + covers.get(i) + ".jpeg")
                             .build()
             );
             coverRepository.save(cover);

@@ -11,10 +11,12 @@ import com.yapp.ios2.vo.Album;
 import com.yapp.ios2.vo.AlbumOrder;
 import com.yapp.ios2.vo.AlbumOwner;
 import com.yapp.ios2.vo.User;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +37,9 @@ public class AlbumService{
 
     @Autowired
     AlbumOwnerRepository albumOwnerRepository;
+
+    @Autowired
+    PhotoRepository photoRepository;
 
     @Autowired
     AlbumOrderPostTypeRepository albumOrderPostTypeRepository;
@@ -189,5 +194,16 @@ public class AlbumService{
         albumRepository.save(album);
     }
 
+
+    public void completeChecker(Long albumUid){
+        Album album = albumRepository.findById(albumUid).get();
+        if(!album.isComplete()){
+            if(photoRepository.findByAlbum(album).size() >= album.getPhotoLimit()){
+                album.setComplete(true);
+            }else if(album.getEndDate().isBefore(ChronoLocalDate.from(LocalDate.now()))){
+                album.setComplete(true);
+            }
+        }
+    }
 
 }
