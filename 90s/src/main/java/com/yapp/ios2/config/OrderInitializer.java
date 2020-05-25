@@ -11,11 +11,14 @@ import com.yapp.ios2.vo.AlbumOrderStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;
 
-@Configuration
+@Order(1)
+@Component
 public class OrderInitializer implements CommandLineRunner {
 
     @Autowired
