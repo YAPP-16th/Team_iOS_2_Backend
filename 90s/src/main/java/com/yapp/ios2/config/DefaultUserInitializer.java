@@ -76,12 +76,5 @@ public class DefaultUserInitializer implements CommandLineRunner {
             }
         }
 
-
-
-
-
-
-
-
     }
 }
