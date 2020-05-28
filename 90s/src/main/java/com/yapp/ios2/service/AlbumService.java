@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.time.chrono.ChronoLocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
@@ -57,6 +58,7 @@ public class AlbumService{
 
         Album newAlbum = Album.builder()
                 .name(name)
+                .password(UUID.randomUUID())
                 .photoLimit(photoLimit)
                 .layoutUid(layoutUid)
                 .cover(coverRepository.findById(cover).get())

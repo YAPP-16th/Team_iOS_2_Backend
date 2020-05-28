@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Builder
 @Entity
@@ -25,6 +26,9 @@ public class Album {
 
     @Column(length = 45, nullable = false)
     private String name;
+
+    @Column
+    private UUID password;
 
     @Column(nullable = false)
     private Integer photoLimit;
