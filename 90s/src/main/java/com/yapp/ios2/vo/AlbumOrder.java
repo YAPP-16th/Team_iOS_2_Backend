@@ -56,6 +56,10 @@ public class AlbumOrder {
     private Album album;
 
     @ManyToOne
+    @JoinColumn(name ="user_uid")
+    private User user;
+
+    @ManyToOne
     @JoinColumn(name ="albumOrderStatus_uid")
     private AlbumOrderStatus status;
 

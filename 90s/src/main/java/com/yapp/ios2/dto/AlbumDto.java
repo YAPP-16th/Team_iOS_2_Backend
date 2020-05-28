@@ -49,6 +49,7 @@ public class AlbumDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class AlbumOrderInfo{
+        private Long albumUid;
         private Long paperType1;
         private Long paperType2;
         private Long postType;

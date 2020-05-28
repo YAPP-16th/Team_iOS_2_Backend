@@ -3,6 +3,7 @@ package com.yapp.ios2.service;
 import com.yapp.ios2.dto.AlbumDto;
 import com.yapp.ios2.repository.*;
 import com.yapp.ios2.vo.AlbumOrder;
+import com.yapp.ios2.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,9 +24,11 @@ public class AlbumOrderService {
     @Autowired
     AlbumOrderPostTypeRepository albumOrderPostTypeRepository;
 
-    public AlbumOrder createAlbumOrder(AlbumDto.AlbumOrderInfo albumOrderInfo){
+    public AlbumOrder createAlbumOrder(AlbumDto.AlbumOrderInfo albumOrderInfo, User user){
 
         AlbumOrder newAlbumOrder = AlbumOrder.builder()
+                .album(albumRepository.findById(albumOrderInfo.getAlbumUid()).get())
+                .user(user)
                 .cost(albumOrderInfo.getCost())
                 .recipient(albumOrderInfo.getRecipient())
                 .postalCode(albumOrderInfo.getPostalCode())
