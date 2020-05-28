@@ -28,8 +28,6 @@ public class JwtFilter extends GenericFilterBean {
 
         log.info(
                 httpServletRequest.getRequestURI()
-                + " "
-                + httpServletRequest.getRemoteUser()
         );
 
         String token = jwtProvider.resolveToken((HttpServletRequest) request);

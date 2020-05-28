@@ -5,6 +5,7 @@ import com.yapp.ios2.service.AlbumService;
 import com.yapp.ios2.service.SnsService;
 import com.yapp.ios2.config.JwtProvider;
 import com.yapp.ios2.service.UserService;
+import com.yapp.ios2.vo.Album;
 import com.yapp.ios2.vo.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,6 +14,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Api(tags = {"1. User"})
@@ -192,8 +194,8 @@ public class UserController {
 
     @GetMapping("/getUserProfile")
     @ResponseBody
-    public UserDto.UserProfile getProile(@AuthenticationPrincipal UserDetails userDetails){
-        User user = userService.getUserByEmail(userDetails.getUsername());
+    public UserDto.UserProfile getUserProile(@AuthenticationPrincipal UserDetails userDetail){
+        User user = userService.getUserByEmail(userDetail.getUsername());
 
         UserDto.UserProfile userProfile = new UserDto.UserProfile();
 
@@ -248,30 +250,30 @@ public class UserController {
     public void signout(@AuthenticationPrincipal UserDetails userDetails){
         User user = userService.getUserByEmail(userDetails.getUsername());
         userService.signout(user);
-
-
     }
 
-    @RestController
-    @RequestMapping("/notice/*")
-    class NoticeController {
-        @GetMapping("/getNoticeInfo")
-        public UserDto.NoticeAgreement getNoticeAgreement(@AuthenticationPrincipal UserDetails userDetails){
 
-            User user = userService.getUserByEmail(userDetails.getUsername());
-            UserDto.NoticeAgreement noticeAgreement = new UserDto.NoticeAgreement(userService.getNoticeAgreement(user));
 
-            return noticeAgreement;
-
-        }
-        @PostMapping("/updateNoticeInfo")
-        public void updateNoticeAgreement(@RequestBody UserDto.NoticeAgreement noticeAgreement, @AuthenticationPrincipal UserDetails userDetails){
-            User user = userService.getUserByEmail(userDetails.getUsername());
-
-            userService.updateAgreement(user, noticeAgreement);
-
-        }
-
-    }
+//    @RestController
+//    @RequestMapping("/notice/*")
+//    class NoticeController {
+//        @GetMapping("/getNoticeInfo")
+//        public UserDto.NoticeAgreement getNoticeAgreement(@AuthenticationPrincipal UserDetails userDetails){
+//
+//            User user = userService.getUserByEmail(userDetails.getUsername());
+//            UserDto.NoticeAgreement noticeAgreement = new UserDto.NoticeAgreement(userService.getNoticeAgreement(user));
+//
+//            return noticeAgreement;
+//
+//        }
+//        @PostMapping("/updateNoticeInfo")
+//        public void updateNoticeAgreement(@RequestBody UserDto.NoticeAgreement noticeAgreement, @AuthenticationPrincipal UserDetails userDetails){
+//            User user = userService.getUserByEmail(userDetails.getUsername());
+//
+//            userService.updateAgreement(user, noticeAgreement);
+//
+//        }
+//
+//    }
 
 }

@@ -116,7 +116,7 @@ public class AlbumService{
     }
 
     public List<Album> getAlbumsNotReady(User user){
-        List<Album> albums = albumRepository.findByOrderStatus(user, "ready");
+        List<Album> albums = albumRepository.findByOrderStatus(user, albumOrderStatusRepository.findById(1L).get());
         return albums;
 
 

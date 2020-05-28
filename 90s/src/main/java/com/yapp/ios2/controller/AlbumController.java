@@ -83,6 +83,7 @@ public class AlbumController {
 
 
     @GetMapping("/getAlbums")
+    @ResponseBody
     public List<Album> getAlbums(@AuthenticationPrincipal UserDetails user){
         List<Album> albums = albumService.getAlbumsByUser(userService.getUserByEmail(user.getUsername()));
 

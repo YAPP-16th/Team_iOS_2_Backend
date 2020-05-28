@@ -51,7 +51,7 @@ public class DefaultUserInitializer implements CommandLineRunner {
         for(int i = 0; i < 31; i++){
             String name = "tester" + i;
 
-            if(userRepository.findByEmail(name + "@90s.com").isPresent()) break;
+            if(userRepository.findByEmail(name + "@90s.com").isPresent()) continue;
 
             User testUser = userRepository.findByEmail(name + "@90s.com").orElse(
                     User.builder()
