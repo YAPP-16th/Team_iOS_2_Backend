@@ -57,7 +57,6 @@ public class AlbumDto {
         private String cost;
         private String recipient;
         private String postalCode;
-        private String trackingNum;
         private String address;
         private String addressDetail;
         private String phoneNum;
