@@ -1,5 +1,6 @@
 package com.yapp.ios2.controller;
 
+import com.amazonaws.services.mq.model.NotFoundException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yapp.ios2.dto.AlbumDto;
 import com.yapp.ios2.repository.AlbumOrderRepository;
@@ -12,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -21,6 +21,7 @@ public class AlbumOrderController {
 
     @Autowired
     AlbumOrderService albumOrderService;
+
     @Autowired
     AlbumOrderRepository albumOrderRepository;
 
@@ -36,8 +37,17 @@ public class AlbumOrderController {
     }
 
     @GetMapping("/getAlbumOrders")
-    public List<AlbumOrder> getAlbumOrders(@AuthenticationPrincipal User user){
+    public List<AlbumOrder> getAlbumOrders(@AuthenticationPrincipal User user) {
         return albumOrderRepository.findAllByUser(user);
+    }
+
+    @DeleteMapping("/deleteAlbumOrder/{albumOrderUid}")
+    public void deleteAlbumOrder(@PathVariable("albumOrderUid") Long albumOrderUid){
+        AlbumOrder albumOrder = albumOrderRepository.findById(albumOrderUid).orElseThrow(
+                () -> new NotFoundException("없는 엘범 인데!")
+        );
+
+        albumOrderRepository.delete(albumOrder);
     }
 
 

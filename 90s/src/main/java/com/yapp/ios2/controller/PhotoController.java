@@ -1,7 +1,9 @@
 package com.yapp.ios2.controller;
 
+import com.amazonaws.services.mq.model.NotFoundException;
 import com.yapp.ios2.dto.AlbumDto;
 import com.yapp.ios2.dto.PhotoDto;
+import com.yapp.ios2.repository.PhotoRepository;
 import com.yapp.ios2.service.PhotoService;
 import com.yapp.ios2.service.UserService;
 import com.yapp.ios2.vo.Photo;
@@ -28,6 +30,9 @@ public class PhotoController {
 
     @Autowired
     private PhotoService photoService;
+    @Autowired
+    private PhotoRepository photoRepository;
+
 
     @Autowired
     private UserService userService;
@@ -82,6 +87,20 @@ public class PhotoController {
         );
 
         return photos;
+    }
+
+    @PutMapping("/updatePhotoOrder/{photoUid}/{photoOrder}")
+    @ResponseBody
+    public Photo updatePhotoOrder(@PathVariable("photoUid") Long photoUid, @PathVariable("photoOrder") Integer photoOrder){
+        Photo photo = photoRepository.findById(photoUid).orElseThrow(
+                () -> new NotFoundException("없는 사진인데!")
+        );
+
+        photo.setPhotoOrder(photoOrder);
+
+        photoRepository.save(photo);
+
+        return photo;
     }
 
 }
