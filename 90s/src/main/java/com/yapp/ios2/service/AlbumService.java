@@ -89,12 +89,26 @@ public class AlbumService{
 
     public void removeOwner(Long albumUid, Long user){
 
-        albumOwnerRepository.delete(
-                albumOwnerRepository.findByAlbumAndUser(
-                        albumRepository.findById(albumUid).get(),
-                        userRepository.findById(user).get()
-                )
+        AlbumOwner albumOwner = albumOwnerRepository.findByAlbumAndUser(
+                albumRepository.findById(albumUid).get(),
+                userRepository.findById(user).get()
         );
+
+        if(albumOwner.getRole().contains("CREATOR")){
+            if(albumOwnerRepository.findByAlbumUid(albumUid).size() == 1){
+//                엘범소유주가 한명인 경우, 엘범을 삭제
+                albumOwnerRepository.delete( albumOwner );
+                albumRepository.delete(albumRepository.findById(albumUid).get());
+            }else{
+                albumOwnerRepository.delete( albumOwner );
+//                Change new Creator
+                AlbumOwner newCreatorAlbumOwner = albumOwnerRepository.findByAlbumUid(albumUid).get(0);
+                newCreatorAlbumOwner.setRole("ROLE_CREATOR");
+                albumOwnerRepository.save(newCreatorAlbumOwner);
+            }
+        }else{
+            albumOwnerRepository.delete( albumOwner );
+        }
 
     }
 
