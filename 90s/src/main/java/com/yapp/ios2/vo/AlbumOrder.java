@@ -25,6 +25,9 @@ public class AlbumOrder {
     @Column
     private String orderCode;
 
+    @Column
+    private Integer amount;
+
     @ManyToOne
     @JoinColumn(name ="AlbumOrderPaperType1_uid")
     private AlbumOrderPaperType1 paperType1;
