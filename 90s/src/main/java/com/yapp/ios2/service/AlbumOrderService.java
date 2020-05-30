@@ -2,6 +2,7 @@ package com.yapp.ios2.service;
 
 import com.yapp.ios2.dto.AlbumDto;
 import com.yapp.ios2.repository.*;
+import com.yapp.ios2.vo.Album;
 import com.yapp.ios2.vo.AlbumOrder;
 import com.yapp.ios2.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,10 @@ public class AlbumOrderService {
 
     public AlbumOrder createAlbumOrder(AlbumDto.AlbumOrderInfo albumOrderInfo, User user){
 
+        Album album = albumRepository.findById(albumOrderInfo.getAlbumUid()).get();
+
         AlbumOrder newAlbumOrder = AlbumOrder.builder()
-                .album(albumRepository.findById(albumOrderInfo.getAlbumUid()).get())
+                .album(album)
                 .user(user)
                 .amount(albumOrderInfo.getAmount())
                 .orderCode(UUID.randomUUID().toString())
@@ -47,6 +50,10 @@ public class AlbumOrderService {
                 .build();
 
         albumOrderRepository.save(newAlbumOrder);
+
+        album.setOrderStatus(albumOrderStatusRepository.findById(2L).get());
+
+        albumRepository.save(album);
 
         return newAlbumOrder;
     }

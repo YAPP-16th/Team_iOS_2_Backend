@@ -2,6 +2,7 @@ package com.yapp.ios2.controller;
 
 import com.amazonaws.services.mq.model.NotFoundException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yapp.ios2.config.exception.AlbumNotFoundException;
 import com.yapp.ios2.dto.AlbumDto;
 import com.yapp.ios2.repository.AlbumOrderRepository;
 import com.yapp.ios2.service.AlbumOrderService;
@@ -44,7 +45,7 @@ public class AlbumOrderController {
     @DeleteMapping("/deleteAlbumOrder/{albumOrderUid}")
     public void deleteAlbumOrder(@PathVariable("albumOrderUid") Long albumOrderUid){
         AlbumOrder albumOrder = albumOrderRepository.findById(albumOrderUid).orElseThrow(
-                () -> new NotFoundException("없는 엘범 인데!")
+                () -> new AlbumNotFoundException("없는 엘범 인데!")
         );
 
         albumOrderRepository.delete(albumOrder);
