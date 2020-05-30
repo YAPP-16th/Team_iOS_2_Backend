@@ -7,6 +7,9 @@ import com.yapp.ios2.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.UUID;
+
 
 @Service
 public class AlbumOrderService {
@@ -29,6 +32,7 @@ public class AlbumOrderService {
         AlbumOrder newAlbumOrder = AlbumOrder.builder()
                 .album(albumRepository.findById(albumOrderInfo.getAlbumUid()).get())
                 .user(user)
+                .orderCode(UUID.randomUUID().toString())
                 .cost(albumOrderInfo.getCost())
                 .recipient(albumOrderInfo.getRecipient())
                 .postalCode(albumOrderInfo.getPostalCode())
