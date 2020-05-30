@@ -4,6 +4,7 @@ import com.amazonaws.util.IOUtils;
 import com.yapp.ios2.dto.AlbumDto;
 import com.yapp.ios2.dto.AlbumOwnerDto;
 import com.yapp.ios2.dto.ResponseDto;
+import com.yapp.ios2.repository.AlbumRepository;
 import com.yapp.ios2.service.AlbumService;
 import com.yapp.ios2.service.UserService;
 import com.yapp.ios2.vo.Album;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @Api(tags = {"2. Album"})
 @RestController
@@ -30,6 +32,9 @@ public class AlbumController {
 
     @Autowired
     private AlbumService albumService;
+
+    @Autowired
+    private AlbumRepository albumRepository;
 
     @Autowired
     private UserService userService;
@@ -101,6 +106,29 @@ public class AlbumController {
         Album album = albumService.getAlbum(albumUid.getUid());
         albumService.completeChecker(album.getUid());
         return album;
+    }
+
+
+    @GetMapping("/getAlbumPassword/{albumUid}")
+    public String getAlbumPassword(@PathVariable("albumUid") Long albumUid){
+
+        Album album = albumService.getAlbum(albumUid);
+
+        return album.getPassword().toString();
+
+    }
+
+    @GetMapping("/updateAlbumPassword/{albumUid}")
+    public String updateAlbumPassword(@PathVariable("albumUid") Long albumUid){
+
+        Album album = albumService.getAlbum(albumUid);
+
+        album.setPassword(UUID.randomUUID());
+
+        albumRepository.save(album);
+
+        return album.getPassword().toString();
+
     }
 
     @PostMapping(value = "/getAlbumCover", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
