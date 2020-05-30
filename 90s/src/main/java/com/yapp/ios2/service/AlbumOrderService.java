@@ -32,6 +32,7 @@ public class AlbumOrderService {
         AlbumOrder newAlbumOrder = AlbumOrder.builder()
                 .album(albumRepository.findById(albumOrderInfo.getAlbumUid()).get())
                 .user(user)
+                .amount(albumOrderInfo.getAmount())
                 .orderCode(UUID.randomUUID().toString())
                 .cost(albumOrderInfo.getCost())
                 .recipient(albumOrderInfo.getRecipient())
