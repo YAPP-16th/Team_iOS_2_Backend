@@ -10,6 +10,7 @@ import com.yapp.ios2.service.UserService;
 import com.yapp.ios2.vo.Album;
 import com.yapp.ios2.vo.AlbumOrder;
 import com.yapp.ios2.vo.AlbumOwner;
+import com.yapp.ios2.vo.User;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -116,6 +117,11 @@ public class AlbumController {
 
         return album.getPassword().toString();
 
+    }
+
+    @PostMapping("/joinAlbumByPassword")
+    public AlbumOwner joinAlbumByPassword(@AuthenticationPrincipal User user, @RequestBody AlbumDto.AlbumPassword albumPassword){
+        return albumService.joinAlbumByPassword(albumPassword.getPassword(), user);
     }
 
     @GetMapping("/updateAlbumPassword/{albumUid}")

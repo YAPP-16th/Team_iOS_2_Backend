@@ -98,6 +98,22 @@ public class AlbumService{
 
     }
 
+    public AlbumOwner joinAlbumByPassword(String albumPassword, User user){
+        Album album = albumRepository.findByPassword(albumPassword);
+
+        AlbumOwner albumOwner = AlbumOwner.builder()
+                .album(album)
+                .user(user)
+                .role("ROLE_GUEST")
+                .build();
+
+        albumOwnerRepository.save(
+                albumOwner
+        );
+
+        return albumOwner;
+    }
+
     public void removeAlbum(Album album){
 
         // Delete all photos in S3

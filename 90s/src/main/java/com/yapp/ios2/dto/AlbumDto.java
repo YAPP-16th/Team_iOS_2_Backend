@@ -17,6 +17,13 @@ public class AlbumDto {
         private Long uid;
     }
 
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class AlbumPassword{
+        private String password;
+    }
+
 
     @Data
     @AllArgsConstructor
