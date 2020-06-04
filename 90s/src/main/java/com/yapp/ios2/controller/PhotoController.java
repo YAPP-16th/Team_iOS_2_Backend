@@ -80,14 +80,20 @@ public class PhotoController {
 
     @PostMapping(value = "/getPhotos")
     @ResponseBody
-    public List<PhotoDto.PhotoInfo> getPhotos(@RequestBody AlbumDto.AlbumUid albumUid){
+    public List<Photo> getPhotos(@RequestBody AlbumDto.AlbumUid albumUid){
 
-        List<PhotoDto.PhotoInfo> photos = PhotoDto.convertFromPhotoListToPhotoInfoList(
-                photoService.getPhotos(albumUid.getUid())
-        );
+        List<Photo> photos = photoService.getPhotos(albumUid.getUid());
 
         return photos;
     }
+//    public List<PhotoDto.PhotoInfo> getPhotos(@RequestBody AlbumDto.AlbumUid albumUid){
+//
+//        List<PhotoDto.PhotoInfo> photos = PhotoDto.convertFromPhotoListToPhotoInfoList(
+//                photoService.getPhotos(albumUid.getUid())
+//        );
+//
+//        return photos;
+//    }
 
     @PutMapping("/updatePhotoOrder/{photoUid}/{photoOrder}")
     @ResponseBody
