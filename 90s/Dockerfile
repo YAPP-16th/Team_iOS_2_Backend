@@ -4,7 +4,7 @@ VOLUME ["/tmp", "/logs"]
 
 EXPOSE 8080
 
-ARG JAR_FILE=target/90s-0.0.1-SNAPSHOT.jar
+ARG JAR_FILE=build/libs/90s-0.0.1-SNAPSHOT.jar
 
 ADD ${JAR_FILE} 90s-0.0.1-SNAPSHOT.jar
 
