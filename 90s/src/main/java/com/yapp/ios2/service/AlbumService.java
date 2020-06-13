@@ -129,13 +129,10 @@ public class AlbumService{
     }
 
     public void removeAlbum(Album album){
-
         // Delete all photos in S3
         s3Service.deleteByAlbum(album.getUid());
 
         albumRepository.delete(album);
-
-
     }
 
 
