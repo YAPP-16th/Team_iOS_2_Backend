@@ -1,6 +1,5 @@
 package com.yapp.ios2.controller;
 
-import com.mysql.cj.util.TestUtils;
 import com.yapp.ios2.config.JwtProvider;
 import com.yapp.ios2.repository.PhotoRepository;
 import com.yapp.ios2.service.AlbumService;

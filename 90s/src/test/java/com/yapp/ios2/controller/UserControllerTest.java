@@ -1,24 +1,22 @@
 package com.yapp.ios2.controller;
 
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yapp.ios2.config.JwtProvider;
 import com.yapp.ios2.dto.JoinDto;
 import com.yapp.ios2.dto.LoginDto;
 import com.yapp.ios2.service.UserService;
 import com.yapp.ios2.vo.User;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
-import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.mockmvc.RestDocumentationResultHandler;
 import org.springframework.restdocs.snippet.Attributes;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -26,17 +24,18 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
-import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
+@RunWith(SpringRunner.class)
+@WebMvcTest(UserController.class)
+//@SpringBootTest
+//@ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 @ActiveProfiles("dev")
 public class UserControllerTest {
 //    @Rule
@@ -50,7 +49,7 @@ public class UserControllerTest {
     @Autowired
     JwtProvider jwtProvider;
 
-    @BeforeEach
+    @Before
     public void setUp(WebApplicationContext webApplicationContext, RestDocumentationContextProvider restDocumentation) {
         this.document = document(
                 "{class-name}/{method-name}",
@@ -67,7 +66,7 @@ public class UserControllerTest {
     public void join() throws Exception {
 
         JoinDto joinDto = new JoinDto();
-        joinDto.setEmail("test8@90s.com");
+        joinDto.setEmail("test909@90s.com");
         joinDto.setName("test");
         joinDto.setPassword("test");
         joinDto.setPhone("010-9523-3114");
@@ -95,7 +94,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void 로그인() throws Exception {
+    public void login() throws Exception {
 
         LoginDto loginDto = new LoginDto();
         loginDto.setEmail("tester0@90s.com");
