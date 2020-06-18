@@ -93,12 +93,14 @@ public class DefaultUserInitializer implements CommandLineRunner {
             );
             Integer photoCnt = 1;
             for(int i = 0; i < 6; i++){
-                Album newAlbum = Album.builder()
-                        .name(names.get(i))
-                        .photoLimit(photos.get(i))
-                        .cover(coverRepository.findById(covers.get(i)).get())
-                        .build();
-                albumRepository.save(newAlbum);
+                Album newAlbum = albumService.create(
+                        names.get(i),
+                        photos.get(i),
+                        defaultUser.getUid(),
+                        covers.get(i),
+                        covers.get(i),
+                        LocalDate.now()
+                );
 
                 for(int j = 0; j < photos.get(i); j++){
                     ClassPathResource resource = new ClassPathResource(
