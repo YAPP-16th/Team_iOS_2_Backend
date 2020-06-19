@@ -1,5 +1,6 @@
 package com.yapp.ios2.service;
 
+import com.yapp.ios2.config.exception.AlbumNotFoundException;
 import com.yapp.ios2.dto.AlbumDto;
 import com.yapp.ios2.repository.*;
 import com.yapp.ios2.vo.Album;
@@ -56,6 +57,17 @@ public class AlbumOrderService {
         albumRepository.save(album);
 
         return newAlbumOrder;
+    }
+
+    public void deleteAlbumOrder(Long albumOrderUid){
+        AlbumOrder albumOrder = albumOrderRepository.findById(albumOrderUid).orElseThrow(
+                () -> new AlbumNotFoundException("없는 엘범 인데!")
+        );
+
+        Album album = albumOrder.getAlbum();
+        album.setOrderStatus(albumOrderStatusRepository.findById(1L).get());
+        albumRepository.save(album);
+
     }
 
     public void changeAlbumOrderStatus(Long albumUid, boolean status) {

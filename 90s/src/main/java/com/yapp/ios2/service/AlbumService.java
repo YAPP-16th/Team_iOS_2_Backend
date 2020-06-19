@@ -129,13 +129,9 @@ public class AlbumService{
     }
 
     public void removeAlbum(Album album){
-
         // Delete all photos in S3
         s3Service.deleteByAlbum(album.getUid());
-
         albumRepository.delete(album);
-
-
     }
 
 
@@ -223,9 +219,14 @@ public class AlbumService{
     public void plusCount(Long albumUid){
         Album album = albumRepository.findById(albumUid).
                 orElseThrow(() -> new AlbumNotFoundException());
-        Integer count = album.getCount();
-        album.setCount(++count);
-        albumRepository.save(album);
+
+//        만약 주문을 했다면 plus Count 를 하지 않아
+        if(!albumOrderRepository.findByAlbum(album).isPresent()){
+            Integer count = album.getCount();
+            album.setCount(++count);
+            albumRepository.save(album);
+        }
+
     }
 
 
@@ -240,6 +241,10 @@ public class AlbumService{
                 albumRepository.save(album);
             }
         }
+    }
+
+    public void albumStatusChecker(Long albumUid){
+
     }
 
     public String invite(Long albumUid, Long userUid){
