@@ -219,9 +219,14 @@ public class AlbumService{
     public void plusCount(Long albumUid){
         Album album = albumRepository.findById(albumUid).
                 orElseThrow(() -> new AlbumNotFoundException());
-        Integer count = album.getCount();
-        album.setCount(++count);
-        albumRepository.save(album);
+
+//        만약 주문을 했다면 plus Count 를 하지 않아
+        if(!albumOrderRepository.findByAlbum(album).isPresent()){
+            Integer count = album.getCount();
+            album.setCount(++count);
+            albumRepository.save(album);
+        }
+
     }
 
 
