@@ -45,3 +45,4 @@ gradle/
 
 logs/*
 *.log
+.DS_Store

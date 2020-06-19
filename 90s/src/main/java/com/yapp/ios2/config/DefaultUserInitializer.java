@@ -12,6 +12,7 @@ import com.yapp.ios2.vo.Album;
 import com.yapp.ios2.vo.Photo;
 import com.yapp.ios2.vo.User;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -25,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -106,11 +108,10 @@ public class DefaultUserInitializer implements CommandLineRunner {
                     ClassPathResource resource = new ClassPathResource(
                             "static/" + String.valueOf(i+1) + "/" + String.valueOf(j+1) + ".png"
                     );
-                    File file = resource.getFile();
-                    System.out.println(file.getPath());
-                    FileInputStream input = new FileInputStream(file);
+                    InputStream inputStream = resource.getInputStream();
+
                     MultipartFile multipartFile = new MockMultipartFile("file",
-                            file.getName(), "text/plain", IOUtils.toByteArray(input));
+                            String.valueOf(j+1) + ".png", "text/plain", IOUtils.toByteArray(inputStream));
                     MultipartFile[] multipartFiles = {multipartFile};
                     photoService.upload(multipartFiles,newAlbum.getUid());
                 }
