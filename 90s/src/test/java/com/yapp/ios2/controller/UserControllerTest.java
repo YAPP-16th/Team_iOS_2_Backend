@@ -12,6 +12,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.mockmvc.RestDocumentationResultHandler;
@@ -34,14 +36,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(UserController.class)
-//@SpringBootTest
+@SpringBootTest
 //@ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 @ActiveProfiles("dev")
 public class UserControllerTest {
 //    @Rule
 //    public JUnitRestDocumentation restDocumentation = new JUnitRestDocumentation();
 
+    @Autowired
     private MockMvc mockMvc;
+    @Autowired
     private RestDocumentationResultHandler document;
 
     @Autowired
@@ -124,7 +128,7 @@ public class UserControllerTest {
     @Test
     public void 회원탈퇴() throws Exception {
         System.out.println("111111111");
-        User user = userService.getUserByEmail("tester@90s.com");
+        User user = userService.getUserByEmail("tester19@90s.com");
         System.out.println("222222222");
         String jwt = jwtProvider.createToken(user.getUid().toString(), user.getRoles());
         System.out.println("333333333");
@@ -137,8 +141,8 @@ public class UserControllerTest {
                         .header("X-AUTH-TOKEN", jwt)
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(status().isOk());
-//                .andDo(print());
+                .andExpect(status().isOk())
+                .andDo(print());
     }
 
     
