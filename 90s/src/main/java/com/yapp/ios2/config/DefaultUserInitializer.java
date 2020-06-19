@@ -68,6 +68,7 @@ public class DefaultUserInitializer implements CommandLineRunner {
                         .build()
         );
         userRepository.save(defaultUser);
+        System.out.println("DEFAULT USER JWT TOKEN : " + jwtProvider.createToken(defaultUser.getUid().toString(), defaultUser.getRoles()));
 //        DefaultUser Album&Photo Init
         if(albumRepository.findByUser(defaultUser).isEmpty()){
             List<String> names = Arrays.asList(

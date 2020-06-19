@@ -13,14 +13,17 @@ import com.yapp.ios2.vo.AlbumOwner;
 import com.yapp.ios2.vo.User;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Role;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
@@ -175,7 +178,10 @@ public class AlbumController {
     }
 
     @GetMapping("/plusCount/{albumUid}")
-    public void plusCount(@PathVariable("albumUid") Long albumUid){
+    @Secured({"TESTER", "USER"})
+    public void plusCount(@AuthenticationPrincipal User user, @PathVariable("albumUid") Long albumUid){
+
+        System.out.println(user.getName());
 
         albumService.plusCount(albumUid);
 
