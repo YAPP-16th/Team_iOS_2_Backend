@@ -172,16 +172,21 @@ public class AlbumController {
     }
 
     @PostMapping("/getAlbumOwners")
-    public List<AlbumOwnerDto.AlbumOwnerInfo> getAlbumOwners(@RequestBody AlbumDto.AlbumUid albumUid){
+    public List<AlbumOwnerDto.AlbumOwnerInfo> getAlbumOwners(@AuthenticationPrincipal User user, @RequestBody AlbumDto.AlbumUid albumUid){
         List<AlbumOwnerDto.AlbumOwnerInfo> albumOwners = albumService.getAlbumOwners(albumUid.getUid());
+
+        for(AlbumOwnerDto.AlbumOwnerInfo albumOwnerInfo : albumOwners){
+            if(albumOwnerInfo.getUserUid().intValue() != user.getUid().intValue()){
+                albumOwnerInfo.setUserUid(null);
+            }
+        }
+
         return albumOwners;
     }
 
     @GetMapping("/plusCount/{albumUid}")
     @Secured({"TESTER", "USER"})
-    public void plusCount(@AuthenticationPrincipal User user, @PathVariable("albumUid") Long albumUid){
-
-        System.out.println(user.getName());
+    public void plusCount(@PathVariable("albumUid") Long albumUid){
 
         albumService.plusCount(albumUid);
 
