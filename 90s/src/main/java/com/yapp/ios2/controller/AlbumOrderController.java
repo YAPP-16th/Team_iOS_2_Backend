@@ -44,11 +44,9 @@ public class AlbumOrderController {
 
     @DeleteMapping("/deleteAlbumOrder/{albumOrderUid}")
     public void deleteAlbumOrder(@PathVariable("albumOrderUid") Long albumOrderUid){
-        AlbumOrder albumOrder = albumOrderRepository.findById(albumOrderUid).orElseThrow(
-                () -> new AlbumNotFoundException("없는 엘범 인데!")
-        );
 
-        albumOrderRepository.delete(albumOrder);
+        albumOrderService.deleteAlbumOrder(albumOrderUid);
+
     }
 
 

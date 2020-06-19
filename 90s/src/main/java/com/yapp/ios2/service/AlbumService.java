@@ -238,6 +238,10 @@ public class AlbumService{
         }
     }
 
+    public void albumStatusChecker(Long albumUid){
+
+    }
+
     public String invite(Long albumUid, Long userUid){
 
         String randomNum = String.valueOf(ThreadLocalRandom.current().nextInt(100000, 1000000));
