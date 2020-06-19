@@ -29,8 +29,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/swagger-ui.html").permitAll()
                 .antMatchers("/photo/download/**").permitAll()
 //                .antMatchers("/user/**").hasAnyRole("USER", "TESTER")
-                .antMatchers("/photo/**").hasAnyRole("USER", "TESTER")
-                .antMatchers("/album/**").hasAnyRole("USER", "TESTER")
+                .antMatchers("/photo/**").hasAnyRole("USER", "TESTER","TRYER")
+                .antMatchers("/album/**").hasAnyRole("USER", "TESTER","TRYER")
                 .anyRequest().permitAll() // 그외 나머지 요청은 누구나 접근 가능
                 .and()
                 .addFilterBefore(new JwtFilter(jwtProvider),
