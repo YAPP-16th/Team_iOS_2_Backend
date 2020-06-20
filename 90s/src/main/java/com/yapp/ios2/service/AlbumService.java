@@ -113,7 +113,8 @@ public class AlbumService{
     }
 
     public AlbumOwner joinAlbumByPassword(String albumPassword, User user){
-        Album album = albumRepository.findByPassword(albumPassword);
+        Album album = albumRepository.findByPassword(
+                UUID.fromString(albumPassword));
 
         AlbumOwner albumOwner = AlbumOwner.builder()
                 .album(album)
