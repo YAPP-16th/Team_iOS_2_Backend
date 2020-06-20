@@ -45,8 +45,6 @@ public class JwtFilter extends GenericFilterBean {
                 + httpServletRequest.getRequestURI()
         );
 
-        HttpServletRequestWrapper httpServletRequestWrapper = new HttpServletRequestWrapper(httpServletRequest);
-        httpServletRequestWrapper.
         chain.doFilter(request, response);
     }
 
