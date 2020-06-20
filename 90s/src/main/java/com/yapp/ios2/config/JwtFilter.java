@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import java.io.IOException;
 
 @Slf4j
@@ -42,9 +43,10 @@ public class JwtFilter extends GenericFilterBean {
                 jwtProvider.getUserName(token)
                 + " - "
                 + httpServletRequest.getRequestURI()
-
         );
 
+        HttpServletRequestWrapper httpServletRequestWrapper = new HttpServletRequestWrapper(httpServletRequest);
+        httpServletRequestWrapper.
         chain.doFilter(request, response);
     }
 
