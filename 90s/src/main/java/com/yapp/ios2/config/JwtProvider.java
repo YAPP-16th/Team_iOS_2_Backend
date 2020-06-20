@@ -58,8 +58,12 @@ public class JwtProvider {
     }
 
     public String getUserName(String token){
-        UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPk(token));
-        return userDetails.getUsername();
+        if(token == null){
+            return "UNKNOWN USER";
+        }else{
+            UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPk(token));
+            return userDetails.getUsername();
+        }
     }
 
     // 토큰에서 회원 정보 추출
