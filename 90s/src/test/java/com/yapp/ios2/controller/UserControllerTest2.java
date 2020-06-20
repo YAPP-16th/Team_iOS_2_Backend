@@ -1,71 +1,46 @@
 package com.yapp.ios2.controller;
 
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yapp.ios2.config.JwtProvider;
-import com.yapp.ios2.dto.JoinDto;
-import com.yapp.ios2.service.UserService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.restdocs.ManualRestDocumentation;
-import org.springframework.restdocs.RestDocumentationContextProvider;
-import org.springframework.restdocs.RestDocumentationExtension;
+import org.springframework.restdocs.JUnitRestDocumentation;
 import org.springframework.restdocs.mockmvc.RestDocumentationResultHandler;
-import org.springframework.restdocs.snippet.Attributes;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.modifyUris;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-//@RunWith(SpringRunner.class)
-//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-//@AutoConfigureRestDocs
-//@ActiveProfiles("dev")
-//@WebMvcTest(UserController.class)
-//@AutoConfigureRestDocs(outputDir = "target/snippets")
-@ExtendWith({ RestDocumentationExtension.class, SpringExtension.class })
+@RunWith(SpringRunner.class)
 @SpringBootTest
-public class UserControllerTest2 {
-    protected ManualRestDocumentation restDocumentation = new ManualRestDocumentation();
-    protected MockMvc mockMvc;
-    @BeforeEach
-    public void setUp(
-            WebApplicationContext webApplicationContext,
-            RestDocumentationContextProvider restDocumentation) {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
-                .apply(springSecurity())
-                .apply( documentationConfiguration(restDocumentation)
-                        .operationPreprocessors()
-                        .withRequestDefaults(
-                                modifyUris().host("test.com").removePort(),
-                                prettyPrint()) .withResponseDefaults(prettyPrint()) )
-                .alwaysDo(MockMvcResultHandlers.print()) .build();
+public class UserControllerTest2{
+
+    @Rule
+    public JUnitRestDocumentation restDocumentation = new JUnitRestDocumentation(); // (1)
+    @Autowired
+    private WebApplicationContext context;
+    private MockMvc mockMvc; // (2)
+    private RestDocumentationResultHandler document;
+
+    // (3)
+    @Before
+    public void setUp() {
+        this.document = document(
+                "{class-name}/{method-name}",
+                preprocessResponse(prettyPrint())
+        );
+
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
+                .apply(documentationConfiguration(this.restDocumentation))
+                .alwaysDo(document)
+                .build();
     }
 
-
-    @MockBean // (2)
-            UserService userService;
-    @MockBean // (2)
-            JwtProvider jwtProvider;
 
     @Test
     public void join() throws Exception {

@@ -45,11 +45,9 @@ dependencies {
     implementation 'org.springframework.security:spring-security-test:5.2.2.RELEASE'
     runtimeOnly 'org.springframework.boot:spring-boot-devtools:2.2.5.RELEASE'
     runtimeOnly 'mysql:mysql-connector-java:8.0.19'
-    testImplementation('org.springframework.boot:spring-boot-starter-test') {
-        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-    }
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc:2.0.3.RELEASE'
-    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.1.0'
+//    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.1.0'
 
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.10'
     compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
