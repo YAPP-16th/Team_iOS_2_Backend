@@ -1,5 +1,6 @@
 package com.yapp.ios2.config;
 
+import com.yapp.ios2.vo.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -54,6 +55,15 @@ public class JwtProvider {
     public Authentication getAuthentication(String token) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPk(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+    }
+
+    public String getUserName(String token){
+        if(token == null){
+            return "UNKNOWN USER";
+        }else{
+            UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPk(token));
+            return userDetails.getUsername();
+        }
     }
 
     // 토큰에서 회원 정보 추출
