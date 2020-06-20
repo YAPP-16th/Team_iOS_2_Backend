@@ -47,6 +47,10 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test:2.2.5.RELEASE'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc:2.0.3.RELEASE'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.1.0'
+
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.10'
+    compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+
 }
 
 publishing {
