@@ -27,14 +27,11 @@ public class Album {
     @Column(length = 45, nullable = false)
     private String name;
 
-    @Column
-    private UUID password;
+    @Column(unique=true)
+    private String password;
 
     @Column(nullable = false)
     private Integer photoLimit;
-
-    @Column(name = "layout_uid")
-    private Long layoutUid;
 
     @Column(columnDefinition = "integer default 0")
     private Integer count;
@@ -62,10 +59,9 @@ public class Album {
 //    public Album() {
 //    }
 
-    public Album(String name, Integer photoLimit, Long layoutUid) {
+    public Album(String name, Integer photoLimit) {
         this.name = name;
         this.photoLimit = photoLimit;
-        this.layoutUid = layoutUid;
     }
 }
 

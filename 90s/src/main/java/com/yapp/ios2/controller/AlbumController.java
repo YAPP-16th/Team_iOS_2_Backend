@@ -57,7 +57,6 @@ public class AlbumController {
                 albumInfo.getName(),
                 albumInfo.getPhotoLimit(),
                 userService.getUserByEmail(user.getUsername()).getUid(),
-                albumInfo.getLayoutUid(),
                 albumInfo.getCoverUid(),
                 albumInfo.getEndDate()
         );
@@ -118,7 +117,7 @@ public class AlbumController {
 
         Album album = albumService.getAlbum(albumUid);
 
-        return album.getPassword().toString();
+        return album.getPassword();
 
     }
 
@@ -132,11 +131,11 @@ public class AlbumController {
 
         Album album = albumService.getAlbum(albumUid);
 
-        album.setPassword(UUID.randomUUID());
+        album.setPassword(UUID.randomUUID().toString());
 
         albumRepository.save(album);
 
-        return album.getPassword().toString();
+        return album.getPassword();
 
     }
 

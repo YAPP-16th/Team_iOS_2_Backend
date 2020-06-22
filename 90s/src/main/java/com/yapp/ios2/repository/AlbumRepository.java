@@ -14,8 +14,8 @@ import java.util.UUID;
 public interface AlbumRepository extends JpaRepository<Album, Long>{
     @Query("select a from Album a, AlbumOwner ao where ao.user = :user and a = ao.album")
     List<Album> findByUser(@Param("user")User user);
-
-    Album findByPassword(UUID password);
+    @Query("select a from Album a where a.password = :password")
+    Album findByPassword(@Param("password")String password);
 
     @Query("select a from Album a, AlbumOwner ao where ao.user = :user and a= ao.album and a.orderStatus not like :orderStatus")
     List<Album> findByOrderStatus(@Param("user") User user, @Param("orderStatus") AlbumOrderStatus orderStatus);
