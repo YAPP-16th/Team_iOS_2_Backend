@@ -45,7 +45,6 @@ public class AlbumDto {
             this.albumUid = album.getUid();
             this.photoLimit = album.getPhotoLimit();
             this.name = album.getName();
-            this.layoutUid = album.getLayoutUid();
             this.coverUid = album.getCover().getUid();
             this.endDate = album.getEndDate();
         }
