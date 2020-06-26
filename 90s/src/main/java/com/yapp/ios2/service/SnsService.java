@@ -31,7 +31,9 @@ public class SnsService {
 //        인증 난수 생성
         String randomNum = String.valueOf(ThreadLocalRandom.current().nextInt(100000, 1000000));
 
-        message = Message.creator(new PhoneNumber("+82" + phoneNumber), new PhoneNumber(fromPhoneNum), randomNum).create();
+        String body = String.format("Back to 90s!\n[%s]",randomNum);
+
+        message = Message.creator(new PhoneNumber("+82" + phoneNumber), new PhoneNumber(fromPhoneNum), body).create();
 
         return randomNum;
 
