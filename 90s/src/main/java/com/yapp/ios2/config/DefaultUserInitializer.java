@@ -163,7 +163,7 @@ public class DefaultUserInitializer implements CommandLineRunner {
                         "Album" + String.valueOf(ThreadLocalRandom.current().nextInt(100000, 1000000)),
                         7,
                         testUser.getUid(),
-                        0L,
+                        Long.valueOf(j+1),
                         LocalDate.now().plusDays(100)
                 );
             }
