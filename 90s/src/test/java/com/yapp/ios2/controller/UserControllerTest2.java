@@ -1,46 +1,40 @@
 package com.yapp.ios2.controller;
 
+
 import org.junit.Before;
 import org.junit.Rule;
-import org.junit.runner.RunWith;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.restdocs.JUnitRestDocumentation;
-import org.springframework.restdocs.mockmvc.RestDocumentationResultHandler;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.restdocs.RestDocumentationContextProvider;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
+@ActiveProfiles("dev")
 public class UserControllerTest2{
 
     @Rule
-    public JUnitRestDocumentation restDocumentation = new JUnitRestDocumentation(); // (1)
+    public JUnitRestDocumentation restDocumentation = new JUnitRestDocumentation();
+
+    private MockMvc mockMvc;
+
     @Autowired
     private WebApplicationContext context;
-    private MockMvc mockMvc; // (2)
-    private RestDocumentationResultHandler document;
 
-    // (3)
     @Before
     public void setUp() {
-        this.document = document(
-                "{class-name}/{method-name}",
-                preprocessResponse(prettyPrint())
-        );
-
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
                 .apply(documentationConfiguration(this.restDocumentation))
-                .alwaysDo(document)
+                .apply(springSecurity())
                 .build();
     }
-
 
     @Test
     public void join() throws Exception {
