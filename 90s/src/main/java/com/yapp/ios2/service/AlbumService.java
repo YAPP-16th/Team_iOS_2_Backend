@@ -54,13 +54,12 @@ public class AlbumService{
     @Autowired
     CoverRepository coverRepository;
 
-    public Album create(String name, Integer photoLimit, Long user, Long layoutUid, Long cover, LocalDate endDate) {
+    public Album create(String name, Integer photoLimit, Long user, Long cover, LocalDate endDate) {
 
         Album newAlbum = Album.builder()
                 .name(name)
-                .password(UUID.randomUUID())
+                .password(UUID.randomUUID().toString())
                 .photoLimit(photoLimit)
-                .layoutUid(layoutUid)
                 .cover(coverRepository.findById(cover).get())
                 .endDate(endDate)
                 .orderStatus(albumOrderStatusRepository.findById(1L).get())
@@ -113,7 +112,8 @@ public class AlbumService{
     }
 
     public AlbumOwner joinAlbumByPassword(String albumPassword, User user){
-        Album album = albumRepository.findByPassword(albumPassword);
+        Album album = albumRepository.findByPassword(
+                albumPassword);
 
         AlbumOwner albumOwner = AlbumOwner.builder()
                 .album(album)

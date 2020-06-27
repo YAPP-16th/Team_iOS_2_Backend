@@ -101,7 +101,6 @@ public class DefaultUserInitializer implements CommandLineRunner {
                         photos.get(i),
                         defaultUser.getUid(),
                         covers.get(i),
-                        covers.get(i),
                         LocalDate.now()
                 );
 
@@ -164,7 +163,6 @@ public class DefaultUserInitializer implements CommandLineRunner {
                         "Album" + String.valueOf(ThreadLocalRandom.current().nextInt(100000, 1000000)),
                         7,
                         testUser.getUid(),
-                        0L,
                         Long.valueOf(j+1),
                         LocalDate.now().plusDays(100)
                 );
