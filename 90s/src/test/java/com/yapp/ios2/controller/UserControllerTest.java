@@ -2,20 +2,21 @@ package com.yapp.ios2.controller;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yapp.ios2.TestConfig;
+import com.yapp.ios2.config.JwtFilter;
 import com.yapp.ios2.config.JwtProvider;
 import com.yapp.ios2.dto.JoinDto;
 import com.yapp.ios2.dto.LoginDto;
 import com.yapp.ios2.service.UserService;
 import com.yapp.ios2.vo.User;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.RestDocumentationContextProvider;
+import org.springframework.restdocs.JUnitRestDocumentation;
 import org.springframework.restdocs.mockmvc.RestDocumentationResultHandler;
 import org.springframework.restdocs.snippet.Attributes;
 import org.springframework.test.context.ActiveProfiles;
@@ -26,53 +27,24 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
-@WebMvcTest(UserController.class)
-@SpringBootTest
-//@ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
-@ActiveProfiles("dev")
-public class UserControllerTest {
-//    @Rule
-//    public JUnitRestDocumentation restDocumentation = new JUnitRestDocumentation();
 
-//    @Autowired
-    private MockMvc mockMvc;
-//    @Autowired
-    private RestDocumentationResultHandler document;
-
-    @Autowired
-    UserService userService;
-    @Autowired
-    JwtProvider jwtProvider;
-
-    @Before
-    public void setUp(WebApplicationContext webApplicationContext, RestDocumentationContextProvider restDocumentation) {
-        this.document = document(
-                "{class-name}/{method-name}",
-                preprocessRequest(prettyPrint()),
-                preprocessResponse(prettyPrint())
-        );
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
-                .apply(documentationConfiguration(restDocumentation))
-                .apply(springSecurity())
-                .alwaysDo(document)
-                .build();
-    }
-
+public class UserControllerTest extends TestInit{
     @Test
-    public void join() throws Exception {
+    public void 회원가입() throws Exception {
 
         JoinDto joinDto = new JoinDto();
-        joinDto.setEmail("test909@90s.com");
+        joinDto.setEmail("test9999@90s.com");
         joinDto.setName("test");
         joinDto.setPassword("test");
         joinDto.setPhone("010-9523-3114");
@@ -84,23 +56,24 @@ public class UserControllerTest {
         mockMvc.perform(
                 post("/user/join")
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header("X-AUTH-TOKEN","eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9UUllFUiJdLCJpYXQiOjE1OTMyMzI0MzIsImV4cCI6MjIyMzk1MjQzMn0.T6xSOI3n0NtHgK6abKt3A_aTcKTF5mT563pq6wBV4Nw")
                         .content(jsonString)
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(document.document(
                         requestFields(
-                                fieldWithPath("email").description("이메일").attributes(new Attributes.Attribute("format","test@90s.com")),
+                                fieldWithPath("email").description("이메일").attributes(new Attributes.Attribute("format", "test@90s.com")),
                                 fieldWithPath("name").description("유저 이름"),
-                                fieldWithPath("password").description("비밀번호").attributes(new Attributes.Attribute("format","카카오 로그인 시에는 null로 보내지 않아도 무관합니다.")),
-                                fieldWithPath("phone").type("String").description("핸드폰 번호").attributes(new Attributes.Attribute("format","010-1234-5678")),
-                                fieldWithPath("sosial").type("Boolean").description("카카오 로그인 여부").attributes(new Attributes.Attribute("format","true / false"))
+                                fieldWithPath("password").description("비밀번호").attributes(new Attributes.Attribute("format", "카카오 로그인 시에는 null로 보내지 않아도 무관합니다.")),
+                                fieldWithPath("phone").type("String").description("핸드폰 번호").attributes(new Attributes.Attribute("format", "010-1234-5678")),
+                                fieldWithPath("sosial").type("Boolean").description("카카오 로그인 여부").attributes(new Attributes.Attribute("format", "true / false"))
                         )
                 ));
     }
 
     @Test
-    public void login() throws Exception {
+    public void 로그인() throws Exception {
 
         LoginDto loginDto = new LoginDto();
         loginDto.setEmail("tester0@90s.com");
@@ -129,14 +102,8 @@ public class UserControllerTest {
 
     @Test
     public void 회원탈퇴() throws Exception {
-        System.out.println("111111111");
-        User user = userService.getUserByEmail("tester19@90s.com");
-        System.out.println("222222222");
-        String jwt = jwtProvider.createToken(user.getUid().toString(), user.getRoles());
-        System.out.println("333333333");
 
-//        ObjectMapper json = new ObjectMapper();
-//        String jsonString = json.writerWithDefaultPrettyPrinter().writeValueAsString(loginDto);
+        createTester();
 
         mockMvc.perform(
                 get("/user/signout")
@@ -146,7 +113,4 @@ public class UserControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print());
     }
-
-
-
 }

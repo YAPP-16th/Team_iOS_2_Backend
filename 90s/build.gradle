@@ -55,7 +55,7 @@ dependencies {
 }
 
 ext {
-    snippetsDir = file('build/generated-snippets')
+    snippetsDir = file('target/generated-snippets')
 }
 test {
     outputs.dir snippetsDir
